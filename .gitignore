@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Symlinks (OneDrive)
+_docs
+_shared
+
+# Environment
+.env
+.env.*
+
+# Dependencies
+node_modules/
+
+# Temp
+*.tmp
+*.log
