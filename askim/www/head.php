@@ -81,13 +81,22 @@ echo tw_function("get_seo", $seo_param);
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "에스킴컴퍼니",
+    "url": "https://www.askim.kr",
+    "logo": "https://www.askim.kr/img/logo.png",
+    "description": "고객의 길 위에 진짜 노출을 만드는 옥외광고 전문 회사",
     "address": {
         "@type": "PostalAddress",
         "postalCode": "04798",
         "addressRegion": "서울특별시",
         "addressLocality": "성동구",
-        "streetAddress": "성수이로24길 31"
-    }
+        "streetAddress": "성수이로24길 31",
+        "addressCountry": "KR"
+    },
+    "sameAs": [
+        "https://blog.naver.com/askimcompany",
+        "https://www.instagram.com/paulseee/",
+        "https://www.youtube.com/channel/UCM72MD-6k_uvBMKyXAcvlgQ"
+    ]
 }
 </script>
 <!-- aos 효과 제이쿼리 -->
