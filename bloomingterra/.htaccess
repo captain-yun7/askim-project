@@ -7,6 +7,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* /index.php/$1 [L]
 
-RewriteCond $1 !^(index\.php|lib|data|upload|robots\.txt|sitemap\.xml)
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,L]
+# SSL 리다이렉트는 Nginx 서버 레벨에서 처리 중 (활성화 불필요)

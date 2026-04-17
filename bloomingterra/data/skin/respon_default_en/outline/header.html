@@ -6,18 +6,33 @@
 <link rel="icon" href="{=C._UPLOAD +'/conf/'+ cfg_site['favicon']}" type="image/x-icon" />
 
 <meta charset="UTF-8">
-<meta name="title" content="{cfg_site['title']}" />
-<meta name="keywords" content="{ seo['keywords'] }">
-<meta name="description" content="{ seo['description'] }">
-<meta name="author" content="{ seo['author'] }">
 <meta name="viewport" content="width=device-width, user-scalable=no">
-<meta name="format-detection" content="telephone=no" /><!--애플전화번호링크자동설정해제-->
-<meta property="og:title" content="{ seo['og_title'] }" />
-<meta property="og:description" content="{ seo['description'] }" />
-<meta property="og:image" content="<!--{ ? seo['og_image'] }-->{ seo['og_image'] }<!--{ / }-->" />
-<meta property="twitter:title" content="{ seo['og_title'] }" />
-<meta property="twitter:description" content="{ seo['description'] }" />
-<meta property="twitter:image" content="<!--{ ? seo['og_image'] }-->{ seo['og_image'] }<!--{ / }-->" />
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="{ seo['description'] }">
+<meta name="keywords" content="{ seo['keywords'] }">
+<meta name="author" content="블루밍테라">
+<link rel="canonical" href="https://bloomingterra.com/{=CI->uri->uri_string()}">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="블루밍테라">
+<meta property="og:title" content="{ seo['og_title'] }">
+<meta property="og:description" content="{ seo['description'] }">
+<meta property="og:url" content="https://bloomingterra.com/{=CI->uri->uri_string()}">
+<meta property="og:locale" content="ko_KR">
+<!--{ ? seo['og_image'] }-->
+<meta property="og:image" content="{ seo['og_image'] }">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!--{ / }-->
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{ seo['og_title'] }">
+<meta name="twitter:description" content="{ seo['description'] }">
+<!--{ ? seo['og_image'] }-->
+<meta name="twitter:image" content="{ seo['og_image'] }">
+<!--{ / }-->
 
 <link rel="stylesheet" type="text/css" href="/lib/css/common.css" />
 <link rel="stylesheet" type="text/css" href="../css/reset.css" />
