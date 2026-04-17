@@ -1,8 +1,12 @@
 User-agent: *
-
 Allow: /
 
 Disallow: /twcenter/
 Disallow: /upload/
 Disallow: /way_castle/
 Disallow: /popup/
+Disallow: /report*.html
+Disallow: /comm/
+Disallow: /other/search.php
+
+Sitemap: https://www.askim.kr/sitemap.xml
