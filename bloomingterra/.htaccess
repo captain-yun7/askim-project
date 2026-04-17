@@ -7,8 +7,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* /index.php/$1 [L]
 
-# ssl 적용시 아래 # 제거해주세요.
-RewriteEngine On
-#RewriteCond $1 !^(index\.php|lib|data|upload|robots\.txt|sitemap\.xml)
-#RewriteCond %{HTTPS} !=on
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,L]
+RewriteCond $1 !^(index\.php|lib|data|upload|robots\.txt|sitemap\.xml)
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,L]
