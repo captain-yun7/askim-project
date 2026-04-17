@@ -6106,21 +6106,21 @@ function tw_function($workType, $param){
 			}
 
 			$print_seo = "";
-			$print_seo .= '<meta name="subject" content="'.$str['browser_title'].'" />';
-			$print_seo .= '<meta name="title" content="'.$str['browser_title'].'" />';
-			$print_seo .= '<meta name="author" content="'.$str['browser_title'].'" />';
-			$print_seo .= '<meta name="publisher" content="'.$str['browser_title'].'" />';
-			$print_seo .= '<meta name="Description" CONTENT="'.$str['description'].'" />';
-			$print_seo .= '<meta name="keywords" CONTENT="'.$str['keywords'].'" />';
-			$print_seo .= '<meta name="reply-To" content="'.$site_info['site_email'].'" />';
-			$print_seo .= '<meta name="location" content="'.$site_info['com_address'].'" />';
-			$print_seo .= '<meta name="Classification" CONTENT="'.$str['classification'].'" />';
+			$print_seo .= '<meta name="description" content="'.$str['description'].'" />';
+			$print_seo .= '<meta name="keywords" content="'.$str['keywords'].'" />';
 			$print_seo .= '<meta property="og:type" content="website" />';
 			$print_seo .= '<meta property="og:title" content="'.$str['og_title'].'" />';
 			$print_seo .= '<meta property="og:url" content="'.SSL.WAY_URL.$_SERVER['REQUEST_URI'].'" />';
 			$print_seo .= '<meta property="og:site_name" content="'.$site_info['site_name'].'" />';
 			$print_seo .= '<meta property="og:description" content="'.$str['description'].'" />';
+			$print_seo .= '<meta property="og:locale" content="ko_KR" />';
 			$print_seo .= '<meta property="og:image" content="'.$str['seoimg_src'].'" />';
+			$print_seo .= '<meta property="og:image:width" content="1200" />';
+			$print_seo .= '<meta property="og:image:height" content="630" />';
+			$print_seo .= '<meta name="twitter:card" content="summary_large_image" />';
+			$print_seo .= '<meta name="twitter:title" content="'.$str['og_title'].'" />';
+			$print_seo .= '<meta name="twitter:description" content="'.$str['description'].'" />';
+			$print_seo .= '<meta name="twitter:image" content="'.$str['seoimg_src'].'" />';
 			$print_seo .= '<title>'.$str['browser_title'].'</title>';
 
 			return $print_seo;
