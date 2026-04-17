@@ -1,0 +1,7 @@
+<!--{ ? isset(board_nav['board_manage_list'])}-->
+<ul id="sub_nav" class="submenu dn">
+	<!--{ @ board_nav['board_manage_list'] }-->
+	<li><a href="/board/board_list?code={.code}" <!--{ ? board_info['code'] == .code }-->class="on"<!--{ / }-->>{.name}</a></li>
+	<!--{ / }-->
+</ul><!--submenu-->
+<!--{ / }-->

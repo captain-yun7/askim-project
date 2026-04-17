@@ -1,0 +1,81 @@
+@charset "utf-8";
+/*
+	font-family:'Open Sans','Noto Sans KR',-apple-system,Roboto,'Helvetica Neue','Apple SD Gothic Neo',Malgun Gothic,'맑은 고딕',AppleGothic,Dotum,'돋움',sans-serif;
+	font-family:'Noto Sans KR',-apple-system,Roboto,'Helvetica Neue','Apple SD Gothic Neo',Malgun Gothic,'맑은 고딕',AppleGothic,Dotum,'돋움',sans-serif;
+*/
+@import url('//fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&subset=korean');
+@import url('//fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+/* font-family: 'Montserrat', sans-serif; */
+@import url('//fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Pretendard */
+@import url('//cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, a {margin: 0;padding: 0;border: 0;font-size: 12px;font: inherit;vertical-align: baseline;font-family:'Open Sans','Noto Sans KR',-apple-system,Roboto,'Helvetica Neue','Apple SD Gothic Neo',Malgun Gothic,'맑은 고딕',AppleGothic,Dotum,'돋움',sans-serif;letter-spacing:-0.3px; font-weight:400;}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button,iframe {margin:0;padding:0}
+fieldset,img {border:0 none;vertical-align:top;}
+img {max-width:100%;}
+blockquote, q {quotes: none}
+blockquote:before, blockquote:after,q:before, q:after {content:'';content:none}
+input,select,textarea,button {vertical-align:middle}
+button {border:0 none;background-color:transparent;cursor:pointer}
+
+body {background-color:#fff;color:#333;font-size:12px;font-family:'Open Sans','Noto Sans KR',-apple-system,Roboto,'Helvetica Neue','Apple SD Gothic Neo',Malgun Gothic,'맑은 고딕',AppleGothic,Dotum,'돋움',sans-serif;}
+dl,ul,ol,li {list-style:none}
+button{background:transparent; cursor:pointer; vertical-align:middle; margin:0;}
+button, input {background:transparent; cursor:pointer; *overflow:visible;}
+button span{display:none;}
+h1, h2, h3, h4, h5, h6{font-size:100%; font-style:normal;}
+
+/* table */
+table { border-collapse:collapse; border-spacing:0; width:100%; }
+th {vertical-align:middle;}
+th, td { border-collapse:collapse; }
+legend, hr { display:none; }
+caption{text-indent:-9999em;overflow:hidden;height:0;font-size:0;line-height:0; }
+
+/* form */
+form { display:inline; }
+select, input, textarea {color:#444;font-family:'Open Sans','Noto Sans KR','Nanum Gothic', Malgun Gothic,'맑은 고딕', AppleGothic,Dotum,'돋움', sans-serif;font-size:12px;vertical-align:middle; }
+fieldset, blockquote, iframe, button { border:none; }
+
+/* font */
+i, em, u, cite {font-style:normal;}
+address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
+em{font-weight:bold;}
+
+/* link */
+a {color:#444; text-decoration:none; cursor:pointer;}
+a:visited{text-decoration: none}
+a:focus{text-decoration: none}
+a:active{text-decoration: none}
+a:hover{text-decoration: none}
+
+h2.blind {display:none; font-size:0; letter-spacing:-9999px;}
+
+.file_list img {padding-left:3px;}
+
+/* 에디터 속성 재정의*/
+.table_write td.view_cont div, .table_write td.view_cont dl, .table_write td.view_cont dt, .table_write td.view_cont dd, .table_write td.view_cont ul, .table_write td.view_cont ol, .table_write td.view_cont li, .table_write td.view_cont h1, .table_write td.view_cont h2, .table_write td.view_cont h3, .table_write td.view_cont h4, .table_write td.view_cont h5, .table_write td.view_cont h6, .table_write td.view_cont pre, .table_write td.view_cont code, .table_write td.view_cont p, .table_write td.view_cont th, .table_write td.view_cont td, .table_write td.view_cont input, .table_write td.view_cont select, .table_write td.view_cont button {margin:auto;padding:initial;color:initial;}
+.table_write td.view_cont i, .table_write td.view_cont em {font-style:italic;color:initial;}
+.table_write td.view_cont em {font-weight:inherit;}
+.table_write td.view_cont dl, .table_write td.view_cont ul, .table_write td.view_cont ul li {list-style:disc;list-style-position:inside;}
+.table_write td.view_cont ol, .table_write td.view_cont ol li {list-style:decimal;list-style-position:inside;}
+.table_write td.view_cont sup, .table_write td.view_cont sub {font-size:x-small;}
+.table_write td.view_cont table {border-spacing:initial;border-width:inherit;}
+.table_write td.view_cont th, .table_write td.view_cont td {border-spacing:initial;border-width:inherit;}

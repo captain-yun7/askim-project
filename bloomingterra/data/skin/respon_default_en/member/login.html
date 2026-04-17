@@ -1,0 +1,55 @@
+﻿{#header}
+<!-- <script type="text/javascript" src="/lib/js/common_member.js"></script> -->
+<script type="text/javascript" src="{js}/js/common_member.js"></script>
+<script type="text/javascript">
+	var Common_Member = new common_member({
+		is_login : "{=defined('_IS_LOGIN')}"
+	});
+
+	$(function() {
+		$("form[name='frm']").validate({
+			submitHandler : function(form) {
+				var set_data = {
+					userid : form.userid.value,
+					password : form.password.value
+				};
+
+				if(Common_Member.dormant_check(set_data) ) {
+					form.submit();
+				}
+			}, rules : {
+				userid : {required : true},
+				password : {required : true}
+			}, messages : {
+				userid : {required : "Please enter your ID."},
+				password : {required : "Please enter a password."}
+			}
+		});
+	});
+
+</script>
+<div class="sub_content">
+	<div class="sub_login">
+		<div class="login_box">
+			{=form_open('member/login', 'name=frm')}
+			<fieldset>
+			<legend>Enter Member Login ID/Password</legend>
+			<input type="hidden" name="encrypt" value="p2" />
+			<input type="hidden" name="return_url" value="{return_url}" />
+			<ul>
+				<li><input type="text" name="userid" id="userid" placeholder="ID"><label for="userid" class="dn">ID</label></li>
+				<li><input type="password" name="password" id="password" placeholder="Password"><label for="password" class="dn">Password</label></li>
+				<li><button type="submit" class="btn_wd btn_point">LOGIN</button></li>
+			</ul>
+			</fieldset>
+			{=form_close()}
+			<ul class="login_link">
+				<li class="first"><a href="/member/find_id">Find ID</a></li>
+				<li><a href="/member/find_pw">Find Password</a></li>
+				<li><a href="/member/join_agreement">Sign up</a></li>
+			</ul>
+		</div><!--login_box-->
+
+	</div>
+</div><!--sub_content-->
+{#footer}

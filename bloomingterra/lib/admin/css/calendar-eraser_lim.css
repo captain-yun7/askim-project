@@ -1,0 +1,121 @@
+
+#CalendarControlIFrame {
+  display: none;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  height: 250px;
+  width: 250px;
+  z-index: 99;
+}
+
+#CalendarControl {
+  position:absolute;
+  background-color:#FFF;
+  margin:0;
+  padding:0;
+  display:none;
+  z-index: 100;
+}
+
+#CalendarControl table {
+  font-family: verdana;
+  font-size: 11px;
+  letter-spacing:-1px;
+  border: 1px solid #958671;
+
+  /*
+  border-left: 1px solid #958671;
+  border-right: 1px solid #958671;
+  */
+}
+
+#CalendarControl th {
+  font-weight: bold;
+  color: #FFF;
+  padding:5px 0;
+}
+
+#CalendarControl th a {
+  font-weight: normal;
+  text-decoration: none;
+  color: #FFF;
+  padding: 1px;
+}
+
+#CalendarControl td {
+  text-align: center;
+
+}
+
+#CalendarControl .header {
+  background-color: #ffffff;
+
+
+}
+
+#CalendarControl .weekday {
+  color:#666666;
+}
+
+#CalendarControl .weekend {
+  color: #0066cc;
+}
+
+#CalendarControl .current {
+  border: 1px solid #958671;
+  background-color: #958671;
+  color: #FFFFFF;
+}
+
+#CalendarControl .weekday,
+#CalendarControl .weekend,
+#CalendarControl .current {
+  display: block;
+  text-decoration: none;
+  border: 1px solid #FFF;
+  width: 2em;
+}
+
+#CalendarControl .weekday:hover,
+#CalendarControl .weekend:hover,
+#CalendarControl .current:hover {
+  color: #FFF;
+  background-color: #958671;
+  border: 1px solid #999;
+}
+
+#CalendarControl .previous {
+  text-align: left;
+}
+
+#CalendarControl .next {
+  text-align: right;
+}
+
+#CalendarControl .previous,
+#CalendarControl .next {
+  padding: 1px 3px 1px 3px;
+  font-size: 1.4em;
+}
+
+#CalendarControl .previous a,
+#CalendarControl .next a {
+  color: #0066ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#CalendarControl .title {
+  font-size: 1.3em;
+
+  text-align: center;
+  font-weight: bold;
+  color: #009999;
+  padding-bottom:3px;
+}
+
+#CalendarControl .empty {
+  background-color: #FFF;
+  border: 1px solid #FFF;
+}

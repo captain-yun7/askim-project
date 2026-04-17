@@ -1,0 +1,100 @@
+<script>
+var noShow = function(checkbox){
+	var no = checkbox.value;
+	if(checkbox.checked){
+		Cookie.setCookie("popup_"+no, 'y', 1);
+	}else{
+		Cookie.setCookie("popup_"+no, 'y', -1);
+	}
+};
+var winWidth = $(window).width();
+<!--{ ? isset(popup_list['popup_list']) }-->
+	<!--{ @ popup_list['popup_list'] }-->
+		<!--{ ? get_cookie('popup_'+ .no, true) != 'y' }-->
+			var popupWidth = 0, popupHeight = 0, popupToppx = 0, popupLeftpx = 0;
+			var isMobile = false;
+			var agentInitial = '';
+			<!--{ ? .popupform == "responsive" }-->
+				if(winWidth >= Number({=.recognition_pc})){
+					popupWidth = Number({=.width_responsive_pc});
+					popupHeight = Number({=.height_responsive_pc});
+					popupToppx = Number({=.toppx_responsive_pc});
+					popupLeftpx = Number({=.leftpx_responsive_pc});
+					agentInitial = 'pc';
+				} else if(winWidth >= Number({=.recognition_tablet})){
+					popupWidth = Number({=.width_responsive_tablet});
+					popupHeight = Number({=.height_responsive_tablet});
+					popupToppx = Number({=.toppx_responsive_tablet});
+					popupLeftpx = Number({=.leftpx_responsive_tablet});
+					agentInitial = 't';
+				}else {
+					popupWidth = Number({=.width_responsive_mobile});
+					popupHeight = Number({=.height_responsive_mobile});
+					popupToppx = Number({=.toppx_responsive_mobile});
+					popupLeftpx = Number({=.leftpx_responsive_mobile});
+					isMobile = true;
+					agentInitial = 'm';
+				}
+			<!--{ : }-->
+				<!--{ ? isMobile == true }-->
+					popupWidth = Number({=.width_mobile});
+					popupHeight = Number({=.height_mobile});
+					popupToppx = Number({=.toppx_mobile});
+					popupLeftpx = Number({=.leftpx_mobile});
+					isMobile = true;
+				<!--{ : }-->
+					popupWidth = Number({=.width_pc});
+					popupHeight = Number({=.height_pc});
+					popupToppx = Number({=.toppx_pc});
+					popupLeftpx = Number({=.leftpx_pc});
+				<!--{ / }-->
+			<!--{ / }-->
+			<!--{ ? .type == '1' }-->
+				var layer_html = '';
+				if (isMobile){
+					layer_html += '<div id="popup_{.no}" class="layer-popup '+ (agentInitial ? 'layer_'+agentInitial : '') +'" style="width:'+popupWidth+'%;top:'+popupToppx+'px;z-index:{2000+ .no};">';
+				}else{
+					layer_html += '<div id="popup_{.no}" class="layer-popup '+ (agentInitial ? 'layer_'+agentInitial : '') +'" style="width:'+popupWidth+'px;min-height:'+popupHeight+'px;top:'+popupToppx+'px;left:'+popupLeftpx+'px;z-index:{2000+ .no};">';
+				}
+
+				layer_html += '<div><h4>{=htmlspecialchars_decode(.title)}</h4></div>';
+				layer_html += '<div class="pop_content yui3-cssreset">';
+				layer_html += '{=str_replace("'", "", htmlspecialchars_decode(.content))}';
+				layer_html += '</div>';
+				layer_html += '<div class="pop_closed">';
+				layer_html += '<input type = "checkbox" value="{.no}" id="{.no}" onChange="noShow(this);"/><label for="{.no}">Do Not Show for 24 hours</label>';
+				layer_html += '<a href ="javascript://" onclick="$(this).closest(\'.layer-popup\').hide();">Close</a>';
+				layer_html += '</div>';
+				layer_html += '</div>';
+
+				$('#popup_contents').append(layer_html);
+			<!--{ : }-->
+				var addressHeight = window.screenY + window.outerHeight - window.innerHeight;//주소 표시줄 높이
+				
+				var popup_options = 'width='+popupWidth+'px,height='+popupHeight+'px,top='+(popupToppx+addressHeight)+',left='+(window.screenX+popupLeftpx)+',toolbar=no,status=no,resizable=no,scrollbars=yes,location=no,menubar=no';
+				var popup_html = '<div class="pop_content yui3-cssreset">{=addslashes(htmlspecialchars_decode(.content))}</div>';
+				popup_html += '<style>';
+				popup_html += 'body {margin:0;}';
+				popup_html += '.pop_content {margin:0;padding:0;}';
+				popup_html += '.pop_content img, .pop_content table, .pop_content div {max-width:100%;max-height:100%;}';
+				popup_html += '.pop_closed {text-align:right;padding:4px 12px;box-sizing:border-box;line-height:20px;font-size:12px;vertical-align:middle;}';
+				popup_html += '.pop_closed input[type="checkbox"] + label {font-size:12px;}';
+				popup_html += '.pop_closed a {vertical-align:top;display:inline-block;line-height:20px;margin-left:12px;position:relative;z-index:1;width:20px;height:20px;font-size:0;}';
+				popup_html += '.pop_closed a:before, .pop_closed a:after {display:inline-block;content:"";width:24px;height:1px;background:#000;position:absolute;left:0;top:50%;}';
+				popup_html += '.pop_closed a:before {transform:rotate(45deg) }';
+				popup_html += '.pop_closed a:after {transform:rotate(-45deg) }';
+				popup_html += '</style>';
+				popup_html += '<div class="pop_closed">';
+				popup_html += '		<label><input type="checkbox" value="{.no}" onChange="opener.noShow(this);">Do Not Show for 24 hours</label>';
+				popup_html += '		<a href="javascript://" onclick="self.close();">Close</a>';
+				popup_html += '</div>';
+				var popup_{.no} = window.open('', 'popup_{.no}', popup_options); 
+				popup_{.no}.document.body.innerHTML = popup_html;
+
+				var popup_header_html = '<title>{=addslashes(htmlspecialchars_decode(.title))}</title>';
+				popup_{.no}.document.head.innerHTML = popup_header_html;
+			<!--{ / }-->
+		<!--{ / }-->
+	<!--{ / }-->
+<!--{ / }-->
+</script>

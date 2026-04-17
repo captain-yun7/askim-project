@@ -1,0 +1,23 @@
+<!--{ ? qa_info['mainview'] == 'y' }-->
+<h2 class="main_tit"><a href="/board/board_list?code=qa">Q&A</a></h2>
+<ul class="qa_ul mainList">
+	<!--{ ? isset(qa_list['board_list']) }-->
+	<!--{ @ qa_list['board_list'] }-->
+	<!--{ ? (.index_+1) == '4' }--></ul><ul class="qa_ul mainList"><!--{ / }-->
+	<li>
+		<!--{ ? .display_read == 's' }-->
+		<a href="/board/board_secret?code={.code}&no={.no}&page=view">
+			<span class="tit">{.title}</span>
+			<span class="date">{=date_format(date_create(.regdt_date),'m')}-{=date_format(date_create(.regdt_date), 'd')}</span>
+		<!--{ : }-->
+		<a href="/board/board_view?code={.code}&no={.no}">
+			<span class="tit">{.title}</span>
+			<span class="date">{=date_format(date_create(.regdt_date),'m')}-{=date_format(date_create(.regdt_date), 'd')}</span>
+		<!--{ / }--></a>
+		</li>
+	<!--{ / }-->
+	<!--{ : }-->
+	<li>There is no post</li>
+	<!--{ / }-->
+</ul>
+<!--{ / }-->

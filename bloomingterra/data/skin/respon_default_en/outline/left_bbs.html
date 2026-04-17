@@ -1,0 +1,14 @@
+<div class="sub_menu">
+	<dl>
+		<dt class="">{ lm.name }</dt>
+		<!--{ ? lm.menu }-->
+			<!-- 메뉴관리 1차 하위 2차메뉴 있을 때 -->
+			<!--{ @ lm.menu }-->
+			<dd class="menu0{ .key_ } <!--{ ? strpos(.value_.url, current) > -1 }-->on<!--{ / }-->"><a href="{ .value_.url }">{ .value_.name }</a></dd>
+			<!--{ / }-->
+		<!--{ : }-->
+			<!-- 메뉴관리 1차 하위 2차메뉴 없을 때, 나 자신 가져오기 -->
+			<dd class="on"><strong>{ on }</strong></dd>
+		<!--{ / }-->
+	</dl>
+</div>

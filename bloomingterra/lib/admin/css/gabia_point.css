@@ -1,0 +1,5 @@
+#wrap #header .hd_top{background:#1d7abd;}
+#wrap a.point{background-color:#1d7abd;}
+#wrap a.point.new_plus{background-color:#fff;color:#1d7abd;border:1px solid #1d7abd;}
+#wrap #leftmenu li ul li.active a{color:#1d7abd;}
+#wrap #leftmenu li ul li.active a:after{border-color:#1d7abd;}

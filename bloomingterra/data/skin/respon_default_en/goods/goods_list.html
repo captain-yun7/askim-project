@@ -1,0 +1,92 @@
+{#header}
+<!-- <script type="text/javascript" src="/lib/js/common_goods.js"></script> -->
+<script type="text/javascript" src="{js}/js/common_goods.js"></script>
+<script type="text/javascript">
+	var Common_Goods = new common_goods({
+		is_login : "{=defined('_IS_LOGIN')}"
+	});
+</script>
+<div class="gallery_list_bg"></div>
+<div class="sub_content">
+	<div class="goods_wrap">
+		<div class="flex_box">
+			<div class="lnb">
+				<ul class="lnb_list">
+				<!--{ @ categories.top_category_list }-->
+					<!--{ ? .value_.yn_use !== "n" }-->
+					<li<!--{ ? substr(req.cate, 0, 3) === .value_.category }--> class="on"<!--{ / }-->>
+						<a href="?cate={ .value_.category }">{ .value_.categorynm }</a>
+						<!--{ ? count(sub_categories[.value_.category]) > 0 }-->
+						<ul class="dep02">
+						<!--{ @ sub_categories[.value_.category] }-->
+							<!--{ ? ..value_.yn_use !== "n" }-->
+							<li<!--{ ? req.cate === ..value_.category }--> class="on"<!--{ / }-->><a href="?cate={ ..value_.category }">{ ..value_.categorynm }</a></li>
+							<!--{ / }-->
+						<!--{ / }-->
+						</ul>
+						<!--{ / }-->
+					</li>
+					<!--{ / }-->
+				<!--{ / }-->
+				</ul>
+				<ul class="lnb_list dn">
+					<li class="<!--{? substr(category_info['category'], 0, 3) == '001'}-->on<!--{ / }-->">
+						<a href="../goods/goods_list?cate=001">성수</a>
+						<ul class="dep02">
+							<li class="<!--{? substr(category_info['category'], 0, 6) == '001001'}on<!--{ / }-->"><a href="../goods/goods_list?cate=001001">도어 투성수</a></li>
+							<li class="<!--{? substr(category_info['category'], 0, 6) == '001002'}on<!--{ / }-->"><a href="../goods/goods_list?cate=001002">오색칠</a></li>
+							<li class="<!--{? substr(category_info['category'], 0, 6) == '001003'}on<!--{ / }-->"><a href="../goods/goods_list?cate=001003">2차 카테고리</a></li>
+							<li class="<!--{? substr(category_info['category'], 0, 6) == '001004'}on<!--{ / }-->"><a href="../goods/goods_list?cate=001004">2차 카테고리</a></li>
+						</ul>
+					</li>
+					<li class="<!--{? substr(category_info['category'], 0, 3) == '002'}-->on<!--{ / }-->">
+						<a href="../goods/goods_list?cate=002">안국</a>
+						<ul class="dep02">
+							<li class="<!--{? substr(category_info['category'], 0, 6) == '002001'}on<!--{ / }-->"><a href="../goods/goods_list?cate=002001">도어 투안국</a></li>
+						</ul>
+					</li>
+					<li class="<!--{? substr(category_info['category'], 0, 3) == '003'}-->on<!--{ / }-->">
+						<a href="../goods/goods_list?cate=003">이태원</a>
+					</li>
+					<li class="<!--{? substr(category_info['category'], 0, 3) == '004'}-->on<!--{ / }-->">
+						<a href="../goods/goods_list?cate=004">신당</a>
+					</li>
+				</ul>
+			</div>
+			<!--{ ? isset(category_list['same_category_list']) || isset(category_list['low_category_list'])}-->
+			<div class="sub_cate_wrap dn">
+				<ul class="sub_cate clear lower-category">
+					<!--{ @ category_list['low_category_list']}-->
+					<li class="menu0{.index_+1} <!--{ ? category_info['category'] == .category }-->on<!--{ / }-->">
+						<a href="/goods/goods_list?cate={.category}&display_type={display_type}"><!--{ ? .multi_category }-->{.multi_category}<!--{ : }-->{.categorynm}<!--{ / }--></a>
+					</li>
+					<!--{ : }-->
+						<!--{ @ category_list['same_category_list']}-->
+					<li class="menu0{.index_+1} <!--{ ? category_info['category'] == .category }-->on<!--{ / }-->">
+						<a href="/goods/goods_list?cate={.category}&display_type={display_type}"><!--{ ? .multi_category }-->{.multi_category}<!--{ : }-->{.categorynm}<!--{ / }--></a>
+					</li>
+						<!--{ / }-->
+					<!--{ / }-->
+				</ul>
+			</div>
+			<!--{ / }-->
+			<div class="goods_cont">
+				<div class="sub_list">
+					<div class="list_array dn">
+						<div class="list_count">총 <span>{goods_list['total_rows']}개</span>의 상품이 있습니다.</div>
+						<ul>
+							<li class="typeA <!--{ ? display_type == 'gallery' }-->on<!--{ / }-->" onclick="Common_Goods.goods_list_type('gallery');">갤러리형</li>
+							<li class="typeB <!--{ ? !display_type || display_type == 'list' }-->on<!--{ / }-->" onclick="Common_Goods.goods_list_type('list');">리스트형</li>
+						</ul>
+						{=form_open(form_attribute['action'], form_attribute['attribute'], form_attribute['hidden'])}{=form_close()}
+					</div><!-- .list_array -->
+					<div class="list">
+					{#goods_display}
+					</div><!-- .list -->
+				</div><!--sub_list-->
+				{goods_list["pagination"]}
+			</div>
+		</div>
+	</div>
+</div><!-- .sub_content -->
+{#footer}

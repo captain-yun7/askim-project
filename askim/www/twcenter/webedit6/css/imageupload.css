@@ -1,0 +1,114 @@
+/*
+ * CHEditor
+ * Copyright © 1997-2025 CHCODE. All rights reserved.
+ */
+.app {
+	width: 710px !important;
+}
+#input-file-element {
+  visibility: hidden;
+  width: 0
+}
+.images-list-outer, .drag-over {
+	background-color: #fff;
+	overflow: auto;
+	border-radius: 0.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100% !important;
+	height: 392px !important;
+	padding: 4px 0;
+	justify-content: space-evenly;
+	align-content: space-between;
+}
+.images-list-outer {
+	border: 2px #208fee solid;
+}
+.drag-over {
+	border: 2px #f39 solid;
+}
+.imageBox {
+	max-width: 242px !important;
+	height: 182px !important;
+	margin: 4px 0;
+	flex: 1 1 50%;
+	border: 1px solid rgba(34, 34, 48, 0.12);
+	border-radius: 0.25rem;
+	overflow: hidden;
+	position: relative;
+}
+.imageBox .imageBox_info {
+	position: absolute;
+	top: 155px;
+	width: 100%;
+	height: 25px;
+	border-top: 1px solid rgba(34, 34, 48, 0.07);
+	padding: 0 5px;
+	display: none;
+	font-size: 0.75rem;
+	font-weight: normal;
+	color: #2f3237;
+	background-color: #fff;
+	user-select: none;
+	line-height: 25px;
+}
+.imageBox .imageBox_info .image-name {
+	width: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	vertical-align: middle;
+	font-weight: bold;
+}
+.imageBox .imageBox_info .image-size {
+	color: #14141f;
+}
+.imageBox .imageBox_info.show {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.imageBox_theImage {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	margin: auto;
+}
+.imageBox_theImage img {
+	width: 100%;
+	height: auto;
+	display: block;
+	pointer-events: none;
+	user-select: none;
+}
+.imageBox_theImage.not-allow {
+  color: #c6c9d5;
+  background-color:rgba(20,20,31,0.03);
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(20,20,31,0.2)" viewBox="0 0 16 16"><path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.btn-img-remove {
+	position: absolute;
+	cursor: pointer;
+	background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" fill="%232f3237" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M21.4,23L16,17.6L10.6,23L9,21.4l5.4-5.4L9,10.6L10.6,9 l5.4,5.4L21.4,9l1.6,1.6L17.6,16l5.4,5.4L21.4,23z"/%3E<polyline fill="%23ffffff" stroke="white" points="14.4,16 9,10.6 10.6,9 16,14.4 21.4,9 23,10.6 17.6,16 23,21.4 21.4,23 16,17.6 10.6,23 9,21.4 14.4,16 "/>%3C/svg%3E');
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 26px;
+	height: 26px;
+	outline: 2px solid transparent;
+	border-radius: 50%;
+	background-color: #2f3237;
+	align-self: flex-start;
+	justify-self: right;
+	margin-top: 5px;
+	margin-right: 5px;
+	transition: outline-color 0.3s;
+}
+.btn-img-remove:hover {
+	outline-color: #fff;
+}

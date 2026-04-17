@@ -1,0 +1,62 @@
+/************************************************************************************************************
+
+	DHTML Suite for Applications
+	(C) www.dhtmlgoodies.com, August 2006
+
+	CSS for the context menu class.
+	
+	Terms of use:
+	Look at the terms of use at http://www.dhtmlgoodies.com/index.html?page=termsOfUse
+	
+	Thank you!
+	
+	www.dhtmlgoodies.com
+	Alf Magne Kalleland
+
+************************************************************************************************************/
+
+.DHTMLSuite_contextMenu{	/* The bar that is parent of the menu strip */
+	width: 98px;  
+	position: absolute; 
+	z-index: 100;
+	background:url(../images/tree/bg_set_bot.png) 0 bottom no-repeat;
+}
+
+.DHTMLSuite_contextMenu ul{	/* The bar that is parent of the menu strip */
+	padding: 15px 5px 1px 15px; 
+	min-height: 20px;
+	background: url(../images/tree/bg_set_top.png) 0 top no-repeat; 
+	margin-bottom: 7px; 
+}
+
+
+.DHTMLSuite_contextMenu li{
+	padding-left: 5px; 
+	margin-bottom: 7px; 
+	background: url(../images/tree/box_arrow.png) 0 3px no-repeat;
+	list-style-type:none;
+	cursor: pointer;
+	font-size:11px;
+}
+
+
+.DHTMLSuite_contextMenu .DHTMLSuite_item_mouseover{
+	color: #f00; 
+	font-weight: bold;
+}
+
+.DHTMLSuite_contextMenu a{
+	text-decoration:none;
+	color:#000;
+	padding-left:0px;
+}
+
+.DHTMLSuite_contextMenu div.DHTMLSuite_contextMenu_separator{	/* Css for the separator line */
+	height:1px;
+	line-height:1px;
+	padding:0px;
+	background-color: #AAA;
+	overflow:hidden;
+	margin-top:1px;
+	margin-bottom:1px;
+}

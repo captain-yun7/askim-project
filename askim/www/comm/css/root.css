@@ -1,0 +1,119 @@
+/***** S:: 변수 *****/
+:root{
+
+	/**** !! 코딩시 지우지 말 것 !! ****/
+
+	/* 컬러 */
+	--main:#0A2C51;
+	--sub:#E92B5A;
+	--sub2:#3FA8FF;
+	--black:#000000;
+	--white:#FFFFFF;
+	--basic:rgba(0,0,0,.6);
+	--light:rgba(0,0,0,.4);
+	--grayBg:#F4F6F9;
+	--border:rgba(0,0,0,.15);
+	--B-bg:#071128;
+	--gra: linear-gradient(270deg, #0A2C51 0%, #1763B7 100%);
+
+
+	/* 폰트 */
+	--kor: 'Pretendard', 'Montserrat', Malgun Gothic,'Malgun Gothic', sans-serif;
+	--eng: 'Montserrat', 'Pretendard', Malgun Gothic,'Malgun Gothic', sans-serif;
+	--icon: "Material Symbols Outlined";
+	
+	
+	/* letter-spacing */
+	/* 기본 간격 */
+	--letter-spacing-default: -0.64px;
+	
+	/* 간격 없음 */
+	--letter-spacing-none:0;
+	
+	/* 제목용 자간 */
+	--letter-spacing-heading:-1.3px;
+
+	/* 본문용 자간 */
+	--letter-spacing-body:-0.8px;
+
+	/* 캡션, 작은 텍스트용 */
+	--letter-spacing-caption:-0.38px;
+
+	/* 버튼 텍스트용 */
+	--letter-spacing-button: -0.76px;
+
+	/* 폼 입력 필드 텍스트 등 */
+	--letter-spacing-input:-0.5px;
+
+	/* 넓은 간격 */
+	--letter-spacing-relaxed:0.5px;
+	
+
+	/**** !! 코딩시 지우지 말 것 !! ****/
+
+
+	/* 높이 */
+	--vh: 100%;
+
+	
+	/* border-radius */
+	--borderR57:57px;
+	--borderR40:40px;
+	
+}
+/***** E:: 변수 *****/
+
+
+
+/*******************************************************************************
+    @media 1680px
+*******************************************************************************/
+@media all and (max-width:1680px){
+
+
+
+
+}
+/*******************************************************************************
+    @media ~1300px
+*******************************************************************************/
+@media all and (max-width:1300px){
+
+
+
+}
+
+/*******************************************************************************
+    @media  ~980px               
+*******************************************************************************/
+@media all and (max-width:980px){
+
+/***** S:: 변수 *****/
+:root{
+
+	/* border-radius */
+	--borderR57:37px;
+	--borderR40:30px;
+	
+}
+/***** E:: 변수 *****/
+
+}
+/*******************************************************************************
+    @media 481~680px
+*******************************************************************************/
+@media all and (max-width:680px){
+
+
+/***** S:: 변수 *****/
+:root{
+
+	/* border-radius */
+	--borderR57:27px;
+	--borderR40:20px;
+	
+}
+/***** E:: 변수 *****/
+
+
+}

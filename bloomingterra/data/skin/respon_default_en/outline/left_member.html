@@ -1,0 +1,25 @@
+<div class="sub_menu">
+    <!--leftmenu영역시작-->
+    <dl>
+		<dt>
+			<span>Member</span>
+			<div class="sub_tit_bg"></div>
+		</dt>
+		<!--{ ? defined('_IS_LOGIN') }-->
+		<dd class="menu01 { ? ((CI->uri->rsegments[2]) == 'logout')}on{/}"><a href="/member/logout" class="">Log out</a></dd>
+		<dd class="menu02 { ? ((CI->uri->rsegments[2]) == 'mypage')}on{/}"><a href="/member/mypage" class="">Modify</a></dd>
+		<dd class="menu03 { ? ((CI->uri->rsegments[2]) == 'change_pw') || ((CI->uri->rsegments[2]) == 'periodic_change_pw')}on{/}"><a href="/member/change_pw" class="">Change Password</a></dd>
+		<dd class="menu04 { ? ((CI->uri->rsegments[2]) == 'withdrawal')}on{/}"><a href="/member/withdrawal" class="">Withdraw Membership</a></dd>
+		<!--{ : }-->
+		<dd class="menu01 { ? ((CI->uri->rsegments[2]) == 'login')}on{/}"><a href="/member/login" class="">Login</a></dd>
+		<dd class="menu02 { ? ((CI->uri->rsegments[2]) == 'find_id')}on{/}"><a href="/member/find_id" class="">Find ID</a></dd>
+		<dd class="menu03 { ? ((CI->uri->rsegments[2]) == 'find_pw')}on{/}"><a href="/member/find_pw" class="">Find PW</a></dd>
+		<dd class="menu04 { ? ((CI->uri->rsegments[2]) == 'join_agreement') || ((CI->uri->rsegments[2]) == 'join') || ((CI->uri->rsegments[2]) == 'join_ok')}on{/}"><a href="/member/join_agreement" class="">Sign up</a></dd>
+		<!--{ / }-->
+		<dd class="menu05 { ? ((CI->uri->rsegments[2]) == 'agreement')}on{/}"><a href="/service/agreement" class="">Terms of Use</a></dd>
+		<dd class="last menu06 { ? ((CI->uri->rsegments[2]) == 'usepolicy')}on{/}"><a href="/service/usepolicy" class="">Privacy Policy</a></dd>
+	</dl>
+    <!--leftmenu영역끝-->
+	{#left_bnr}
+</div><!-- .sub_menu -->
+

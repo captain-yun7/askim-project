@@ -1,0 +1,24 @@
+form { margin:0; }
+td,table { font-size: 12px; color: #847f74; line-height: 160%; font-family: verdana;}
+.input {border:0px; font-size:9pt; font-family:"굴림","돋움"; color:#545454; border:1px solid #dfdfdf; background-color:#f7f7f7;}
+.m_message_bg { background:url(/images/m_message_bg.gif) no-repeat; width:185px; height:129px;}
+.sms_msg {
+	BORDER: 0px solid; 
+	
+	BACKGROUND: #999ea4; 
+	COLOR: #FFFFFF;
+	
+	WIDTH: 150px;
+	HEIGHT: 45px;
+	
+	OVERFLOW:auto;
+	
+	scrollbar-face-color: #999ea4;
+	scrollbar-highlight-color: #FFFFFF;
+	scrollbar-3dlight-color: #999ea4;
+	scrollbar-shadow-color: #FFFFFF;
+	scrollbar-darkshadow-color: #999ea4;
+	scrollbar-track-color: #999ea4;
+	scrollbar-arrow-color: #FFFFFF;
+
+}

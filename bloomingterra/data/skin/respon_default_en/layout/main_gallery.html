@@ -1,0 +1,21 @@
+<!--{ ? gallery_info['mainview'] == 'y' }-->
+<ul class="board_ul" data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-in-quart" data-aos-delay="100" data-aos-duration="800">
+	<!--{ ? isset(gallery_list['board_list']) }-->
+	<!--{ @ gallery_list['board_list'] }-->
+	<li class="board_li">
+		<!--{ ? .is_read == 's' }--><a href="/board/board_secret?code={.code}&no={.no}&page=view" alt="{.title}"><!--{ : }--><a href="/board/board_view?code={.code}&no={.no}" alt="{.title}"><!--{ / }--></a>
+		<div class="thumb">
+			<img src="{C._UPLOAD}/board/{.upload_path}/{ .board_file.thumbnail[0]['fname'] }" alt="{.title}" onerror="this.src='../../images/common/noimg.gif'">
+		</div>
+		<div class="txt">
+			<strong>{.title}</strong>
+			<p>{=strip_tags(htmlspecialchars_decode(.content))}</p>
+			<p>ex1 : { gallery_extra[.no]['ex1'] }</p>
+		</div>
+	</li>
+	<!--{ / }-->
+	<!--{ : }-->
+	<li>There is no post</li>
+	<!--{ / }-->
+</ul>
+<!--{ / }--> 

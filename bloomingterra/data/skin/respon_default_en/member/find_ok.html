@@ -1,0 +1,30 @@
+{#header}
+<!--{ ? mode == 'find_id' }-->
+<script type="text/javascript">
+var jq = jQuery;
+(function($){
+	$('.sub_menu dl dd:nth-child(3)').addClass('on');
+})(jQuery);
+</script>
+<!--{ / }-->
+<!--{ ? mode == 'find_pw' }-->
+<script type="text/javascript">
+var jq = jQuery;
+(function($){
+	$('.sub_menu dl dd:nth-child(4)').addClass('on');
+})(jQuery);
+</script>
+<!--{ / }-->
+<div class="sub_content">
+
+	<div class="sub_ok">
+		<div class="ok_box">
+			<h3>"{find['subject']}"</h3>
+			<h4>find['message']} to the E-mail address <span>{find['email']}</span> that you entered when signing up.</h4>
+			<div class="login_bt"><a href="/member/login" class="btn btn_point">Login</a></div>
+		</div><!--login_box-->
+	</div><!--sub_ok-->
+
+</div><!--sub_content-->
+{#footer}
+

@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule .*$ https://www.askim.kr%{REQUEST_URI} [L,R=301]
+Options +SymLinksIfOwnerMatch
+
+RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
+RewriteRule .*$ https://www.askim.kr%{REQUEST_URI} [L,R=301]
+Options +SymLinksIfOwnerMatch

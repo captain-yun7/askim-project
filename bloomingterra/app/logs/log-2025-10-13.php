@@ -1,0 +1,11 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2025-10-13 05:44:50 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 3 - Invalid query: SELECT *
+FROM `da_board_gallery_tags`
+WHERE `bno` IN()
+ERROR - 2025-10-13 05:44:55 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 3 - Invalid query: SELECT *
+FROM `da_board_gallery_tags`
+WHERE `bno` IN()
+ERROR - 2025-10-13 05:44:57 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 3 - Invalid query: SELECT *
+FROM `da_board_gallery_tags`
+WHERE `bno` IN()

@@ -1,0 +1,8 @@
+/* 툴팁 */
+.ui-tooltip {padding: 4px 8px !important;}
+.ui-widget {font-family:NanumGothic,'NanumGothic', 나눔고딕, NG, Malgun Gothic, "맑은고딕", Tahoma, Geneva, sans-serif !important; font-size:12px !important; letter-spacing:-0.5pt;}
+.ui-widget-content {border: 1px solid #edd00e !important; background: rgba(254, 255, 158, 0.9) !important; color: #555 !important;}
+.ui-widget-content a {color: #eee !important;}
+.ui-widget-shadow {-webkit-box-shadow:  0px 0px 3px 3px rgba(221, 221, 221, 0.4) !important; -moz-box-shadow: 0px 0px 3px 3px rgba(221, 221, 221, 0.4);
+	box-shadow:  0px 0px 3px 3px rgba(221, 221, 221, 0.4) !important;}
+

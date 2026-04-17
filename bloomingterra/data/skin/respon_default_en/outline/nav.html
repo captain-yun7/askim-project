@@ -1,0 +1,211 @@
+<div id="header" class="">
+	<div class="header_cont">
+		<h1 class="hd_logo"><a href="/" title="Logo">{cfg_site.compName}</a></h1>
+		<!--{ ? isset(cfg_menu)}-->
+		<div class="hd_right">
+			<ul class="hd_lnb">
+				<!--{ ? CI->uri->rsegments[1] == "index_" }-->
+				<li><a href="" id="about_btn">ABOUT</a></li>
+				<!--{:}-->
+				<li><a href="/" id="about_btn">ABOUT</a></li>
+				<!--{/}-->
+				<!--{ @ cfg_menu}-->
+				<!--{ ? .use == 'y'}-->
+				<li class="<!--{ ? on != '' }--><!--{ ? on == .name }-->on <!--{ / }--><!--{ : }--><!--{ ? lm.name == .name }-->on <!--{ / }--><!--{ / }--><!--{ ? strpos(.url, '/goods/') > -1 }--><!--{ ? strpos(.url, substr(req.cate, 0, 3)) > -1 }--> on<!--{ / }--><!--{ / }-->">
+					<a href="{.url}">{.name}</a>
+					<!--{ : }-->
+					<li class="hd_lnb_dep1_li"><a href="{.url}" class="dep1_a">{.name}</a><!-- 하위메뉴 없을 때 -->
+					<!--{ / }-->
+				</li>
+				<!--{ / }-->
+				<!--{ / }-->
+			</ul>
+			<dl class="multi_lang dn">
+				<dt><span>EN</span></dt>
+				<dd>
+					{ ? multilingual }
+					<ul class="hd_lang">
+						<!--{ @ cfg_site['languagelink'] }-->
+						<li><a href="/?language={.key_}" onclick="">{? .key_ == 'kor'}KR{:}EN{/}</a></li>
+						<!--{ / }-->
+					</ul>
+					{ / }
+				</dd>
+			</dl>
+			<a class="menu-trigger" href="#"><span></span><span></span><span></span></a>
+		</div>
+	</div>
+</div>
+<aside id="aside">
+	<div class="aside_box">
+		<!--{ ? isset(cfg_menu)}-->
+		<ul class="slide menu slidemenu">
+			<!--{ ? CI->uri->rsegments[1] == "index_" }-->
+			<li><a href="" id="about_btn">ABOUT</a></li>
+			<!--{:}-->
+			<li><a href="/" id="about_btn">ABOUT</a></li>
+			<!--{/}-->
+			<!--{ @ cfg_menu}-->
+			<!--{ ? .use == 'y'}-->
+			<li class="depth1_li"><a href="{.url}" class="depth1_a">{.name}</a></li>
+			<!--{ / }-->
+			<!--{ / }-->
+		</ul>
+		<!--{ / }-->
+	</div>
+</aside><!-- #aside 상단영역 -->
+<!--{ ? CI->uri->rsegments[1] == "index_" }-->
+<script>
+$(function() {
+	var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false;
+		if(!isMobile){
+			scroller = ScrollSmoother.create({
+				smooth: 2,
+				//effects: true,
+				//normalizeScroll : true
+			});
+		}
+});
+</script>
+<!--{/}-->
+<script>
+$(function() {
+	//lang
+	$('.multi_lang dt').click(function(){
+		$(this).toggleClass('on').next('dd').stop().slideToggle('slow');
+	});
+	$(document).mouseup(function (e){
+		//닫기
+		var langDD = $('.multi_lang dt');
+		if(langDD.has(e.target).length === 0){
+			langDD.removeClass("on").next("dd").stop().slideUp();
+		}
+	});
+
+	var itval;
+	// aside close
+	function aside_close() {
+		$('#aside').removeClass('on');
+		clearTimeout(itval);
+		$('#header').removeClass('hd_aside');
+		itval = setTimeout(function () {
+			$('body').css({'overflow':'inherit','height':'auto'});
+			
+		}, 800);
+	}
+	
+	// aside open
+	function aside_open() {
+		$('#aside').addClass('on');
+		$('#header').addClass('hd_aside');
+		clearTimeout(itval);
+		$('body').css({'overflow':'hidden','height':'100%'});
+	}
+	
+	// aside on/off
+	$('.menu-trigger, .btn_aside_close').each(function(e){
+		$(this).on('click', function(e){
+			e.preventDefault();
+			$('.menu-trigger').toggleClass('active-1');
+			if ($('#aside').hasClass('on')) {
+				aside_close();
+			} else {
+				aside_open();
+			}
+		});
+		$('.aside_bg').on('click', function(){
+			$('.menu-trigger').removeClass('active-1');
+			aside_close();
+		});
+	});
+	
+	//카테고리 메뉴
+	$("li.group_tit .icons").on("click", function(e) {
+		//e.preventDefault();
+		$(this).parent().siblings().children().next().next().slideUp(function() {
+			$(this).siblings("a").removeClass("on");
+		});
+		$(this).parent().addClass("on");
+		$(this).siblings("ul").slideToggle(function() {
+			if($(this).is(":visible") == false) $(this).parent("li").removeClass("on");
+		});
+		if($(this).parent().closest('li').find('ul').children().length == 0) {
+			return true;	
+		} else {
+			return false;
+		}
+	});
+});
+</script>
+<!--{ ? CI->uri->rsegments[1] != "index_" }-->
+<script>
+$(document)	.ready(function(){
+	// header on
+	if ( $(this).scrollTop() > 1 ) {
+		$('#header').addClass('on');
+	} else {
+		$('#header').removeClass('on');
+	}
+	$(window).scroll(function(){
+		if ( $(this).scrollTop() > 1 ) {
+			$('#header').addClass('on');
+		} else {
+			$('#header').removeClass('on');
+		}
+	});
+});
+</script>
+<!--{:}-->
+<script>
+$(document)	.ready(function(){
+	var winW = $(window).width();
+	if(winW < 860){
+		// header on
+		if ( $(this).scrollTop() > 1 ) {
+			$('#header').addClass('on');
+		} else {
+			$('#header').removeClass('on');
+		}
+
+		$(window).scroll(function(){
+			if ( $(this).scrollTop() > 1 ) {
+				$('#header').addClass('on');
+			} else {
+				$('#header').removeClass('on');
+			}
+		});
+	}else{
+		$('#header').removeClass('on');
+	}
+
+	$(window).resize(function(){
+		var winW = $(window).width();
+		if(winW < 860){
+			// header on
+			if ( $(this).scrollTop() > 1 ) {
+				$('#header').addClass('on');
+			} else {
+				$('#header').removeClass('on');
+			}
+			$(window).scroll(function(){
+				if ( $(this).scrollTop() > 1 ) {
+					$('#header').addClass('on');
+				} else {
+					$('#header').removeClass('on');
+				}
+			});
+		}else if (winW > 860){
+			$('#header').removeClass('on');
+			$(window).scroll(function(){
+				if ( $(this).scrollTop() > 1 ) {
+					$('#header').removeClass('on');
+				} else {
+					$('#header').removeClass('on');
+				}
+			});
+		}
+	});
+	
+});
+</script>
+<!--{/}-->

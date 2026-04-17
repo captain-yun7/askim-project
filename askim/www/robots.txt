@@ -1,0 +1,8 @@
+User-agent: *
+
+Allow: /
+
+Disallow: /twcenter/
+Disallow: /upload/
+Disallow: /way_castle/
+Disallow: /popup/

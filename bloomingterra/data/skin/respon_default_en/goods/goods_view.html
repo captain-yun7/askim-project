@@ -1,0 +1,176 @@
+{#header}
+<div class="sub_content">
+	<div class="sub_view">
+		<div class="view_visual">
+			<div class="view_thumb">
+				<!--{ @ goods_view['goods_view']['detail_img'] }-->
+					<img src="{C._UPLOAD}/goods/detail_img/{.value_}" onerror="this.src='../images/common/noimg.gif'">
+				<!--{ / }-->
+			</div>
+			<h3 class="subject">{goods_view['goods_view']['name']}</h3>
+			<div class="info_wrap">
+				<dl class="info desc">
+					<dt>Client</dt>
+					<!--{ ? extraFieldData }-->
+						<!--{ @ extraFieldData }-->
+							<!--{ ? .name == 'Client'}-->
+								<dd>{.value}</dd>
+							<!--{ / }-->
+						<!--{ / }-->
+					<!--{ / }-->
+					
+				</dl>
+				<dl class="info desc">
+					<dt>Category</dt>
+					<!--{ ? isset(category_list['top_category_list'])}-->
+					<!--{ @ category_list['top_category_list']}-->
+					<!--{ ? category_info['category'] == .category || substr(category_info['category'], 0, 3) == substr(.category, 0, 3) || substr(category_info['category'], 0, 3) == substr(.category, 0, 3) }-->
+					<dd>{.categorynm}</dd>
+					<!--{ / }-->
+					<!--{ / }-->
+					<!--{ / }-->
+				</dl>
+				<dl class="info desc">
+					<dt>Date</dt>
+					<dd>{=date('Y.m.d', strtotime(goods_view.goods_view.regdt))}</dd>
+				</dl>
+			</div>
+			<a href="" class="share_btn"><img src="../images/sub/share_btn.png" alt="공유버튼"></a>
+		</div>
+		<!--{ ? CI->input->ip_address() === "210.121.177.87" }-->
+		<!--{ / }-->
+		<!--{ ? goods_view['goods_view']['info'] }-->
+		<div class="view_text">
+			<div class="cont">
+				{=htmlspecialchars_decode(goods_view['goods_view']['info'])}
+			</div>
+		</div>
+		<!--{ / }-->
+		<div class="view_add">
+			<div class="prodSwiper">
+				<ul class="swiper-wrapper">
+					<!--{ ? extraFieldData }-->
+						<!--{ @ extraFieldData }-->
+							<!--{ ? .name == '슬라이드 이미지 01' || .name == '슬라이드 이미지 02' || .name == '슬라이드 이미지 03'}-->
+								<li class="swiper-slide">{.value}</li>
+							<!--{ / }-->
+						<!--{ / }-->
+					<!--{ / }-->
+				</ul>
+				<div class="swiper-pagination"></div>
+			</div>
+			<!--{ ? goods_view['goods_view']['ex4'] && goods_view['goods_view']['ex5'] && goods_view['goods_view']['ex7']}-->
+			<div class="youtube">
+				<!--{ ? extraFieldData }-->
+				<!--{ @ extraFieldData }-->
+				<!--{ ? .name == '유튜브 썸네일'}-->
+				<div class="youtube_thumb">{.value}</div>
+				<!--{/}-->
+				<!--{/}-->
+				<!--{/}-->
+				<dl>
+					<dt>
+						<!--{ ? extraFieldData }-->
+							<!--{ @ extraFieldData }-->
+								<!--{ ? .name == '유튜브 링크'}-->
+									<a href="{.value}" class="link" target="_blank"></a>
+								<!--{ / }-->
+							<!--{ / }-->
+						<!--{ : }-->
+							<a href="https://www.youtube.com/@askimstudio" class="link" target="_blank"></a>
+						<!--{ / }-->
+						<img src="../data/skin/respon_default/images/sub/yotube_icon.svg" alt="유튜브">
+					</dt>
+					<!--{ ? extraFieldData }-->
+						<!--{ @ extraFieldData }-->
+							<!--{ ? .name == '유튜브 텍스트'}-->
+								<dd>{.value}</dd>
+							<!--{ / }-->
+						<!--{ / }-->
+					<!--{ / }-->
+					
+				</dl>
+			</div>
+			<!--{/}-->
+		</div>
+		<div class="view_contact">
+			<div class="cont">
+				<h2>CONTACT</h2>
+				<h5>Blooming Terra connects space and people, <br>providing the most reasonable solutions.</h5>
+				<div class="btn_send">
+					<a href="../board/board_write?code=inquiry"><span>Contact Us</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="view_button">
+			<div class="w_custom">
+				<!--{ ? button.prev > 0 }-->
+				<a href="?no={ button.prev }&cate={ req.cate }" class="page_btn">
+				<!--{ : }-->
+				<a href="#" class="page_btn" onclick="alert('더 이상 없습니다.'); return false;">
+				<!--{ / }-->
+					<dl>
+						<dt><img src="/data/skin/respon_default/images/sub/page_btn.svg" alt="이전"></dt>
+						<dd>PREV</dd>
+					</dl>
+				</a>
+				<a href="goods_list?cate={ req.cate }" class="list_btn"><span></span><span></span><span></span></a>
+				<!--{ ? button.next > 0 }-->
+				<a href="?no={ button.next }&cate={ req.cate }" class="page_btn next">
+				<!--{ : }-->
+				<a href="#" class="page_btn next" onclick="alert('더 이상 없습니다.'); return false;">
+				<!--{ / }-->
+					<dl>
+						<dt><img src="/data/skin/respon_default/images/sub/page_btn.svg" alt="이전"></dt>
+						<dd>NEXT</dd>
+					</dl>
+				</a>
+			</div>
+		</div>
+		<div class="dn">
+			<div class="info">
+				<dl>
+					<dt class="thumb_box"><img src="{C._UPLOAD}/goods/img1/{goods_view['goods_view']['img1']}" onerror="this.src='../images/common/noimg.gif'" alt="{goods_view['goods_view']['name']}"></dt>
+					<dd class="goods_tit">{goods_view['goods_view']['name']}</dd>
+				</dl>
+			</div><!-- .info -->
+			<div class="info_wrap">
+				<!--{ ? goods_view['goods_view']['upload_fname'] }-->
+				<dl class="info_li">
+					<dt class="info_tit">{goodsField['name'][cfg_site['language']]['upload_fname']}</dt>
+					<dd class="info_cont"><a href="/fileRequest/download?file={=urlencode('/goods/file'+'/'+ goods_view['goods_view']['upload_fname'])}&save={=urlencode(goods_view['goods_view']['upload_oname'])}" target="_blank" style="color:cornflowerblue;" download>{goods_view['goods_view']['upload_oname']}</a></dd>
+				</dl>
+				<!--{ / }-->
+				<!--{ ? goods_view['goods_view']['info'] }-->
+				<dl class="info_li">
+					<dt class="info_tit">{goodsField['name'][cfg_site['language']]['info']}</dt>
+					<dd class="info_cont">{=htmlspecialchars_decode(goods_view['goods_view']['info'])}</dd>
+				</dl>
+				<!--{ / }-->
+				<!--예비필드 노출-->
+				<!--{ ? extraFieldData }-->
+					<!--{ @ extraFieldData }-->
+					<dl class="info_li">
+						<dt class="info_tit">{=.name}</dt>
+						<dd class="info_cont">{=.value}</dd>
+					</dl>
+					<!--{ / }-->
+				<!--{ / }-->
+				<dl class="info_li">
+					<dt class="info_tit">{goodsField['name'][cfg_site['language']]['detail_img']}</h4>
+					<dd class="info_cont">
+						<ul>
+						<!--{ @ goods_view['goods_view']['detail_img'] }-->
+							<li>
+								<img src="{C._UPLOAD}/goods/detail_img/{.value_}" onerror="this.src='../images/common/noimg.gif'">
+							</li>
+						<!--{ / }-->
+						</ul>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div><!--/ info_wrap -->
+</div><!-- .sub_cont -->
+<script src="{ js }/js/view.js"></script>
+{#footer}

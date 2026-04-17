@@ -1,0 +1,128 @@
+.sub-top-line{height:110px; border-bottom:7px solid #1cac90; }
+.sub-page .sub-top .sub-top-title{font-size:22px; height:22px; padding:30px 0 10px 0}
+
+.sub-page .sub-top .sub-top-txt{font-size:14px; line-height:18px}
+.sub-page .sub-top p{margin-left:47px}
+
+
+	
+	/* 게시물 삭제확인 */
+#divPw {display:none;z-index:999;position:absolute;top:50%;left:50%; margin:-120px 0 0 -152px;z-index:999;width:367px;height:230px}
+.popWrap{width:100%; height:100%; background:#525252;}
+.popWrap .bbs-delete{ border:10px solid #525252; margin:0 auto; background:#fff; text-align:center; width:367px;height:230px}
+.popWrap .bbs-delete h1{font-size:21px; line-height:21px; padding:32px 0 24px 0; text-indent:45px; text-align:left;}
+.popWrap .bbs-delete .bbs-del-title{background:url(../images/bbs/ico_del.gif) no-repeat 28px 32px}
+.popWrap .bbs-delete p{font-size:15px; padding-bottom:15px}
+.popWrap .pop-input2{width:200px; height:29px; line-height:29px; background:#f4f4f4; border:1px solid #e4e4e4;}
+.popWrap .pop-input3{width:251px; height:29px; line-height:29px; background:#f4f4f4; border:1px solid #e4e4e4;}
+.popWrap .pop-btn-sec{text-align:center; padding:0 0 28px 0}
+.popWrap .pop-btn-sec2{text-align:center; padding:15px 0 0 0}
+.popWrap .pop-btn-sec3{text-align:center; padding:10px 0 28px 0}
+.popWrap .btn-close{position:absolute; right:-15px; top:0px; width:35px; height:32px; padding:0; margin:0; border:0 none; overflow:hidden; text-indent:-9999px; background:url(../images/bbs/btn_popClose.gif) no-repeat 0 0; cursor:pointer}
+
+
+
+	/* contents bbsView 문의게시판, 이용후기, 자주하는질문, 공지사항, 네이버컨설팅 무료디자인 게시판 보기 */
+.bbsView-title{border-top:2px solid #949494; border-bottom:1px solid #eaeaea; padding:14px 0 0 0}
+.bbsView-title h4{text-indent:15px; font-weight:normal; font-family:ng; line-height:16px; margin-bottom:13px}
+.bbsView-title h4 span{font-family:ngb; padding-right:48px; color:#5e5e5e}
+.bbsView-title dl{margin-left:15px; *zoom:1}
+.bbsView-title dl:after{display:block; clear:both; content:''}
+.bbsView-title dt{clear:both; float:left; width:70px; font-family:ngb; line-height:16px; color:#5e5e5e; margin-bottom:13px;} 
+.bbsView-title dd{line-height:16px; margin-bottom:13px;}
+.bbs-content{width:98%; margin:0 auto; padding:31px 0; line-height:18px}
+.file-delCheck{padding:5px 0}
+.file-delCheck img{vertical-align:middle; border:1px solid #dfdfdf}
+.file-delCheck input{margin-left:10px}
+.file-delCheck label{cursor:pointer}
+.comment-list{width:100%}
+.comment-list li{position:relative; padding:22px 0; margin-bottom:10px; background:#f5f5f5;}
+.comment-list .modBox{padding:5px;display:none ;background:#cfd5d6}
+.comment-list .comment-subject{margin:0 24px 20px 24px;}
+.comment-list .comment-subject dl{*zoom:1}
+.comment-list .comment-subject dl:after{display:block; clear:both; content:''}
+.comment-list .comment-subject dl dt{float:left}
+.comment-list .comment-subject dl dd{float:left; font-family:ngb;}
+.comment-list .comment-content{margin:0 24px; line-height:18px}
+.comment-list .comment-btn{position:absolute; right:11px; top:8px}
+.btnTail_del {width:60px; padding:5px 0; color:#fff; border:solid 1px #a8a8a8; background:#a8a8a8; font-size:11px; display:inline-block; text-align:center; font-weight:600;} 
+.btnTail_mod {width:60px; padding:5px 0; color:#fff; border:solid 1px #a8a8a8; background:#525252; font-size:11px; display:inline-block; text-align:center; font-weight:600;} 
+.btnPop_cancel {width:85px; padding:8px 0; color:#fff; border:solid 1px #a8a8a8; background:#787878; font-size:12px; display:inline-block; text-align:center; font-weight:600;} 
+.btnPop_ok {width:85px; padding:8px 0; color:#fff; border:solid 1px #a8a8a8; background:#333333; font-size:12px; display:inline-block; text-align:center; font-weight:600;} 
+
+.comment-list textarea{ margin:0 9px 0 15px; width:695px; border:1px solid #e1e1e1; resize:none; _display:inline}
+.comment-list input{border:1px solid #e1e1e1; resize:none; _display:inline ;margin-right:20px}
+
+.comment-write{width:100%; padding:17px 0 13px 0; background:#f5f5f5 url(../images/art_newHome/images/bg_comment_line.gif) repeat-x 0 0; *zoom:1}
+.comment-write:after{display:block; clear:both; content:''}
+.comment-write textarea{float:left; margin:0 9px 0 15px; width:700px; border:1px solid #e1e1e1; resize:none; _display:inline}
+.comment-write input{border:1px solid #e1e1e1; resize:none; _display:inline ;margin-right:20px}
+/*.comment-write input{float:left; margin-top:20px }*/
+	/* 리스트 수정 글쓰기등 하단 버튼 */
+.bbs-btn-sec{padding:13px 0; text-align:center;}
+.bbs-btn-sec2{padding:13px 0; text-align:center; position:relative}
+.bbs-btn-sec2 p{padding-top:80px; line-height:20px; font-family:ngb; font-size:13px}
+.bbs-btn-sec2 .pay-ok{position:absolute; left:50%; top:30px; margin-left:-60px}
+.bbs-btn-sec3{padding:25px 0; text-align:center}
+	/* contents write modify 문의게시판, 이용후기, 자주하는질문, 공지사항, 네이버컨설팅 무료디자인 게시판 글작성 글수정 */
+.write-modify-title{font-family:ng; font-weight:normal; line-height:16px; padding:4px 0; margin-bottom:16px; text-indent:21px; border-top:2px solid #949494; border-bottom:1px solid #eaeaea; }
+.bbs-write-modify{width:94%; margin:0 auto 7px auto; border-collapse:collapse}
+.bbs-write-modify th,
+.bbs-write-modify td{height:21px; line-height:16px; padding:3px 0;}
+.bbs-write-modify th{text-align:left; font-family:ng; font-weight:normal;}
+.bbs-write-modify td .htmlCheck{padding:6px 0;}
+.bbs-write-modify td .htmlCheck input{vertical-align:baseline}
+.bbs-write-modify td .htmlCheck label{padding:0 15px 0 5px}
+.bbs-write-modify td .bbs-input{height:17px; line-height:17px; border:1px solid #b6b6b6;}
+.bbs-write-modify td .bbs-input-sizeS{width:251px;}
+.bbs-write-modify td .bbs-input-sizeM{width:362px; font-size:11px}
+.bbs-write-modify td .bbs-input-sizeB{width:98%}
+.bbs-write-modify td .bbsCheckCode-sec{padding:15px 0 0 0; *zoom:1}
+.bbs-write-modify td .bbsCheckCode-sec:after{display:block; clear:both; content:''}
+.bbs-write-modify td .bbsCheckCode-sec .bbsCheckCode{float:left; width:100px; height:20px; line-height:20px; background:#eaeaea; text-align:center; margin-right:2px; font-size:14px; color:#f74d4d}
+.bbs-write-modify td .bbsCheckCode-sec .checkCode-input{float:left; height:16px}
+	/* 결제또는 수정 페이지에 들어가는 개인정보 보호정책 확인 및 몰이용약관 */
+.agree-sec{width:94%; margin:0 auto; padding:7px 0 15px 0; border-top:2px solid #acacac; }
+.agree-sec2{width:100%; margin:0 auto; padding:7px 0 15px 0}
+.agree-box{border:1px solid #e7e7e7; margin-bottom:14px} /* 아이프레임사용시 */
+.agree-box2{height:200px; border:1px solid #e7e7e7; margin-bottom:14px; background:#f4f4f4; overflow:auto; line-height:20px} /* 직접입력시 */
+.agree-box2 .agree-txt{width:96%; margin:0 auto; padding:5px 0}
+.agree-title{font-size:14px; color:#5e5e5e; padding: 10px 0; display:block}
+
+.art-list{width:100%; padding-top:5px; *zoom:1}
+.art-list:after{display:block; clear:both; content:''}
+.art-list li{float:left;  width:214px; overflow:hidden; margin:0 7px 33px 0; color:#5a5a5a}
+.art-list li:nth-child(4){margin-right:0;}
+.art-list li:nth-chile(8){margin-right:0;}
+.art-list li:nth-chile(12){margin-right:0;}
+.art-list li:nth-child(5){clear:both;float:left;}
+.art-list li:nth-chile(9){clear:both;float:left;}
+.art-list li:nth-chile(13){clear:both;float:left;}
+.art-list li.lineLast{margin-right:0}
+.art-list li .list-img{width:100%; padding-bottom:18px}
+.art-list li .list-img img{width:212px; height:212px;border:1px solid #dadada}
+.art-list li .list-img2{width:100%; padding-bottom:7px}
+.art-list li .list-img2 img{width:212px; border:1px solid #dadada}
+.art-list li p{line-height:16px;height:32px;text-overflow: ellipsis;width:214px;overflow:hidden;}
+.art-list li p.alignCenter{text-align:center}
+.art-list li a{color:#5a5a5a}
+.art-list li a:hover{color:#eb4343}
+	/* 포트폴리오 미리보기리스트 4줄 */
+.art-pflist{width:100%; padding-top:10px; *zoom:1}
+.art-pflist:after{display:block; clear:both; content:''}
+.art-pflist li{float:left;  width:213px; overflow:hidden; margin:0 6px 14px 0; color:#5a5a5a}
+.art-pflist li.lineLast{margin-right:0}
+.art-pflist li .list-img{width:100%; padding-bottom:7px}
+.art-pflist li .list-img img{width:212px; border:1px solid #dadada}
+.art-pflist li p{line-height:18px; text-align:center}
+.art-pflist li a{color:#5a5a5a}
+.art-pflist li a:hover{color:#eb4343}
+	/* contents 게시판관련 (문의게시판, 이용후기, 자주하는질문, 공지사항, 네이버컨설팅 게시판) */
+.bbs-sec{width:830px; margin:0 auto}
+.list_name {font-weight:bold; color:eb4343}
+/* 버튼스타일
+.btn_area {margin-top:10px; text-align:right;}
+.btn_area .brd_btn {display:inline-block; width:68px; height:28px; line-height:30px; color:#333; background:#f7f7f7; border:solid 1px #d3d3d3; text-align:center; font-size:13px;}
+.btn_area .brd_btn_w {display:inline-block; width:68px; height:28px; line-height:30px; color:#fff; background:#71b200; border:solid 1px #71b200; text-align:center; font-size:13px;}
+*/
+.blind {display:none}

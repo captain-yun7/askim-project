@@ -1,0 +1,27 @@
+<?php
+// 웹에디터 필드명
+if($edit_name == "") $edit_name = "content";
+if($edit_width == "") $edit_width="100%";
+if($edit_height == "") $edit_height="300"; 
+
+// ---------------------------------------------------------------------------------
+// outputBodyHTML 메서드를 호출하면 TEXTAREA 'fm_post' 폼 값에
+// 에디터에서 입력한 내용이 자동으로 입력됩니다.
+//
+// outputBodyHTML:  BODY 태그 안쪽 내용을 가져옵니다.
+// outputHTML:      HTML 문서 모두를 가져옵니다.
+// outputBodyText:  BODY 태그 안쪽의 HTML 태그를 제외한 텍스트만을 가져옵니다.
+// inputLength:     입력한 텍스트 문자 수를 리턴합니다.
+// contentsLength:  BODY 태그 안쪽의 HTML 태그를 포함한 모든 문자 수를 리턴합니다.
+// contentsLengthAll: HTML 문서의 모든 문자 수를 리턴합니다.
+?>
+<script type="text/javascript" src="/twcenter/webedit6/cheditor.js?ver=<?=time()?>"></script>
+<label for="<?=$edit_name?>"></label>
+<textarea id="<?=$edit_name?>" name="<?=$edit_name?>"><?=$edit_content?></textarea>
+<script type="text/javascript">
+var <?=$edit_name?> = new cheditor();             							// 에디터 개체를 생성합니다.
+<?=$edit_name?>.config.editorHeight = '<?=$edit_height?>px';    // 에디터 세로폭입니다.
+<?=$edit_name?>.config.editorWidth = '<?=$edit_width?>';       	// 에디터 가로폭입니다.
+<?=$edit_name?>.inputForm = '<?=$edit_name?>';           				// textarea의 ID 이름입니다.<?=$edit_name?>.config.exceptedElements.iframe = false;
+<?=$edit_name?>.run();                            							// 에디터를 실행합니다.
+</script>

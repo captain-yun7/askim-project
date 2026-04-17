@@ -1,0 +1,89 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT']."/twcenter/common.php";
+?>
+<html>
+<head>
+<title>:: 상품 확대 ::</title>
+<style>.dragme{position:relative;}</style>
+<script language='javascript'>
+<!--
+var ie=document.all;
+var nn6=document.getElementById&&!document.all;
+var isdrag=false;
+var x,y;
+var dobj;
+var imgfull=false;
+function movemouse(e)
+{
+  if (isdrag)
+  {
+    dobj.style.left = nn6 ? tx + e.clientX - x : tx + event.clientX - x;
+    dobj.style.top  = nn6 ? ty + e.clientY - y : ty + event.clientY - y;
+    return false;
+  }
+}
+function selectmouse(e)
+{
+  var fobj      = nn6 ? e.target : event.srcElement;
+  var topelement = nn6 ? 'HTML' : 'BODY';
+  while (fobj.tagName != topelement && fobj.className != 'dragme')
+  {
+    fobj = nn6 ? fobj.parentNode : fobj.parentElement;
+  }
+  if (fobj.className=='dragme')
+  {
+    isdrag = true;
+    dobj = fobj;
+    tx = parseInt(dobj.style.left+0);
+    ty = parseInt(dobj.style.top+0);
+    x = nn6 ? e.clientX : event.clientX;
+    y = nn6 ? e.clientY : event.clientY;
+    document.onmousemove=movemouse;
+    return false;
+  }
+}
+
+function resize(){
+	
+	var margin_width = 12;
+	var margin_height = 30;
+	
+	if(new RegExp(/MSIE/).test(navigator.userAgent)){ 
+	  if(navigator.appName.charAt(0) == "M" && 
+	  	navigator.appVersion.charAt(0) == 4 && 
+	  	(navigator.appVersion.indexOf("MSIE 7") == -1))
+	  {
+		} else {	// 브라우저 7
+	 		margin_height = margin_height + 43;
+		}
+	}
+
+	var prdimg = document.prdimg;
+	var img_width = prdimg.width + margin_width;
+	var img_height = prdimg.height + margin_height;
+	
+	if(img_width >= screen.width || img_height >= screen.height) {
+		self.moveTo(0,0);
+		self.resizeTo(screen.width, screen.height); 
+		document.onmousedown=selectmouse;
+		document.onmouseup=new Function('isdrag=false');
+		document.prdimg.title = "드래그하면 이미지가 이동합니다.\n창닫기(더블클릭)";
+		imgfull = true;
+	}else{
+		self.resizeTo(img_width, img_height);
+		self.moveTo(screen.width/2-img_width/2,screen.height/2-img_height/2);
+	}
+}
+
+function selfClose(){
+	if(!imgfull) self.close();
+}
+
+//-->
+</script>
+</head>
+
+<body topmargin="0" leftmargin="0" onLoad="resize();">
+<img src="/twcenter/data/product/<?=$prdimg?>" name="prdimg" onClick="selfClose();" ondblClick="window.close();" style="cursor:hand" class="dragme"></td>
+</body>
+</html>

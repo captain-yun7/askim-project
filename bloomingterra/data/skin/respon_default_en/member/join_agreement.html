@@ -1,0 +1,40 @@
+{#header}
+<script type="text/javascript">
+$(function() {
+	$("form[name='frm']").validate({
+		rules : {
+			agree : {required : true},
+			agree2 : {required : true}
+		}, messages : {
+			agree : {required : "Please accept the terms and conditions."},
+			agree2 : {required : "Please agree to collect personal information."}
+		}
+	});
+});
+</script>
+<div class="sub_content">
+	{=form_open('member/join', 'name=frm')}
+	<fieldset>
+	<legend>Join agreement</legend>
+	<div class="sub_agree">
+		<div class="agree_box line">
+			<h3 class="bbs_write_title">Consent to Terms of Use </h3>
+			<textarea title="Consent to Terms of Use">{terms['usePolicy']['text']}</textarea>
+			<p><input type="checkbox" name="agree" id="agree" value="y" /><label for="agree">Do you consent to the Terms of Use?</label></p>
+		</div><!--agree_box-->
+		<div class="agree_box">
+			<h3 class="bbs_write_title">Consent to Collection and Use of Personal Data </h3>
+			<textarea title="Consent to Collection and Use of Personal Data">{terms['agreement']['text']}</textarea>
+			<p><input type="checkbox" name="agree2" id="agree2" value="y" /><label for="agree2">Do you consent to the collection and use of your personal data? </label> </p>
+		</div><!--agree_box-->
+		<div class="btn_wrap ta_center">
+			<button type="submit"><a class="btn_point btn">OK</a></button>
+			<button onclick="history.back();"><a href="javascript://" class="btn_basic btn">Cancel</a></button>
+		</div><!--btn_center-->
+	</div><!--sub_agree-->
+	</fieldset>
+	{=form_close()}
+
+</div><!--sub_content-->
+
+{#footer}

@@ -1,0 +1,50 @@
+{#header}
+<!-- <script type="text/javascript" src="/lib/js/common_goods.js"></script> -->
+<script type="text/javascript" src="{js}/js/common_goods.js"></script>
+<script type="text/javascript">
+	var Common_Goods = new common_goods({
+		is_login : "{=defined('_IS_LOGIN')}"
+	});
+</script>
+
+<div class="sub_content">
+	<div class="sub_list">
+		<!-- 검색창 -->
+		{=form_open(form_attribute['action'], form_attribute['attribute'], form_attribute['hidden'])}
+		<div class="list_search">
+			<div>
+				<span>
+					<input type="checkbox" name="search_include" id="search_include-y" value="y" />
+					<label for="search_include-y">Search within Results</label>
+				</span>
+				<div class="search_form">
+					<div class="search">
+						<div class="select_box_wrap">
+							<select name="search_type" title="Search Items">
+								<option value="Gm.name">{goodsField['name'][cfg_site['language']]['name']}</option>
+							</select>
+							<div class="select_box_arrow"></div>
+						</div>
+						<input type="text" name="search" placeholder="Please enter the keyword." id="search"><label for="search" class="dn">Please enter the keyword</label>
+						<a href="javascript://" class="btn_md btn_default" onclick="Common_Goods.goods_search();">Search</a>
+					</div><!-- .search -->
+				</div><!-- .search_form -->
+			</div>
+		</div><!-- .list_search -->
+		<div class="list_array">
+			<!--{ ? isset(search_keyword) }-->
+			<h3>There are <span>{goods_list['total_rows']}</span> search results on <span>'{=implode(', ', search_keyword)}'</span></h3>
+			<!--{ / }-->
+			<ul>
+				<li class="typeA <!--{ ? display_type == 'gallery' }-->on<!--{ / }-->" onclick="Common_Goods.goods_list_type('gallery');">Gallery-type</li>
+				<li class="typeB <!--{ ? !display_type || display_type == 'list' }-->on<!--{ / }-->" onclick="Common_Goods.goods_list_type('list');">List-type</li>
+			</ul>
+		</div><!-- .list_array -->
+		{=form_close()}
+		<div class="list">
+		{#goods_display}
+		</div><!-- .list -->
+	</div><!--sub_list-->
+	{goods_list["pagination"]}
+</div><!-- .sub_content -->
+{#footer}

@@ -1,0 +1,118 @@
+@import url("common.css");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..500,0..1,-50..200");
+
+
+.subtitle{padding: 240px 0 36px;}
+.subtitle .fs21{font-weight:300; color:var(--black); padding:10px 0 0;}
+
+.header{background:var(--white); border-bottom: 1px solid var(--border);}
+.header .header_in .logo a{background:url('/img/logo.png') no-repeat center/contain;}
+.header .header_in .sns_list dd.sns01 a{background:url('/img/sns_blog.png') no-repeat center/contain;}
+.header .header_in .sns_list dd.sns02 a{background:url('/img/sns_instagram.png') no-repeat center/contain;}
+.header .header_in .sns_list dd.sns03 a{background:url('/img/sns_youtube.png') no-repeat center/contain;}
+.header .header_in .brochure_btn a{border-color:var(--border); color:var(--black);}
+.header .header_in .head_btn li a path{fill:var(--black);}
+.header .header_in .head_btn li a rect{fill:var(--black);}
+.header .gnb ul li > a{color:var(--black);}
+
+
+
+
+
+/*** 공통 css ***/
+.basic_cont{max-width:1530px; width: 90%; margin:0 auto 240px;}
+
+
+/* 이용약관, 개인정보취급방침 */
+.policy_cont{position:relative; overflow:hidden; font-size:1rem;}
+.policy_cont br{display:block;}
+.policy_cont strong{font-weight:500; color:var(--black);}
+.policy_cont .cont_title{font-size:1.412rem; color:var(--black); padding-bottom:18px; letter-spacing:var(--letter-spacing-default); font-weight:500;}
+.policy_cont p.cont_tit {display:block; font-size:1.2em !important; padding-bottom:10px; font-weight:500; color:var(--black) !important; letter-spacing:var(--letter-spacing-default);}
+.policy_cont .cont_txt {padding:0px 0px 35px 0;}
+.policy_cont .cont_txt2 {padding-bottom:35px;}
+.policy_cont .cont_box {padding:25px; background:var(--grayBg); margin:7px 0px 10px 0px; display:block;  letter-spacing:var(--letter-spacing-default); line-height:1.7;}
+
+.privacy_list {width:91%; overflow:hidden; clear:both; *zoom:1; padding:4% 4% 3% 4%; border:1px solid var(--border); margin-bottom:30px;}
+.privacy_list li {width:50%; float:left; padding-bottom:1%;}
+.privacy_list li a {font-weight:500; color:var(--black);} 
+
+
+
+
+#outro{position: relative; overflow: hidden; background:var(--black);}
+#outro .outro_bg{position: absolute; left:0; top:0; width: 100%; height: 100%; background-repeat:no-repeat; background-size:cover; background-position:center; -ms-transform: scale(1.1,1.1); -o-transform: scale(1.1,1.1); -moz-transform: scale(1.1,1.1); -webkit-transform: scale(1.1,1.1); transform: scale(1.1,1.1); -webkit-transition:transform 3000ms  ease-in-out; -moz-transition:transform 3000ms ease-in-out; -o-transition:transform 3000ms ease-in-out; -ms-transition:transform 3000ms ease-in-out; transition:transform 3000ms ease-in-out;}
+#outro.action .outro_bg{transform: scale(1); -ms-transform: scale(1); -webkit-transform: scale(1);}
+#outro .outro_txt{position: relative; z-index: 9; text-align:center;}
+#outro .outro_txt .fs37{color:var(--white); font-weight: 300; padding-bottom: 12px;}
+#outro .outro_txt .fs65{color:var(--white);}
+#outro .outro_txt .btn_area{margin: 80px auto 0; justify-content:center;}
+#outro .outro_txt .more_btn{min-width:180px; border-color:var(--white); background:none; color:var(--white);}
+#outro .outro_txt .more_btn:hover{background:var(--white); border-color:var(--white); color:var(--main); box-shadow: 0 20px 40px 0 rgba(255, 255, 255, 0.10);}
+
+/*******************************************************************************
+    @media 1680px
+*******************************************************************************/
+@media all and (max-width:1680px){
+
+
+
+
+}
+/*******************************************************************************
+    @media ~1300px
+*******************************************************************************/
+@media all and (max-width:1300px){
+
+
+/*** 공통 css ***/
+.basic_cont{margin:0 auto 200px;}
+
+}
+
+/*******************************************************************************
+    @media  ~980px               
+*******************************************************************************/
+@media all and (max-width:980px){
+
+
+.subtitle{padding: 200px 0 30px;}
+
+/*** 공통 css ***/
+.basic_cont{margin:0 auto 150px;}
+
+/* 이용약관, 개인정보취급방침 */
+.policy_cont{}
+.policy_cont p.cont_tit {font-size:1.2em !important; padding-bottom:5px;}
+.policy_cont .cont_txt {padding:0px 0px 25px 0; }
+.policy_cont .cont_txt2 {padding-bottom:25px;}
+.policy_cont .cont_box {padding:18px 18px; }
+
+.privacy_list {margin-bottom:30px;}
+.privacy_list li {width:100%;  }
+
+
+#outro .outro_in{}
+#outro .outro_txt .fs37{padding-bottom: 10px;}
+#outro .outro_txt .btn_area{margin: 50px auto 0;}
+#outro .outro_txt .more_btn{min-width:160px;}
+
+
+}
+/*******************************************************************************
+    @media 481~680px
+*******************************************************************************/
+@media all and (max-width:680px){
+
+
+.subtitle{padding: 140px 0 20px;}
+.subtitle .fs21{padding:6px 0 0;}
+
+/*** 공통 css ***/
+.basic_cont{margin:0 auto 100px;}
+
+
+#outro .outro_in{}
+#outro .outro_txt .btn_area{margin: 30px auto 0;}
+
+}

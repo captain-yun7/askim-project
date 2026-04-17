@@ -1,0 +1,15 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2024-05-02 08:16:31 --> Could not find the language line "board_no"
+ERROR - 2024-05-02 08:21:09 --> Could not find the language line "board_no"
+ERROR - 2024-05-02 08:22:42 --> Could not find the language line "board_no"
+ERROR - 2024-05-02 08:23:50 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:23:50 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:26:09 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:36:17 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:36:21 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:36:29 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:36:52 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:36:53 --> Could not find the language line "파일명은 필수값입니다."
+ERROR - 2024-05-02 08:45:47 --> Could not find the language line "board_no"
+ERROR - 2024-05-02 08:46:05 --> Could not find the language line "board_no"

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>Symbols</title>
+		<meta name="robots" content="noindex, nofollow">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="../css/dialog.css">
+	</head>
+	<body>
+		<div class="app" style="width: 330px !important">
+			<main class="app-main">
+				<div class="wrapper">
+					<div class="page">
+						<div class="page-inner">
+							<div class="page-section">
+								<div class="row no-gutters">
+									<div class="col-3 d-flex align-items-center justify-content-center">
+										<label for="code-category" class="m-0">분류</label>
+									</div>
+									<div class="col-9 pl-1">
+										<select name="code-category" id="code-category" class="custom-select custom-select-sm"></select>
+									</div>
+								</div>
+								<hr class="break-hr">
+								<div class="row no-gutters">
+									<div id="symbols-outer"></div>
+								</div>
+								<hr class="break-hr">
+								<div class="row no-gutters">
+									<div class="col-3 d-flex align-items-center justify-content-center">
+										<label for="input-symbol" class="m-0">입력</label>
+									</div>
+									<div class="col-9 pl-1">
+										<input type="text" name="input-symbol" id="input-symbol" class="form-control form-control-sm" spellcheck="false" autocomplete="off">
+									</div>
+								</div>
+								<hr class="break-hr">
+								<div class="row">
+									<div class="col-3 input-group align-content-center justify-content-center">
+										<span class="text-muted symbol-info-code" id="symbol-info-code"></span>
+									</div>
+									<div class="col-9 input-group justify-content-end">
+										<button class="cheditor-btn btn-light mr-1" id="btn_cancel">취소</button>
+										<button class="cheditor-btn btn-primary" id="btn_submit">삽입</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script type="module" src="./js/symbol.js"></script>
+	</body>
+</html>

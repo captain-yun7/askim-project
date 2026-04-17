@@ -1,0 +1,84 @@
+	
+	.dhtmlgoodies_tree,#floatingContainer{
+		margin:10px 0 0 0;
+		padding:0px;
+
+	}
+	.dhtmlgoodies_tree ul{	/* Sub menu groups */
+	    width:320px;
+		margin-left:20px;	/* Left spacing */
+		padding-left:0px;
+		display:none;	/* Initially hide sub nodes */
+	}
+	
+	#floatingContainer ul{
+		margin-left:20px;	/* Left spacing */
+		padding-left:0px;	
+	}
+	.dhtmlgoodies_tree li,#floatingContainer li{	/* Nodes */
+		list-style-type:none;
+		vertical-align:middle;
+		
+	}
+	.dhtmlgoodies_tree li a,#floatingContainer li a{	/* Node links */
+	    color: #333333;
+		text-decoration:none;
+		font-family: "돋움", Dotum, Verdana, Tahoma;
+		font-size: 12px;
+		padding-left:1px;
+		line-height:17px;
+		margin-left:0px;
+
+		
+	}
+	.dhtmlgoodies_tree li a.highlightedNodeItem{
+		color:#656565;
+		/*background-color:#009;*/
+	}
+	
+	
+	.dhtmlgoodies_tree input.folderTreeTextBox{	/* Css for the text input - rename item */
+		font-size:11px;
+		margin:0px;
+		padding:0px;
+		height:15px;
+	}
+	.dhtmlgoodies_tree input.folderTreeTextBox2{	/* Css for the text input - rename item */
+		clear:both;
+		font-size:11px;
+		margin:0px;
+		padding:0px;
+		height:15px;
+	}
+
+    #addDivBox{	/* Css for the text input - rename item */
+
+	/*
+    width: 193px;
+    display: inline;
+	margin-top:10px;
+    margin: 3 auto;
+    text-align: center;
+    clear: both;
+	border: 1px solid #ff0000;
+	*/
+	}
+
+    #delDivBox{	/* Css for the text input - rename item */
+	/*
+    width: 193px;
+    display: none;
+	margin-top:10px;
+    margin: 3 auto;
+    text-align: center;
+    clear: both;
+	border: 1px solid #ff0000;
+	*/
+	}
+
+	.BoxTitle {
+	 padding: 5px;
+	 color:#003399;
+	 text-align:center;
+	 font-weight:bold;
+	}

@@ -1,0 +1,323 @@
+{#header}
+<!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
+<script type="text/javascript" src="{js}/js/common_board.js"></script>
+<script type="text/javascript" >
+	var Common_Board = new common_board({
+		code : "{board_info['code']}",
+		no : "{board_view['board_view']['no']}",
+		is_login : "{=defined('_IS_LOGIN')}",
+		nonMember_title : "{terms['nonMember']['title']}",
+	});
+
+	$(function() {
+		$("form[name='comment_frm']").validate({
+			rules : {
+				name : {required : true},
+				password : {required : true, rangelength : [4, 20]},
+				//content : {required : {depends : function(){return !getSmartEditor("comment");}}},
+				content : {required : true},
+				file : {}
+			}, messages : {
+				name : {required : "Please enter the author of the comment."},
+				password : {required : "Please enter a password.", rangelength: $.validator.format("The password is between {0}~{1} characters.")},
+				content : {required : "Please enter your content."},
+				file : {}
+			}
+		});
+	});
+
+	function comment_modify_display(idx, is_display) {
+		var display_comment = $("#display_comment_"+ idx);
+
+		if(is_display) {
+			$("#modify_comment_content_"+ idx +", #modify_comment_btn_"+ idx, display_comment).removeClass("hide");
+			$("#view_comment_btn_"+ idx + ", #view_comment_content_"+ idx, display_comment).addClass("hide");
+		} else {
+			$("#modify_comment_content_"+ idx +", #modify_comment_btn_"+ idx, display_comment).addClass("hide");
+			$("#view_comment_btn_"+ idx + ", #view_comment_content_"+ idx, display_comment).removeClass("hide");
+		}
+	}
+
+	function comment_modify_check(idx, is_secret) {
+		var display_comment = $("#display_comment_"+ idx);
+		$("[name='mode_"+ idx +"']", display_comment).val("modify");
+
+		if(is_secret == 'y') {
+			comment_modify_display(idx, true);
+		} else {
+			$("#layer_password_"+ idx, display_comment).addClass("modify").removeClass("hide").find(":password").focus();
+		}
+	}
+
+	function comment_delete_check(idx, is_secret) {
+		var display_comment = $("#display_comment_"+ idx);
+		$("[name='mode_"+ idx +"']", display_comment).val("delete");
+
+		if(is_secret == 'y') {
+			Common_Board.board_comment_delete(idx);
+		} else {
+			$("#layer_password_"+ idx, display_comment).removeClass("modify").removeClass("hide").find(":password").focus();
+		}
+	}
+
+	function comment_password_layer_close(idx) {
+		var display_comment = $("#display_comment_"+ idx);
+		$("#layer_password_"+ idx).addClass("hide");
+		$("[name='password_"+ idx +"']", display_comment).val("");
+	}
+
+	function comment_password_enter(idx) {
+		if (event.keyCode == 13) {
+			Common_Board.board_comment_password_check(idx);
+		}
+	}
+</script>
+<div class="sub_content">
+	<div class="sub_board">
+		<div class="view_visual">
+			<!--{ ? board_info['thumbnail'] == 'y' }-->
+				<!--{ ? count(board_view['board_view']['board_file']['thumbnail']) }-->
+					<div class="view_thumb">
+						<!--{ @ board_view['board_view']['board_file']['thumbnail'] }-->
+							<!--{ ? board_view['board_view']['board_file']['thumbnail'][.key_]['fname'] == board_view['board_view']['thumbnail_image']}--><!-- //대표 썸네일 제외시 사용 -->
+								<img src="{C._UPLOAD}/board/{board_view['board_view']['upload_path']}/{board_view['board_view']['thumbnail_image']}" alt=""/>
+							<!--{ : }-->
+								<img src="{C._UPLOAD}/board/{board_view['board_view']['upload_path']}/{board_view['board_view']['board_file']['thumbnail'][.key_]['fname']}" alt=""/>
+							<!--{ / }-->
+						<!--{ / }-->
+					</div>
+				<!--{ / }-->
+			<!--{ / }-->
+			<h3 class="subject"><!--{ ? board_view['board_view']['preface'] }-->[{board_view['board_view']['preface']}] <!--{ / }-->{board_view['board_view']['title']}</h3>
+			<div class="info_wrap">
+				<dl class="info">
+					<!--{ ? board_info['extraFl'] == 'y' && extraFieldData }-->
+						<!--{ @ extraFieldData }-->
+							<!--{? .name == '소제목'}-->
+							<dt>{=.value}</dt>
+							<!--{ / }-->
+						<!--{ / }-->
+					<!--{ / }-->
+					<dd>{ =date("Y.m.d", strtotime(board_view.board_view.regdt)) }</dd>
+				</dl>
+			</div>
+			<a href="" class="share_btn"><img src="../images/sub/share_btn.png" alt="공유버튼"></a>
+		</div>
+		<div class="view_content">
+			<div class="w_custom">
+				<div class="cont yui3-cssreset">
+					<!--{ ? board_info['yn_video'] == 'y' }-->
+					<div class="view_video">{=htmlspecialchars_decode(board_view['board_view']['video_html'])}</div>
+					<!--{ / }-->
+					{=htmlspecialchars_decode(board_view['board_view']['content'])}
+					<!--{ ? board_info['extraFl'] == 'y' && extraFieldData }-->
+					<ul class="tag_list">
+						<!--{ @ extraFieldData }-->
+						<!--{? .name == '태그'}-->
+						<li><a href="../board/board_list?code={board_info['code']}&search_type=title&search={=.value}">#{=.value}</a></dt></li>
+						<!--{ / }-->
+						<!--{ / }-->
+					</ul>
+					<!--{ / }-->
+				</div>
+			</div>
+		</div>
+		<div class="view_button">
+			<div class="w_custom">
+				<!--{ ? button.prev === "nothing" }-->
+				<a href="#" class="page_btn" onclick="alert('이전 게시물이 없습니다.'); return false;">
+				<!--{ : }-->
+				<a href="?code={ board_info.code }&no={ button.prev }<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }--><!--{ ? req.search }-->&search_type=title&search={ req.search }<!--{ / }-->" class="page_btn">
+				<!--{ / }-->
+					<dl>
+						<dt><img src="/data/skin/respon_default/images/sub/page_btn.svg" alt="이전"></dt>
+						<dd>PREV</dd>
+					</dl>
+				</a>
+				<a href="/board/board_list?code={board_info['code']}<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }--><!--{ ? req.search }-->&search_type=title&search={ req.search }<!--{ / }-->" class="list_btn"><span></span><span></span><span></span></a>
+				<!--{ ? button.next === "nothing" }-->
+				<a href="#" class="page_btn next" onclick="alert('다음 게시물이 없습니다.'); return false;">
+				<!--{ : }-->
+				<a href="?code={ board_info.code }&no={ button.next }<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }-->" class="page_btn next">
+				<!--{ / }-->
+					<dl>
+						<dt><img src="/data/skin/respon_default/images/sub/page_btn.svg" alt="이전"></dt>
+						<dd>NEXT</dd>
+					</dl>
+				</a>
+			</div>
+		</div>
+		<div class="bbs_view dn">
+			<!--{ ? board_info['yn_mobile'] == 'y' || board_info['yn_email'] == 'y' }-->
+			<div class="view_etc dn">
+				<!--{ ? board_info['yn_mobile'] == 'y' }--><span><em>연락처</em>{board_view['board_view']['mobile']}</span><!--{ / }-->
+				<!--{ ? board_info['yn_email'] == 'y' }--><span><em>이메일</em>{board_view['board_view']['email']}</span><!--{ / }-->
+			</div>
+			<!--{ / }-->
+			<div class="view_cont yui3-cssreset">
+				<!--{ ? board_info['yn_video'] == 'y' }-->
+				<div class="view_video">{=htmlspecialchars_decode(board_view['board_view']['video_html'])}</div>
+				<!--{ / }-->
+				{=htmlspecialchars_decode(board_view['board_view']['content'])}
+			</div>
+
+			<!--{ ? board_info['thumbnail'] == 'y' }-->
+				<!--{ ? count(board_view['board_view']['board_file']['thumbnail']) }-->
+				<h4 class="dn">
+					<span>썸네일</span>
+					<!--{ @ board_view['board_view']['board_file']['thumbnail'] }-->
+						<a href="/fileRequest/download?file={=urlencode('/board/'+ board_view['board_view']['upload_path'] +'/'+ board_view['board_view']['board_file']['thumbnail'][.key_]['fname'])}&save={=urlencode(board_view['board_view']['board_file']['thumbnail'][.key_]['oname'])}" target="_blank" style="color:cornflowerblue;" download>{board_view['board_view']['board_file']['thumbnail'][.key_]['oname']}<!--{ ? board_view['board_view']['board_file']['thumbnail'][.key_]['fname'] == board_view['board_view']['thumbnail_image']}--> (대표)<!--{ / }--></a>
+					<!--{ / }-->
+				</h4>
+				<!--{ / }-->
+			<!--{ / }-->
+			<!--{ ? board_info['files'] == 'y' }-->
+				<!--{ ? count(board_view['board_view']['board_file']['file']) }-->
+					<div class="extra_editor_wrap">
+						<h4>첨부파일</h4>
+						<div class="extra_cont">
+							<!--{ @ board_view['board_view']['board_file']['file'] }-->
+							<span><a href="/fileRequest/download?file={=urlencode('/board/'+ board_view['board_view']['upload_path'] +'/'+ board_view['board_view']['board_file']['file'][.key_]['fname'])}&save={=urlencode(board_view['board_view']['board_file']['file'][.key_]['oname'])}" target="_blank" style="color:cornflowerblue;" download>{board_view['board_view']['board_file']['file'][.key_]['oname']}</a></span>
+							<!--{ / }-->
+						</div>
+					</div>
+				<!--{ / }-->
+			<!--{ / }-->
+			<!--예비필드 노출-->
+			<!--{ ? board_info['extraFl'] == 'y' && extraFieldData }-->
+				<!--{ @ extraFieldData }-->
+					<div class="extra_editor_wrap">
+						<h4>{=.name}</h4>
+						<div class="extra_cont <!--{ ? .type == 'editor' }-->view_cont yui3-cssreset<!--{ / }-->">
+							<!--{ ? .type == 'all' }-->
+							<a href="{=.link}&save={=urlencode(.original_file_name)}" style="color:cornflowerblue;" download/>{=.original_file_name}</a>
+							<!--{ : .type == 'video' }-->
+							<video id="" src="{=.link}" controls width="100%"></video>
+							<!--{ : }-->
+							{=.value}
+							<!--{ / }-->
+						</div>
+					</div>
+				<!--{ / }-->
+			<!--{ / }-->
+		</div><!--bbs_view-->
+		<!--{ ? board_info['QNA_BOARD'] == board_info['board_type'] }-->
+			<!--{ ? board_view['board_view']['answer_status'] == 'y' }-->
+			<!-- 답변 내용 -->
+			<div class="bbs_view">
+				<div class="view_tit">
+					<h3>{board_view['board_view']['answer_title']}</h3>
+				</div>
+				<div class="view_cont yui3-cssreset">{=htmlspecialchars_decode(board_view['board_view']['answer_content'])}</div><!--view_cont-->
+			</div><!--bbs_view-->
+			<!--{ / }-->
+		<!--{ / }-->
+		<!--{ ? board_info['comment'] == 'y' }-->
+			<!--{ ? board_view['is_comment_write'] }-->
+			{=form_open('', 'name=comment_frm')}
+			<fieldset>
+				<legend>게시글에대한 코멘트 작성</legend>
+				<div class="board_comment">
+					<div class="comment_name clear">
+						<span>이름<input type="text" name="name" id="name" value="<!--{ ? defined('_IS_LOGIN') }-->{member['name']}<!--{ / }-->" { ? defined('_IS_LOGIN') }readonly{ / }/><label for="name" class="dn">코멘트 작성자</label></span>
+						<!--{ ? !defined('_IS_LOGIN') }--><span>비밀번호<input type="password" name="password" id="password" label="비밀번호"><label for="password" class="dn">비밀번호 : </label></span><!--{ / }-->
+					</div>
+					<div class="comment_memo clear">
+						<textarea name="content" allowBlank="false" label="댓글" title="댓글 내용을 작성헤주세요." ></textarea>
+						<input type="hidden" name="file_fname" />
+						<input type="hidden" name="file_oname" />
+						<a href="javascript://" onclick="Common_Board.board_comment_write(document.comment_frm);" class="btn_lg btn_point">댓글달기</a>
+					</div>
+					<!--{ ? !defined('_IS_LOGIN') }-->
+					<!-- 개인정보 수집항목 동의 -->
+					<div class="policy_cont">
+						<div>
+							<input type="checkbox" name="nonMember" id="checkbox-nonMember" />
+							<label for="checkbox-nonMember">{terms['nonMember']['title']}</label>
+							<a href="/service/usepolicy" target="_blank" class="btn_sm btn_info">전체보기 ></a>
+						</div>
+						<textarea readonly cols="30" rows="5" align="left" title="개인정보 수집항목">{terms['nonMember']['text']}</textarea>
+					</div><!-- .policy_cont -->
+					<!--{ / }-->
+				</div><!-- .board_comment -->
+			</fieldset>
+			{=form_close()}
+			<!--{ / }-->
+			<!--{ ? isset(board_view['board_list_comment']) }-->
+			<div class="board_comment_list">
+				<div class="comment_title">댓글 <span>{board_view['total_rows_comment']}</span>개</div>
+				<!--{ @ board_view['board_list_comment'] }-->
+				<div class="comment" id="display_comment_{.idx}">
+					<input type="hidden" name="idx_{.idx}" value="{.idx}" />
+					<input type="hidden" name="mode_{.idx}" value="" />
+					<div class="clear">
+						<div class="comment_writer">{.name} <span class="board_line"></span> {.regdt}</div>
+						<div class="com_btn">
+							<div id="view_comment_btn_{.idx}">
+								<!--{ ? .is_comment_modify == 'y' || .is_comment_modify == 's'}-->
+								<a class="btn_more" href="javascript://" onclick="comment_modify_check('{.idx}', '{.is_comment_modify}');">수정</a>
+								<span class="board_line"></span>
+								<!--{ / }-->
+
+								<!--{ ? .is_comment_delete == 'y' || .is_comment_delete == 's' }-->
+								<a class="btn_more" href="javascript://" onclick="comment_delete_check('{.idx}', '{.is_comment_delete}')">삭제</a>
+								<!--{ / }-->
+
+								<!--{ ? .is_comment_modify == 's' || .is_comment_delete == 's' }-->
+								<div id="layer_password_{.idx}" class="comment_password hide">
+									<span>비밀번호</span>
+									<input type="password" name="password_{.idx}" onkeyup="comment_password_enter('{.idx}');" />
+									<a href="javascript://" onclick="Common_Board.board_comment_password_check('{.idx}');" class="btn_sm btn_info">확인</a>
+									<a class="close" href="javascript://" onclick="comment_password_layer_close('{.idx}');">닫기</a>
+								</div>
+								<!--{ / }-->
+							</div>
+							<div id="modify_comment_btn_{.idx}" class="hide" >
+								<a href="javascript://" onclick="comment_modify_display('{.idx}', false);comment_password_layer_close('{.idx}');">취소</a>
+							</div>
+						</div>
+					</div>
+					<div id="view_comment_content_{.idx}"class="com_txt">{=htmlspecialchars_decode(.content)}</div>
+					<div id="modify_comment_content_{.idx}" class="com_modify hide">
+						<textarea name="content_{.idx}" title="댓글을 수정해주세요">{=htmlspecialchars_decode(.content)}</textarea>
+						<input type="hidden" name="name_{.idx}" value="{.name}" />
+						<input type="hidden" name="password_{.idx}" />
+						<input type="hidden" name="file_fname_{.idx}" />
+						<input type="hidden" name="file_oname_{.idx}" />
+						<a href="javascript://" onclick="Common_Board.board_comment_modify('{.idx}')" class="btn_lg btn_default">수정</a>
+					</div>
+					<div class="com_txt_reply hide"></div>
+				</div>
+				<!--{ / }-->
+			</div>
+			<!--{ / }-->
+		<!--{ / }-->
+		<div class="view_btn dn">
+			<div class="btn_wrap ta_left"><!--{? board_info['code'] != 'inquiry' }--><a href="/board/board_list?code={board_info['code']}" class="btn_point btn">목록</a><!--{/}--></div>
+			<div class="btn_wrap ta_right">
+				<!--{ ? board_view['is_modify'] == 'y' }-->
+				<a href="/board/board_write?code={board_info['code']}&no={board_view['board_view']['no']}" class="btn_basic btn">수정</a>
+				<!--{ : board_view['is_modify'] == 's' }-->
+				<a href="/board/board_secret?code={board_info['code']}&no={board_view['board_view']['no']}&page=write" class="btn_basic btn">수정</a>
+				<!--{ / }-->
+				<!--{ ? board_view['is_delete'] == 'y' }-->
+				<a href="/board/board_delete?code={board_info['code']}&no={board_view['board_view']['no']}" class="btn_basic btn">삭제</a>
+				<!--{ : board_view['is_modify'] == 's' }-->
+				<a href="/board/board_secret?code={board_info['code']}&no={board_view['board_view']['no']}&page=delete" class="btn_basic btn">삭제</a>
+				<!--{ / }-->
+				<!--{ ? board_info['tree'] == 'y' }-->
+				<!--{ ? board_view['is_answer_write'] == 'y' }-->
+				<a href="/board/board_write?code={board_info['code']}&no={board_view['board_view']['no']}&cref={board_view['board_view']['no']}" class="btn_basic btn">답글</a>
+				<!--{ / }-->
+				<!--{ / }-->
+				<!--{ ? board_info['QNA_BOARD'] == board_info['board_type'] }-->
+				<!--{ ? board_info['is_inquire_answer'] }-->
+				<a href="/board/board_write?code={board_info['code']}&no={board_view['board_view']['no']}&answer_status={board_view['board_view']['answer_status']}" class="btn_basic btn"><!--{ ? board_view['board_view']['answer_status'] == "y" }-->답변수정<!--{ : }-->답변등록<!--{ / }--></a>
+				<!--{ / }-->
+				<!--{ / }-->
+			</div>
+		</div><!--view_btn-->
+	</div>
+</div>
+<script src="{ js }/js/view.js"></script>
+{#footer}

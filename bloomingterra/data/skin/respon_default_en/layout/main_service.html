@@ -1,0 +1,21 @@
+<!--{ ? service_info['mainview'] == 'y' }-->
+<ul class="ibx">
+	<!--{ ? isset(service_list['board_list']) }-->
+	<!--{ @ service_list['board_list'] }-->
+	<li>
+		<a href="{ service_extra[.no]['ex1'] }"></a>
+		<div class="thumb"><img src="{C._UPLOAD}/board/{.upload_path}/{ .board_file.thumbnail[0]['fname'] }" alt="{.title}" onerror="this.src='../../images/common/noimg.gif'"></div>
+		<div class="txt_box">
+			<div class="ov_box"></div>
+			<dl>
+				<dt>{.title}</dt>
+				<dd>{=strip_tags(htmlspecialchars_decode(.content))}</dd>
+			</dl>
+		</div>
+	</li>
+	<!--{ / }-->
+	<!--{ : }-->
+	<li>There is no post</li>
+	<!--{ / }-->
+</ul>
+<!--{ / }--> 

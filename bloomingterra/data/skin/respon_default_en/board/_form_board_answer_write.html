@@ -1,0 +1,64 @@
+<!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
+<script type="text/javascript" src="{js}/js/common_board.js"></script>
+<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script>
+	var Common_Board = new common_board({
+		code : "{board_info['code']}",
+		no : "{board_view['board_view']['no']}",
+		is_login : "{=defined('_IS_LOGIN')}"
+	});
+
+	$(function() {
+		$("form[name='frm']").validate({
+			rules : {
+				answer_title : {required : true},
+				answer_content : {editorRequired : {depends : function(){return !getSmartEditor("contents")}}},
+			}, messages : {
+				answer_title : {required : "Please enter the title of the answer."},
+				answer_content : {editorRequired : "Please enter your answer."},
+			}
+		});
+
+		attachSmartEditor("contents", "board");
+	});
+</script>
+
+	<form name="frm" id="frm" action="/board/board_write" target="ifr_processor" method="POST">
+		<fieldset>
+			<legend>Compose Post</legend>
+			<input type="hidden" name="code" value="{board_info['code']}" />
+			<input type="hidden" name="mode" value="{board_info['mode']}" />
+			<input type="hidden" name="no" value="{board_view['board_view']['no']}" />
+			<!--{ ? board_info['secret'] == '2' }-->
+			<input type="hidden" name="is_secret" value="{board_view['board_view']['is_secret']}" >
+			<!--{ : board_info['secret'] == '1' }-->
+			<input type="hidden" name="is_secret" value="y">
+			<!--{ : }-->
+			<input type="hidden" name="is_secret" value="n">
+			<!--{ / }-->
+			<table class="board_write" summary="Compose Post, Title, Author, Details, File Attachments, etc.">
+				<caption>Compose Post</caption>
+				<colgroup>
+					<col width="15%">
+					<col >
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="row">Title of Reply</th>
+						<td><input type="text" name="answer_title" id="title" value="{board_view['board_view']['answer_title']}" /><label for="title" class="dn">Title</label></td>
+					</tr>
+					<tr>
+						<th scope="row">Reply Details</th>
+						<td>
+							<div class="edit-box" style="width:100%;"><textarea name="answer_content" id="contents" style="height:320px" title="Please enter the details.">{board_view['board_view']['content']}</textarea></div>
+						</td>
+					</tr>
+				</tbody>
+			</table><!--board_write-->
+			<div class="btn_center">
+				<button onclick="Common_Board.board_write(this.form); return false;"><a href="javascript://" class="btn_point btn">OK</a></button>
+				<button onclick="location.href='/board/board_list?code={board_info['code']}'"><a href="javascript://" class="btn btn_basic">Cancel</a></button>
+			</div><!--btn_center-->
+		</fieldset>
+	</form>
+

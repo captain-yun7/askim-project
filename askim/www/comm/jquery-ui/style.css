@@ -1,0 +1,6 @@
+@charset "utf-8";
+
+.ui-datepicker{ font-size:13px; width: 250px; }
+.ui-datepicker select.ui-datepicker-month{ width:35%; font-size:13px; border:1px solid #CBCBCB; vertical-align: middle; height:30px; line-height:30px; font-family:'Nanum Gothic', 나눔고딕, sans-serif;}
+.ui-datepicker select.ui-datepicker-year{ width:40%; font-size:13px; border:1px solid #CBCBCB; vertical-align: middle; height:30px; line-height:30px; font-family:'Nanum Gothic', 나눔고딕, sans-serif;}
+.ui-datepicker-trigger{ margin-left:2px; vertical-align:middle; cursor: pointer; }

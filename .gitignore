@@ -20,3 +20,11 @@ node_modules/
 # Temp
 *.tmp
 *.log
+
+# Large upload directories (user-generated content)
+bloomingterra/upload/
+askim/log/
+askim/tmp/
+
+# Sensitive config (DB credentials)
+bloomingterra/app/config/database.php

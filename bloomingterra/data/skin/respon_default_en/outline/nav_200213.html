@@ -1,0 +1,87 @@
+<header id="header">
+	<div id="gnb">
+		<div class="head_inner">
+			<h1><a href="/"><img src="../images/common/logo.png" alt="logo"></a></h1>
+			<h2 class="blind">Global Navigation bar</h2>
+			<div class="m_search">
+				<form name="" action="/goods/goods_search">
+				<fieldset>
+				<legend>카테고리 상품 검색</legend>
+					<div class="m_search_wrap clear">
+						<span class="sinput_warp">
+							<input id="search" type="text" name="search" placeholder="SEARCH..." class="sinput">
+							<input type="submit" value="Search"></input>
+						</span>
+					</div>
+				</fieldset>
+				</form>
+			</div>
+			<!-- 언어별 다국어 링크 (각 언어별 스킨에서 디자인 수정 부탁드립니다.) -->
+			<div style="position: absolute;top: 50px;left: 190px;width: 162px;">
+				<!--{ @ cfg_site['languagelink'] }-->
+					<a href="/?language={.key_}" onclick="" style="color:#FFFFFF;">{ .key_ }</a>
+				<!--{ / }-->
+			</div>
+			<!--// 언어별 다국어 링크 끝 -->
+			<ul class="gnb_right">
+				<!--{ ? defined('_IS_LOGIN') }-->
+				<li><a href="/member/logout" class="text">Logout</a></li>
+				<li><a href="/member/mypage" class="text">Mypage</a></li>
+				<!--{ : }-->
+				<li><a href="/member/login" class="text">Login</a></li>
+				<li><a href="/member/join_agreement" class="text">Join</a></li>
+				<!--{ / }-->
+				<li><a href="/board/board_write?code=inquiry">Contact us</a></li>
+			</ul>
+
+		</div>
+		<div class="head_abg"></div>
+	</div><!--gnb-->
+	<div id="lnb" class="">
+		<div class="head_inner">
+			<h2 class="blind">Local Navigation bar</h2>
+			<ul id="lnb_nav">
+				<!--{ ? isset(cfg_menu)}-->
+				<!--{ @ cfg_menu}-->
+				<!--{ ? .use == 'y'}-->
+				<li class="<!--{ ? on != '' }--><!--{ ? on == .name }--> on<!--{ / }--><!--{ : }--><!--{ ? lm.name == .name }--> on<!--{ / }--><!--{ / }-->">
+					<a href="{.url}"  class="lnb_{.index_+1} <!--{ ? isset(.menu) && .use == 'y'}-->has_child<!--{ / }-->">{.name}</a>
+					<div class="depth sub_{.index_+1}">
+						<ul>
+							<!--{ @ .menu}-->
+							<!--{ ? ..use == 'y'}-->
+							<li><a href="{..url}">{..name}</a></li>
+							<!--{ / }-->
+							<!--{ / }-->
+						</ul>
+					</div>
+				</li>
+				<!--{ / }-->
+				<!--{ / }-->
+				<!--{ / }-->
+			</ul>
+		</div>
+	</div><!--lnb-->
+</header><!--header-->
+<script>
+$(document).ready(function(){
+
+	$('#lnb_nav li').each(function(){
+		$(this).on('mouseover',function(){
+			$(this).addClass('on');
+		});
+		$(this).on('mouseout',function(){
+			$(this).removeClass('on');
+		});
+	});
+
+	$(window).scroll(function(){
+		if ( $(document).scrollTop() > 110 ) {
+			$('#lnb').addClass('on');
+		} else {
+			$('#lnb').removeClass('on');
+		}
+	});
+
+});
+</script>

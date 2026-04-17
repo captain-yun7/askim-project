@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>Media</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/dialog.css">
+  </head>
+  <body>
+    <div class="app" style="width:450px !important;">
+      <main class="app-main">
+        <div class="wrapper">
+          <div class="page">
+            <div class="page-inner">
+              <div class="page-section">
+                <form>
+                  <div class="row no-gutters">
+                    <div class="col-3 d-flex align-items-center justify-content-center">동영상 URL</div>
+                    <div class="col-9 pl-1">
+                      <label for="fm_source_url" class="d-none">URL</label>
+                      <input type="text" name="source-url" id="fm_source_url" class="form-control form-control-sm" placeholder="동영상 URL 또는 소스를 붙여 넣으세요." spellcheck="false" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="row no-gutters mt-2">
+                    <div class="col-3 d-flex align-items-center justify-content-center">동영상 크기</div>
+                    <div class="col-5">
+                      <div class="input-group pl-1 d-flex align-items-center">
+                        <input type="text" name="width" size="4" id="fm_width" class="form-control form-control-sm" placeholder="가로" spellcheck="false" autocomplete="off">
+                        <label for="fm_width" class="d-none">동영상 가로 크기</label>
+                        <div class="mx-2 x-lg"></div>
+                        <input type="text" name="height" size="4" id="fm_height" class="form-control form-control-sm" placeholder="세로" spellcheck="false" autocomplete="off">
+                        <label for="fm_height" class="d-none">동영상 세로 크기</label>
+                      </div>
+                    </div>
+                    <div class="col-auto d-flex align-self-center">
+                      <div class="input-group">
+                        <div class="custom-control custom-checkbox ml-2">
+                          <input type="checkbox" class="custom-control-input" id="fm_keep_ratio" name="keep-ratio" checked="checked">
+                          <label class="custom-control-label" for="fm_keep_ratio">16:9 비율 유지</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="break-hr">
+                  <div class="row no-gutters">
+                    <div class="col-8 align-self-center text-muted font-sm">
+                      참고: Youtube, 네이버TV, 숲 등의 동영상 지원
+                    </div>
+                    <div class="col-4 input-group justify-content-end">
+                      <input type="button" class="cheditor-btn btn-light mr-1" id="btn_cancel" value="취소">
+                      <input type="submit" class="cheditor-btn btn-primary" id="btn_submit" value="확인" disabled="disabled">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="./js/video.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+html {overflow: -moz-scrollbars-vertical; overflow-y: scroll;}
+/* #adminLog{width:100%;max-width:420px;min-width:300px;margin:0 auto;position:relative;position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);-webkit-transform:translate(-50%, -50%);-moz-transform:translate(-50%, -50%);-o-transform:translate(-50%, -50%);}
+#adminLog .adminLog-box{color:#333;}
+#adminLog .adminLog-box:after{display:block; clear:both; content:''}
+#adminLog .adminLog-box h1{font-weight:500;text-align:center;font-size:26px;line-height:32px;padding:0 0 26px 0;margin:0 auto;}
+#adminLog .adminLog-box .log-form{padding:0;box-sizing:border-box;width:100%;}
+#adminLog .adminLog-box .log-idPwd{float:left;width:73%;max-width:290px;}
+#adminLog .adminLog-box .log-okBtn{float:right;width:27%;max-width:120px;}
+#adminLog .adminLog-box .log-okBtn .log-okSubmit {display:block;width:100%;height:94px;line-height:94px;background:#2e2e2e;border:0;font-size:16px;color:#fff;opacity:1;font-weight:600;text-align:center;cursor:pointer;box-sizing:border-box;transition:all 0.3s;}
+#adminLog .adminLog-box .log-okBtn .log-okSubmit:hover {opacity:0.9;}
+#adminLog .adminLog-box .log-idPwd dl{position:relative;z-index:1;height:44px;line-height:44px;width:100%;}
+#adminLog .adminLog-box .log-idPwd dl + dl {margin-top:6px;}
+#adminLog .adminLog-box .log-idPwd dt{display:none;}
+#adminLog .adminLog-box .log-idPwd dd{height:inherit;line-height:inherit;vertical-align:top;}
+#adminLog .adminLog-box .log-idPwd dd input{width: calc(100% - 1px);width: -ms-calc(100% - 1px);width: -webkit-calc(100% - 1px);width: -moz-calc(100% - 1px);width: -o-calc(100% - 1px);max-width:100%;height:44px;line-height:22px;padding:10px 8px;font-size:15px;color:#aaa;letter-spacing: 0px;background-color:#f9f9f9;border:1px solid #ccc;border-radius: 0px;font-weight:400;box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;outline:0;box-shadow: none;transition:all 0.3s;vertical-align:top;}
+#adminLog .adminLog-box .log-idPwd dd input::-webkit-input-placeholder {font-size:15px;color:#aaa;}
+#adminLog .adminLog-box .log-idPwd dd input::-moz-placeholder {font-size:15px;color:#aaa;}
+#adminLog .adminLog-box .log-idPwd dd input:-ms-input-placeholder {font-size:15px;color:#aaa;}
+#adminLog .adminLog-box .log-idPwd dd input:-moz-placeholder {font-size:15px;color:#aaa;}
+#adminLog .adminLog-box .log-idPwd dd input:focus {color:#555;font-weight:500;letter-spacing: 0px;background-color:#fff;border: 1px solid #888;border-radius: 0px;outline:0;box-shadow: none;}
+#adminLog .adminLog-box .log-idPwd dd input:focus::-webkit-input-placeholder {color:#555;}
+#adminLog .adminLog-box .log-idPwd dd input:focus::-moz-placeholder {color:#555;}
+#adminLog .adminLog-box .log-idPwd dd input:focus:-ms-input-placeholder {color:#555;}
+#adminLog .adminLog-box .log-idPwd dd input:focus:-moz-placeholder {color:#555;}
+#adminLog .adminLog-box .id-save{width:100%;margin:8px 0 0 0;height:20px;font-size:12px; line-height:20px;text-align:left;color:#999;}
+#adminLog .adminLog-box p{text-align:center; padding-top:10px;color:#bbb;font-size:12px;font-weight:300;letter-spacing:0.2px;} */
+
+#adminLog{width:1040px;margin:0 auto;position: fixed;left:50%;top:50%;transform:translate(-50%, -50%);box-shadow: 0px 6px 17px 0 rgba(0, 0, 0, 0.3);border-radius:20px;overflow:hidden;}
+#adminLog .log-form{font-size:0;}
+#adminLog .logo_box, #adminLog .login_box{display: inline-block;box-sizing:border-box;vertical-align: top;width:50%;height:600px;position: relative;text-align: center;}
+#adminLog .logo_box{background:url('../images/login_logo_bg.jpg')no-repeat center;background-size:cover;padding-top:170px;}
+#adminLog .logo_box h2{font-size:26px;color:rgba(255, 255, 255, 0.8);font-weight:300;font-family:'Montserrat';}
+#adminLog .logo_box img{display: block;margin:24px auto 41px;}
+#adminLog .logo_box h2 p{font-size:inherit;color:#fff;font-weight:600;letter-spacing:1.3px;font-family:'Pretendard';}
+#adminLog .logo_box a{display: inline-block;vertical-align: top;font-size:16px;color:#fff;font-weight:400;letter-spacing:0.32px;border-bottom:1px solid #fff;font-family:'Montserrat';position: absolute;bottom: 90px;left: 50%;transform: translate(-50%);}
+
+#adminLog .login_box{background:#fff;padding-top:78px;}
+#adminLog .login_box h3{font-size:30px;color:#333;font-weight:400;font-family:'Montserrat';}
+#adminLog .login_box .log-idPwd{margin-top:37px;}
+#adminLog .login_box .log-idPwd dl + dl{margin-top:30px;}
+#adminLog .login_box .log-idPwd dl input{width:260px;height:38px;box-sizing:border-box;outline:none;border:none;border-bottom:1px solid #ddd;font-size:16px;color:#aaa;font-weight:400;padding-left:6px;}
+#adminLog .login_box .log-idPwd dl input::placeholder{color:#aaa;}
+#adminLog .login_box .log-idPwd dl input:focus{border-color:#333;color:#333;}
+#adminLog .login_box .id-save{text-align:left;width:260px;margin:19px auto 0;}
+#adminLog .login_box .id-save input{display: none;}
+#adminLog .login_box .id-save input + label{font-size:14px;color:rgba(102, 102, 102, 0.8);font-weight:400;padding-left:27px;background:url('../images/admin-icon-chk.png')no-repeat left center;cursor:pointer;}
+#adminLog .login_box .id-save input[type="checkbox"]:checked + label{background:url('../images/admin-icon-chk-on.png')no-repeat left center;}
+#adminLog .login_box .log-okBtn{width:260px;margin:40px auto 0;}
+#adminLog .login_box .log-okBtn input{width:100%;height:52px;line-height:50px;box-sizing:border-box;border-radius:26px;border:1px solid #2846b2;background:#2846b2;font-size:18px;color:#fff;font-weight:400;}
+#adminLog .login_box .login_intro{display: inline-block;text-align:left;margin-top:44px;}
+#adminLog .login_box .login_intro li{position: relative;padding-left:14px;font-size:14px;color:rgba(102, 102, 102, 0.8);font-weight:300;line-height:24px;font-family:'Pretendard';}
+#adminLog .login_box .login_intro li:before{width:4px;height:4px;content:"";background:#2846b2;position: absolute;left:0;top:10px;}
+#adminLog .login_box .login_intro li + li{margin-top:3px;}

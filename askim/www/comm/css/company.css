@@ -1,0 +1,236 @@
+@import url('sub.css'); 
+
+
+
+/**** S:: 회사소개 > 회사개요 ****/
+.about_cont{}
+	.about_top{background:url('/company/img/about_top.jpg') no-repeat center/cover; box-sizing:border-box; text-align:center; padding:140px 5%;}
+	.about_top .fs40{color:var(--white);}
+	.about_top .fs18{color:rgba(255,255,255,.7); padding:15px 0 0;}
+	.about_list{padding:26px 0 0; display: flex; flex-wrap:wrap; justify-content:space-between;}
+	.about_list dl{display:flex; border-bottom: 1px solid var(--border); width: calc(50% - 15px);}
+	.about_list dl dt{width:150px; padding:23px 10px; box-sizing:border-box; font-size:1rem; color:var(--black); line-height:160%; letter-spacing:var(--letter-spacing-default);}
+	.about_list dl dd{width:calc(100% - 150px); padding:23px 10px; box-sizing:border-box; font-size:1rem; color:var(--basic); line-height:160%; letter-spacing:var(--letter-spacing-default);}
+	.about_list dl dd p{padding:0 20px 0 0; display: inline-block;}
+	.about_list dl dd p:last-child{padding:0;}
+/**** E:: 회사소개 > 회사개요 ****/
+
+
+
+/**** S:: 회사소개 > 인사말 ****/
+.greeting_cont{display:flex; flex-wrap:wrap; justify-content:space-between; background:url('/company/img/greeting_bg.png') no-repeat left 55% bottom/382px auto;}
+.greeting_cont > div{box-sizing:border-box; width:calc(50% - 15px);}
+.greeting_cont .txt_area{}
+.greeting_cont .txt_area .fs20{padding:20px 0 0;}
+.greeting_cont .txt_area .fs18{padding:23px 0 0;}
+.greeting_cont .txt_area .fs18 p{padding:0 0 40px; line-height:180%;}
+.greeting_cont .txt_area .fs18 p:last-child{padding:0;}
+.greeting_cont .txt_area .ceo{padding:50px 0 0; font-size:1.25rem; line-height:120%; color:var(--black); letter-spacing:var(--letter-spacing-default);}
+.greeting_cont .txt_area .ceo strong{display:inline-block; font-size:1.625rem; letter-spacing:var(--letter-spacing-default); line-height:120%; font-weight:700; margin-left: 9px;}
+.greeting_cont .img_area{}
+.greeting_cont .img_area img{max-width:100%;}
+/**** E:: 회사소개 > 인사말 ****/
+
+
+/**** S:: 회사소개 > 조직도 ****/
+.organ_cont{}
+.organ_cont .fs20{padding:0 0 50px; font-weight: 400; color:var(--baisc); opacity: 0.8;}
+.organ_cont .img{box-sizing:border-box; text-align:center;}
+.organ_cont .img.m{display:none;}
+.organ_cont .img img{max-width:100%;}
+/**** E:: 회사소개 > 조직도 ****/
+
+
+/**** S:: 회사소개 > 찾아오시는 길 ****/
+.location_cont{}
+.location_cont .fs20{padding:0 0 50px; font-weight: 400; color:var(--baisc); opacity: 0.8;}
+.location_cont .location_map{}
+.location_cont .location_map .root_daum_roughmap {width:100%;}
+.location_cont .location_map .wrap_map{width:100%; height:550px;}
+.location_cont .location_map .map_border{display:none !important;}
+.location_cont .location_map .wrap_controllers{display:none !important;}
+.location_cont .location_info{padding:30px 0 0; display:flex; flex-wrap:wrap; align-items:center;}
+.location_cont .location_info ul{width:calc(100% - 520px); box-sizing:border-box; padding:0 30px 0 0; font-size:0;}
+.location_cont .location_info ul li{display:inline-block; vertical-align:top; font-size:1.125rem; line-height:150%; padding: 3px 20px 3px 0;}
+.location_cont .location_info ul li span{display:inline-block; letter-spacing:var(--letter-spacing-default); color:var(--black); line-height:150%; margin-right: 7px;}
+.location_cont .location_info .location_btn{display:flex;}
+.location_cont .location_info .location_btn a{display: inline-block; margin: 0 0 0 5px; width: 170px; height: 60px; line-height: 58px; box-sizing:border-box; border:1px solid; text-align:center; transition:all .3s linear; font-size:1.063rem; letter-spacing:var(--letter-spacing-default); font-weight: 500;}
+.location_cont .location_info .location_btn a:first-child{margin: 0;}
+.location_cont .location_info .location_btn a svg{display: inline-block; vertical-align: middle; margin: -2px 12px 0 0; transition:all .3s linear;}
+.location_cont .location_info .location_btn a svg path{fill:var(--white); transition:all .3s linear;}
+
+.location_cont .location_info .location_btn a.naver_map{background:#10D265; border-color:#10D265; color:var(--white);}
+.location_cont .location_info .location_btn a.naver_map svg{width: 15px;}
+.location_cont .location_info .location_btn a.naver_map:hover{background:var(--white); color:#10D265;}
+.location_cont .location_info .location_btn a.naver_map:hover svg path{fill:#10D265 !important;}
+
+.location_cont .location_info .location_btn a.kakao_map{background:#FAE100; border-color:#FAE100; color:#371C1D;}
+.location_cont .location_info .location_btn a.kakao_map svg{width: 13px;}
+.location_cont .location_info .location_btn a.kakao_map svg path{fill:#371C1D;}
+
+.location_cont .location_info .location_btn a.kakao_map:hover{background:#371C1D; border-color:#371C1D; color:#FAE100;}
+.location_cont .location_info .location_btn a.kakao_map:hover svg path{fill:#FAE100;}
+
+.location_cont .location_info .location_btn a.printBtn{background:var(--main); border-color:var(--main); color:var(--white);}
+.location_cont .location_info .location_btn a.printBtn:before{content:'\e55b'; display: inline-block; vertical-align: middle; margin: -2px 12px 0 0; color:var(--white); font-family: var(--icon); font-size:24px; font-weight: 400;}
+.location_cont .location_info .location_btn a.printBtn:hover{background:var(--sub); border-color:var(--sub); color:var(--white);}
+
+
+.location_cont.print .location_info ul{width:calc(100% - 130px);}
+.location_cont.print .location_info .location_btn{width: 130px;}
+.location_cont.print .location_info .location_btn a{margin:0;}
+/**** E:: 회사소개 > 찾아오시는 길 ****/
+
+
+
+/*******************************************************************************
+    @media 1350px
+*******************************************************************************/
+@media all and (max-width:1350px){
+
+
+
+}
+
+/*******************************************************************************
+    @media ~1280px
+*******************************************************************************/
+@media all and (max-width:1280px){
+
+
+
+/**** S:: 회사소개 > 찾아오시는 길 ****/
+.location_cont{}
+.location_cont .location_info ul{width:calc(100% - 460px);}
+.location_cont .location_info .location_btn a{width: 150px; font-size:1rem;}
+/**** E:: 회사소개 > 찾아오시는 길 ****/
+
+
+
+
+}
+
+/*******************************************************************************
+    @media  ~980px               
+*******************************************************************************/
+@media all and (max-width:980px){
+
+
+/**** S:: 회사소개 > 회사개요 ****/
+.about_cont{}
+	.about_top{padding:100px 5%;}
+	.about_top .stxt{padding:10px 0 0;}
+	.about_list{padding:20px 0 0;}
+	.about_list dl{width: 100%;}
+	.about_list dl dt{width:120px; padding:18px 10px;}
+	.about_list dl dd{width:calc(100% - 120px); padding:18px 10px;}
+/**** E:: 회사소개 > 회사개요 ****/
+
+/**** S:: 회사소개 > 인사말 ****/
+.greeting_cont{background-position: left 0 bottom; background-size: 40% auto;}
+.greeting_cont > div{width:100%;}
+.greeting_cont .txt_area .fs20{padding:18px 0 0;}
+.greeting_cont .txt_area .stxt{padding:15px 0 0;}
+.greeting_cont .txt_area .stxt p{padding:0 0 20px;}
+.greeting_cont .txt_area .ceo{padding:30px 0 0; font-size:1.125rem;}
+.greeting_cont .txt_area .ceo strong{font-size:1.4rem; margin-left: 5px;}
+.greeting_cont .img_area{padding:30px 0 0; text-align:right;}
+.greeting_cont .img_area img{max-width:60%;}
+/**** E:: 회사소개 > 인사말 ****/
+
+
+/**** S:: 회사소개 > 조직도 ****/
+.organ_cont{}
+.organ_cont .fs20{padding:0 0 30px;}
+/**** E:: 회사소개 > 조직도 ****/
+
+
+/**** S:: 회사소개 > 찾아오시는 길 ****/
+.location_cont{}
+.location_cont .fs20{padding:0 0 30px;}
+.location_cont .location_map{}
+.location_cont .location_map .wrap_map{height:400px;}
+.location_cont .location_info{padding:20px 0 0;}
+.location_cont .location_info ul{width:calc(100% - 265px);}
+.location_cont .location_info ul li{font-size:1rem;}
+.location_cont .location_info ul li.address{padding-right: 0; display: block;}
+.location_cont .location_info .location_btn a{width: 130px; height: 50px; line-height: 48px;}
+.location_cont .location_info .location_btn a svg{margin: -2px 7px 0 0;}
+
+.location_cont .location_info .location_btn a.naver_map{}
+.location_cont .location_info .location_btn a.naver_map svg{width: 12px;}
+.location_cont .location_info .location_btn a.kakao_map{}
+.location_cont .location_info .location_btn a.kakao_map svg{width: 10px;}
+.location_cont .location_info .location_btn a.printBtn{display: none;}
+/**** E:: 회사소개 > 찾아오시는 길 ****/
+
+
+
+}
+/*******************************************************************************
+    @media 481~680px
+*******************************************************************************/
+@media all and (max-width:680px){
+
+
+/**** S:: 회사소개 > 회사개요 ****/
+.about_cont{}
+	.about_top{padding:60px 5%;}
+	.about_top .stxt{padding:8px 0 0;}
+	.about_list{padding:10px 0 0;}
+	.about_list dl dt{width:100px; padding:15px 10px;}
+	.about_list dl dd{width:calc(100% - 100px); padding:15px 10px;}
+	.about_list dl dd p{padding:0 15px 0 0;}
+/**** E:: 회사소개 > 회사개요 ****/
+
+
+/**** S:: 회사소개 > 인사말 ****/
+.greeting_cont .txt_area .fs20{padding:15px 0 0;}
+.greeting_cont .txt_area .stxt{padding:12px 0 0;}
+.greeting_cont .txt_area .stxt p{padding:0 0 15px;}
+.greeting_cont .txt_area .ceo{padding:20px 0 0;}
+/**** E:: 회사소개 > 인사말 ****/
+
+
+/**** S:: 회사소개 > 조직도 ****/
+.organ_cont{}
+.organ_cont .fs20{padding:0 0 20px;}
+.organ_cont .img.m{display:block;}
+.organ_cont .img.pc{display:none;}
+/**** E:: 회사소개 > 조직도 ****/
+
+
+/**** S:: 회사소개 > 찾아오시는 길 ****/
+.location_cont{}
+.location_cont .fs20{padding:0 0 20px;}
+.location_cont .location_map{}
+.location_cont .location_map .wrap_map{height:300px;}
+.location_cont .location_info{padding:10px 0 0;}
+.location_cont .location_info ul{width:100%; padding:0 0 10px;}
+.location_cont .location_info ul li{padding: 3px 15px 3px 0;}
+.location_cont .location_info .location_btn{width: 100%;}
+.location_cont .location_info .location_btn a{margin: 0 0 0 5px; width: calc((100% - 5px)/2); height: 40px; line-height: 38px;}
+/**** E:: 회사소개 > 찾아오시는 길 ****/
+
+
+
+}
+/*******************************************************************************
+    @media ~480px             
+*******************************************************************************/
+@media all and (max-width:480px){
+
+
+
+
+
+}
+/*******************************************************************************
+    @media ~360px
+*******************************************************************************/
+@media all and (max-width:360px){
+
+
+
+
+}

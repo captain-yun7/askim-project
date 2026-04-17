@@ -1,0 +1,17 @@
+<!--{ ? notice_info['mainview'] == 'y' }-->
+<ul class="board_ul">
+	<!--{ ? isset(notice_list['board_list']) }-->
+	<!--{ @ notice_list['board_list'] }-->
+	<li class="board_li">
+		<!--{ ? .is_read == 's' }--><a href="/board/board_secret?code={.code}&no={.no}&page=view" alt="{.title}"><!--{ : }--><a href="/board/board_view?code={.code}&no={.no}" alt="{.title}"><!--{ / }--></a>
+		<div class="txt">
+			<strong>{.title}</strong>
+			<p>{=date("d.m.Y", strtotime(.regdt_date))} </p>
+		</div>
+	</li>
+	<!--{ / }-->
+	<!--{ : }-->
+	<li>There is no post</li>
+	<!--{ / }-->
+</ul>
+<!--{ / }--> 

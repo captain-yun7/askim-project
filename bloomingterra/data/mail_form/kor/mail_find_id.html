@@ -1,0 +1,19 @@
+<div style="width:720px;margin:30px;">
+	<div style="border-top:2px solid #000;border-bottom:1px solid #ccc;padding:40px 0 0;">
+		<h2 style="font-size:40px;line-height:60px;font-weight:normal;color:#333;">고객님의 <strong>아이디</strong>를<br>알려드립니다.</h2>
+		<p style="font-size:14px;line-height:24px;color:#555;">안녕하세요. 고객님께서 요청하신 아이디를 알려드립니다. <br>비밀번호가 기억나지 않는 경우 <a href="{$base_url()}member/find_pw"><strong style="font-size:14px;font-weight:normal;color:#cb2222;text-decoration:underline;">비밀번호 찾기 페이지</strong></a>에서 찾을 수 있습니다.</p>
+		<div>
+			<h3 style="color:#222;font-size:14px;font-weight:700;padding:0 0 5px 10px;">아이디 안내<span style="color:#555;font-size:12px;font-weight:500;padding-left:15px;">* We will inform you of your ID</span></h3>
+			<dl style="clear:both;content:'';display:block;height:49px;line-height:49px;border-top:1px solid #aaa;border-bottom:1px solid #ccc;margin:0 0 20px 10px;">
+				<dt style="float:left;width:130px;color:#333;font-size:13px;font-weight:500;background:#eee;text-align:left;text-indent:20px;">회원 아이디(ID)</dt>
+				<dd style="float:left;color:#c94141;font-size:15px;font-weight:500;text-align:left;text-indent:20px;margin:0;">{$find_id}</dd>
+			</dl>
+			<p style="color:#666;font-size:12px;line-height:17px;font-weight:400;text-align:left;padding:0 0 50px 0;margin:0 10px;">Hi. We will inform you of your ID.<br/>If you can not remember your password, please visit the site to find it on the <b style="color:#333;">password-assistance page</b>.</p>
+			<h5 style="text-align:center;padding-bottom:30px;"><div style="width:210px;padding-top:16px;padding-bottom:16px;line-height:18px;font-size:18px;font-weight:700;color:#fff;background:#c94141;border-bottom:3px #872626 solid;text-align:center;margin-left:250px;"><a href="{$base_url()}" target="_blank" style="line-height:18px;font-size:18px;font-weight:700;color:#fff;">사이트 바로가기<br/><b style="font-size:14px;color:#e1e1e1;">Visit The Homepage</b></a></div></h5>
+			<div style="background:#f7f7f7;color:#777;font-size:11px;font-weight:500;line-height:21px;padding:24px 30px 27px;">
+				{$nameKor} <span style="display:inline-block;width:1px;height:10px;padding:0 7px;color:#ccc;">|</span>  주소(address) : {$address}<br/>대표자(CEO) : {$ceoName} <span style="display:inline-block;width:1px;height:10px;padding:0 7px;color:#ccc;">|</span> 사업자등록번호(Business license number) : {$compSerial}<br/>팩스(Fax) : {$compFax} <span style="display:inline-block;width:1px;height:10px;padding:0 7px;color:#ccc;">|</span> 전화번호(TEL) : {$compPhone} <br/>이메일(E-mail) : {$adminEmail}
+				<p style="color:#888;font-size:11px;font-weight:500;margin:0;padding:3px 0 0;">Copyright &copy; <span style="color:#333;font-size:11px;font-weight:500;">{$nameEng}</span> All rights reserved.</p>
+			</div>
+		</div>
+	</div>
+</div>

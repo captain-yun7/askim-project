@@ -1,0 +1,12 @@
+{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "쓰리웨이",
+    "address": {
+        "@type": "PostalAddress",
+        "postalCode": "06192",
+        "addressRegion": "서울특별시",
+        "addressLocality": "강남구",
+        "streetAddress": "선릉로 428"
+    }
+}

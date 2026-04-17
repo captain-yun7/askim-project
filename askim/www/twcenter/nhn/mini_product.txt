@@ -1,0 +1,352 @@
+<<<begin>>>
+<<<mapid>>>1605190001
+<<<pname>>>test
+<<<price>>>1000
+<<<class>>>I
+<<<utime>>>2016-05-19 15:26:26
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1512310001
+<<<pname>>>μPAD10.1M 16GB
+<<<price>>>99000
+<<<class>>>U
+<<<utime>>>2015-12-31 11:48:07
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1511090006
+<<<pname>>>Ultra Storm11 용 악세사리 모음
+<<<price>>>15900
+<<<class>>>U
+<<<utime>>>2015-11-09 18:42:07
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1511090005
+<<<pname>>>Converter9용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-11-09 18:36:51
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1511090004
+<<<pname>>>뮤패드 7IIIW용 악세사리 모음
+<<<price>>>9800
+<<<class>>>I
+<<<utime>>>2015-11-09 18:29:40
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1511090003
+<<<pname>>>뮤패드 7IIIA용 악세사리 모음
+<<<price>>>9800
+<<<class>>>I
+<<<utime>>>2015-11-09 18:20:59
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1511090002
+<<<pname>>>뮤패드 7M용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-11-09 18:04:47
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1511090001
+<<<pname>>>뮤패드 10.1MII용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-11-09 18:00:08
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1510010001
+<<<pname>>>Micro SD Card 64GB
+<<<price>>>22000
+<<<class>>>U
+<<<utime>>>2015-10-01 14:26:58
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1509040001
+<<<pname>>>μPAD WIN 10.1II
+<<<price>>>219000
+<<<class>>>U
+<<<utime>>>2015-09-04 10:19:38
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1508140001
+<<<pname>>>μCAST-C1
+<<<price>>>29000
+<<<class>>>U
+<<<utime>>>2015-08-14 14:47:43
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210010
+<<<pname>>>μPAD 7M
+<<<price>>>59900
+<<<class>>>U
+<<<utime>>>2015-07-21 11:45:13
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210009
+<<<pname>>>μPAD 7IIIW
+<<<price>>>99000
+<<<class>>>U
+<<<utime>>>2015-07-21 11:41:17
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210008
+<<<pname>>>μPAD 7IIIA
+<<<price>>>99000
+<<<class>>>U
+<<<utime>>>2015-07-21 11:36:32
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210007
+<<<pname>>>μPAD8
+<<<price>>>79000
+<<<class>>>U
+<<<utime>>>2015-07-21 11:30:51
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210004
+<<<pname>>>μPAD10.1
+<<<price>>>199000
+<<<class>>>U
+<<<utime>>>2015-07-21 11:15:36
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210003
+<<<pname>>>μPAD10.1M
+<<<price>>>99000
+<<<class>>>U
+<<<utime>>>2015-07-21 10:16:43
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210002
+<<<pname>>>μPAD WIN 10.1II DUO
+<<<price>>>219000
+<<<class>>>U
+<<<utime>>>2015-07-21 10:07:44
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1507210001
+<<<pname>>>μPAD10.1MII
+<<<price>>>109000
+<<<class>>>U
+<<<utime>>>2015-07-21 10:02:05
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306875
+<<<pname>>>뮤패드 WIN10.1 ll용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-02-02 18:50:48
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306830
+<<<pname>>>뮤패드 WIN10.1용 악세사리 모음
+<<<price>>>10000
+<<<class>>>U
+<<<utime>>>2015-01-16 13:18:08
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306754
+<<<pname>>>뮤패드 WIN8.9용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-03-11 09:41:11
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306754
+<<<pname>>>뮤패드 WIN8.9용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-03-11 09:41:11
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306673
+<<<pname>>>뮤패드 W8용 악세사리 모음
+<<<price>>>10000
+<<<class>>>U
+<<<utime>>>2015-01-16 13:16:47
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306643
+<<<pname>>>뮤패드 W8 ll용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-06-01 14:30:55
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306454
+<<<pname>>>뮤패드 10.1용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:15:28
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306431
+<<<pname>>>뮤패드 10.1M용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:14:24
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306407
+<<<pname>>>뮤패드 8용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-02-04 12:00:55
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306372
+<<<pname>>>뮤패드 7용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:13:38
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306351
+<<<pname>>>뮤패드 7 SE용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:12:56
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306285
+<<<pname>>>뮤패드 7 ll용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:11:59
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306253
+<<<pname>>>TX97용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:11:20
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421306226
+<<<pname>>>TX97D용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 12:50:59
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421305007
+<<<pname>>>TX85용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:10:50
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304971
+<<<pname>>>TX82용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:10:28
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304945
+<<<pname>>>TX72용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:09:39
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304922
+<<<pname>>>TX70C용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:08:53
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304894
+<<<pname>>>TX12D용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:07:33
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304798
+<<<pname>>>Q9용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:06:44
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304715
+<<<pname>>>Q7용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:06:00
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304675
+<<<pname>>>Q8용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:05:39
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1421304590
+<<<pname>>>P101용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-16 13:05:07
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1420784539
+<<<pname>>>P80용 악세사리 모음
+<<<price>>>9800
+<<<class>>>U
+<<<utime>>>2015-01-09 15:44:44
+<<<revct>>>0
+<<<ftend>>>
+<<<begin>>>
+<<<mapid>>>1353474497
+<<<pname>>>MCD-101용 리모콘
+<<<price>>>10000
+<<<class>>>U
+<<<utime>>>2015-02-03 13:33:18
+<<<revct>>>0
+<<<ftend>>>

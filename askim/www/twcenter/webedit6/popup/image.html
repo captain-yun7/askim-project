@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>InsertImage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <link rel="stylesheet" type="text/css" href="../css/dialog.css">
+    <link rel="stylesheet" type="text/css" href="../css/imageupload.css">
+  </head>
+  <body>
+    <div class="app">
+      <div class="app-main">
+        <div class="wrapper">
+          <div class="page">
+            <div class="page-inner">
+              <div class="page-section">
+                <div class="row no-gutters mb-2">
+                  <div class="d-flex col-3 align-items-center justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z"/>
+                    </svg>
+                    <span class="ml-2">설정</span>
+                  </div>
+                  <div class="col-9 pl-2">
+                    <div class="row no-gutters justify-content-between">
+                      <div class="d-flex">
+                        <input type="file" name="imageUpload[]"
+                              accept="image/jpeg,image/png,image/gif,image/webp"
+                              id="input-file-element"
+                              multiple="multiple">
+                        <button id="btn-file" class="cheditor-btn btn-primary">파일 선택</button>
+                        <button id="btn-remove-all" class="cheditor-btn btn-light ml-1">전체 삭제</button>
+                      </div>
+                      <div class="align-self-center">
+                        <span id="image-count">0</span> / <span id="maxImageNum"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-3" style="background-color: #f1f3f9; border-radius: .25rem;border: 1px solid #dee3ed">
+                    <form name="fm_options">
+                    <div id="imageInfoBox">
+                      <div>
+                        <div class="image-title-bar round-top mb-2">크기 조정</div>
+                        <div class="mt-2 px-3">
+                          <div class="input-group">
+                            <label for="input-resize-select" class="input-group-prepend align-self-center mr-2">가로폭</label>
+                            <select name="input-user-select" id="input-resize-select" class="custom-select custom-select-sm"></select>
+                          </div>
+                          <div class="input-group mt-1 d-none">
+                            <label for="input-resize-user" class="input-group-prepend align-self-center mr-2">사용자</label>
+                            <input type="text" class="form-control form-control-sm" name="resize-width" id="input-resize-user">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-2">
+                        <div class="image-title-bar mb-2">정렬</div>
+                        <div class="row no-gutters px-4">
+                          <div class="input-group justify-content-center">
+                            <div class="custom-control custom-radio custom-control-nolabel">
+                              <div class="d-flex justify-content-center">
+                                <img src="../icons/image_align_left.png" style="width:16px; height:16px" alt="">
+                              </div>
+                              <div class="break"></div>
+                              <input type="radio" class="custom-control-input" id="alignment-left" name="alignment" value="left">
+                              <label class="custom-control-label" for="alignment-left"> </label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-nolabel mx-4">
+                              <div class="d-flex justify-content-center">
+                                <img src="../icons/image_align_center.png" style="width:16px; height:16px" alt="">
+                              </div>
+                              <div class="break"></div>
+                              <input type="radio" class="custom-control-input" id="alignment-center" name="alignment" value="center" checked>
+                              <label class="custom-control-label" for="alignment-center"></label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-nolabel">
+                              <div class="d-flex justify-content-center">
+                                <img src="../icons/image_align_right.png" style="width:16px; height:16px" alt="">
+                              </div>
+                              <div class="break"></div>
+                              <input type="radio" class="custom-control-input" id="alignment-right" name="alignment" value="right">
+                              <label class="custom-control-label" for="alignment-right"></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="mx-2">
+                      <div class="text-muted mx-2">
+                        <p class="mb-3">사진을 파란 선 안으로 끌어 놓을 수 있습니다.</p>
+                        <p>설정한 가로폭 보다 큰 이미지는 리사이징되어 전송됩니다.</p>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+                  <div class="col-9 pl-2">
+                    <div id="imageListWrapper" class="images-list-outer"></div>
+                  </div>
+                </div>
+                <hr class="my-2">
+                <div class="input-group justify-content-center">
+                  <button class="cheditor-btn btn-light w-15 mr-1" id="btn_cancel">취소</button>
+                  <button class="cheditor-btn btn-primary w-15" id="btn_submit">전송</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./js/image.js"></script>
+  </body>
+</html>

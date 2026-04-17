@@ -1,0 +1,68 @@
+{#header}
+<script>
+	$(function() {
+		$("form[name='frm']").validate({
+			submitHandler: function(form) {
+				form.submit();
+			}, rules : {
+				old_password : {required : {depends : function() { return $("[name='mode']").val() == "change";}}}, 
+				password : {required : {depends : function() { return $("[name='mode']").val() == "change";}}, rangelength : [10, 16], equalTo : "#password2", passwordValid : {depends : function() {return $("[name='mode']").val() == "change";}}},
+				password2 : {required : {depends : function() { return $("[name='mode']").val() == "change";}}, rangelength : [10, 16], passwordValid : {depends : function() {return $("[name='mode']").val() == "change";}}}
+			}, messages : {
+				old_password : {required : "Please enter {memberField['name'][cfg_site['language']]['password']}."}, 
+				password : {required : "Please enter a new {memberField['name'][cfg_site['language']]['password']}.", rangelength: $.validator.format("The {memberField['name'][cfg_site['language']]['password']} is between {0}~{1}characters."), equalTo : "The new  {memberField['name'][cfg_site['language']]['password']} does not match.", passwordValid : "You must mix at least 2 different types from English/numbers/special characters for your {memberField['name'][cfg_site['language']]['password']}."},
+				password2 : {required : "Please enter Confirm New {memberField['name'][cfg_site['language']]['password']}.", rangelength: $.validator.format("The {memberField['name'][cfg_site['language']]['password']} is between {0}~{1}characters."), passwordValid : "You must mix at least 2 different types from English/numbers/special characters for your {memberField['name'][cfg_site['language']]['password']}."}
+			}
+		});
+	})
+
+	function change_chk(form, mode) {
+		if(mode == false) {
+			if(confirm("Do you want to change it in 1 month?")) {
+				form.mode.value = "nextChange";
+			} else {
+				return false;
+			}
+		} else {
+			form.mode.value = "change";
+		}
+		return true;
+	}
+</script>
+<div class="sub_content">
+	<div class="sub_login add">
+		<div class="login_box">
+			<h2 class="bbs_write_title">Change PW</h2>
+			{=form_open('member/periodic_change_pw', 'name=frm')}
+			<input type="hidden" name="mode" /> 
+			<table class="bbs_write" summary="change pw">
+				<caption>* The password must be 10 – 16 characters using English characters (case sensitive)+numbers.</caption>
+				<colgroup>
+					<col width="15%">
+					<col >
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="row">Current Password</th>
+						<td><input type="password" id="changepw1" name="old_password" value=""><label for="changepw1" class="dn">Current Password</label></td>
+					</tr>
+					<tr>
+						<th scope="row">New Password</th>
+						<td><input type="password" id="changepw2" name="password" value=""><label for="changepw2" class="dn">New Password</label></td>
+					</tr>
+					<tr>
+						<th scope="row">Confirm New Password</th>
+						<td><input type="password" id="password2" name="password2" value=""><label for="changepw3" class="dn">Confirm New Password</label></td>
+					</tr>
+				</tbody>
+			</table><!-- .bbs_write -->
+			<p class="bbs_write_info">You have used the same password for more than 3 months now. For safe personal information protection, we recommend that you change the password periodically.</p>
+			<div class="btn_wrap ta_center">
+				<button onclick="return change_chk(this.form, true);" class="btn_point btn">Change</button>
+				<!--{ ? member['password_skip_cnt'] < '5'}--><button onclick="return change_chk(this.form, false);" class="btn_basic btn">Change next time</button><!--{ / }-->
+			</div><!-- .btn_center -->
+			{=form_close()}
+		</div><!--login_box-->
+	</div><!--sub_login-->
+</div><!--sub_login-->
+{#footer}

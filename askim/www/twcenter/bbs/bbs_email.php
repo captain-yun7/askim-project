@@ -1,0 +1,52 @@
+<?
+
+$email_content .= "<style>";
+$email_content .= "td {font-size:12px;font-family:굴림,돋움;color:#4A4A4A;line-height:160%}   table {border-collapse:collapse;}";
+$email_content .= "</style>";
+$email_content .= "<html>";
+$email_content .= "<head>";
+$email_content .= "<meta http-equiv=Content-Type content=text/html; charset=utf-8>";
+$email_content .= "</head>";
+$email_content .= "<body>";
+$email_content .= "<table width='642' height='100%' align='center' border='0' cellspacing='0' cellpadding='0'>";
+$email_content .= "<tbody>";
+$email_content .= "<tr>";
+$email_content .= "<td align='middle'>";
+$email_content .= "<table border='0' cellspacing='0' cellpadding='0'>";
+$email_content .= "<tbody>";
+$email_content .= "<tr>";
+$email_content .= "<td>";
+$email_content .= "<img alt='' src='{SITE_URL}/twcenter/mail/img/top_01.gif' />";							
+$email_content .= "</td>";						
+$email_content .= "</tr>";						
+$email_content .= "<tr>";
+$email_content .= "<td background='{SITE_URL}/twcenter/mail/img/bg_line.gif'>";
+$email_content .= "<table width='642' border='0' cellspacing='0' cellpadding='0' class='bbs_view'>";
+$email_content .= "<tbody>";
+$email_content .= "<br/>";
+$email_content .= "<tr>";
+$email_content .= "<th width='13%'>제목</th>";
+$email_content .= "<td style='padding: 10px' width='100%'>".$subject."</td>";	
+$email_content .= "</tr>";	
+$email_content .= "<tr>";
+$email_content .= "<th width='13%'>내용</th>";
+$email_content .= "<td style='padding: 10px' width='100%'>".$content."</td>";	
+$email_content .= "</tr>";								
+$email_content .= "</tbody>";								
+$email_content .= "</table>";							
+$email_content .= "</td>";						
+$email_content .= "</tr>";						
+$email_content .= "<tr>";
+$email_content .= "<td>";
+$email_content .= "<img alt='' src='{SITE_URL}/twcenter/mail/img/bottom.gif' />";							
+$email_content .= "</td>";			
+$email_content .= "</tr>";			
+$email_content .= "</tbody>";			
+$email_content .= "</table>";
+$email_content .= "</td>";	
+$email_content .= "</tr>";
+$email_content .= "</tbody>";
+$email_content .= "</table>";
+$email_content .= "</html>";
+
+?>

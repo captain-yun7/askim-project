@@ -1,0 +1,35 @@
+{#header}
+<div class="sub_content">
+	<h2 class="bbs_write_title">Change Member Password</h2>
+	<div class="sub_agree change_pw">
+		{=form_open('member/change_pw', 'name=frm')}
+		<table class="bbs_write" summary="비밀번호 변경" style="">
+			<caption>Change Member Password</caption>
+			<colgroup>
+				<col width="15%">
+				<col >
+			</colgroup>
+			<tbody>
+				<tr>
+					<th scope="row">Password</th>
+					<td><input type="password" id="changepw1" name="old_password" value=""><label for="changepw1" class="dn">Password</label></td>
+				</tr>
+				<tr>
+					<th scope="row">New Password</th>
+					<td><input type="password" id="changepw2" name="password" value=""><label for="changepw2" class="dn">New Password</label></td>
+				</tr>
+				<tr>
+					<th scope="row">Confirm New Password</th>
+					<td><input type="password" id="password2" name="password2" value=""><label for="changepw3" class="dn">Confirm New Password</label></td>
+				</tr>
+			</tbody>
+		</table><!-- .bbs_write -->
+		<p class="bbs_write_info">Please change your password for safe privacy.</p>
+		<div class="btn_wrap ta_center">
+			<button onclick="return change_chk(this.form);"><a href="javascript://" class="btn_point btn">OK</a></button>
+			<button onclick="history.back(); return false;"><a href="javascript://" class="btn btn_basic">Cancel</a></button>
+		</div><!--btn_center-->
+		{=form_close()}
+	 </div>
+</div><!--sub_content-->
+{#footer}

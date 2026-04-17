@@ -1,0 +1,66 @@
+{#header}
+<script type="text/javascript">
+	$(function() {
+		$("form[name='frm']").validate({
+			rules : {
+				password : {required : true},
+				withdrawal_reason : {required : true, maxlength : 100},
+			}, messages : {
+				password : {required : "Please enter {memberField['name'][cfg_site['language']]['password']}."},
+				withdrawal_reason : {required : "Please enter {memberField['name'][cfg_site['language']]['withdrawal_reason']}.", maxlength : $.validator.format("Please enter {memberField['name'][cfg_site['language']]['withdrawal_reason']} within {0} characters.")}
+			}
+		});
+	});
+
+	function withdrawal_chk() {
+		var frm = $("form[name='frm']");
+		if(!frm.valid()) {
+			return false;
+		}
+
+		if(!confirm("Are you sure you want to leave?")) {
+			return false;
+		}
+		frm.submit();
+	}
+</script>
+
+<div class="sub_content">
+	<div class="sub_join">
+		{=form_open('', 'name=frm')}
+		<fieldset>
+			<legend>Withdraw Membership</legend>
+			<table class="bbs_write" summary="Enter Member ID, Password, and Reason for Withdrawing Your Membership">
+				<caption>Reconfirm Member Information</caption>
+				<colgroup>
+					<col width="15%">
+					<col >
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="row">ID</th>
+						<td>{member['userid']}</td>
+					</tr>
+					<tr>
+						<th scope="row">Password</th>
+						<td><input type="password" name="password" id="password" /><label for="password" class="dn">Password</label></td>
+					</tr>
+					<tr>
+						<th scope="row">Reason for</br>Withdrawing Your Membership</th>
+						<td><textarea name="withdrawal_reason" title="Reason for Withdrawing Your Membership"></textarea></td>
+					</tr>
+				</tbody>
+			</table><!-- .bbs_write -->
+			
+			<p class="bbs_write_info">If you withdraw your membership, you may not re-register with the same ID.</p>
+
+			<div class="btn_wrap ta_center">
+				<button onclick="withdrawal_chk(); return false;"><a class="btn btn_point" href="javascript://">Withdraw Membership</a></button>
+				<button onclick="history.back(); return false;"><a class="btn btn_basic" href="javascript://">Cancel</a></button>
+			</div><!-- .btn_center -->
+		</fieldset>
+		{=form_close()}
+	</div><!--sub_join-->
+
+</div><!--sub_content-->
+{#footer}

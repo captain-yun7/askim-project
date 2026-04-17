@@ -1,0 +1,53 @@
+{#header}
+<script type="text/javascript" src="http://openapi.map.naver.com/openapi/v3/maps.js?clientId=IMIEQwAacmOyrkEUBm6E&callback=initMap"></script>
+<script type="text/javascript">
+	var map = null;
+	var marker = null;
+	var position = new naver.maps.LatLng(37.401216, 127.107415);
+
+	var mapOptions = {
+		center: position,
+		zoom: 12
+	};
+	
+	function initMap() {
+		map = new naver.maps.Map('map', mapOptions);
+		marker = new naver.maps.Marker({
+			position: position,
+			map: map
+			//,icon: './img/pin_default.png'
+		});
+	}
+</script>
+<div class="sub_content">
+	<div class="sub_location">
+		<div class="sub_location_map clear">
+			<div class="map_box">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d665.4645798097675!2d127.01323665645653!3d37.4961037346581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca168d0db944f%3A0xe2e4b3bb1a76be0!2z7ISc7Jq47Yq567OE7IucIOyEnOy0iOq1rCDshJzstIjrjIDroZw1Meq4uCAyNQ!5e0!3m2!1sko!2skr!4v1526013781509" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+			</div>
+		</div><!-- .sub_location_map -->
+
+		<div class="sub_location_info">
+			<dl>
+				<dt>{cfg_site.nameKor}</dt>
+				<dd>
+					<ul>
+						<li class="map1"><span>주소 : </span><p>({cfg_site.zipcode}) {cfg_site.address}</p></li>
+						<li class="map2"><span>대표번호 : </span><p>{cfg_site.compPhone}</p></li>
+						<li class="map3"><span>이메일 : </span><p>{cfg_site.adminEmail}</p></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl>
+				<dt>교통정보</dt>
+				<dd>
+					<ul>
+						<li class="map4"><span>지하철 : </span><p>신분당선 1번 출구로 나오신 후 도보로 약 16분 소요</p></li>
+						<li class="map5"><span>자가용 : </span><p>경부고속도로 판교 IC에서 분당.판교 방면으로 나온 후 통게이트를 지나 고가도로 옆 길, 서현로를 따라 이동 후 대왕판교로로 이동</p></li>
+					</ul>
+				</dd>
+			</dl>
+		</div><!-- .sub_location_info -->
+	</div><!-- .sub_location -->
+</div><!--sub_content-->
+{#footer}

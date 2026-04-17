@@ -1,0 +1,43 @@
+<div style="margin: 30px; width: 720px;">
+	<div style="padding: 40px 0px 0px; border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(204, 204, 204); border-top-width: 2px; border-bottom-width: 1px; border-top-style: solid; border-bottom-style: solid;">
+		<h2 style="color: rgb(51, 51, 51); line-height: 60px; font-size: 40px; font-weight: normal;">{$board_name} 게시판</h2>
+		<div>
+			<h3 style="padding: 0px 0px 5px 10px; color: rgb(51, 51, 51); font-size: 14px; font-weight: 500;">{$board_name} 게시판에 작성된 게시글입니다.<span style="color: rgb(85, 85, 85); padding-left: 15px; font-size: 12px; font-weight: 500;">* {$board_name} This is a post written on the bulletin board.</span></h3>
+			<dl style="margin: 0px 0px 0px 10px; line-height: 71px; border-top-color: rgb(170, 170, 170); border-bottom-color: rgb(204, 204, 204); border-top-width: 1px; border-bottom-width: 1px; border-top-style: solid; border-bottom-style: solid; display: table; min-height: 71px;">
+				<dt style="background: rgb(238, 238, 238); width: 140px; text-align: left; color: rgb(51, 51, 51); text-indent: 20px; font-size: 13px; font-weight: 500; vertical-align: middle; display: table-cell;">제목 (Subject)</dt>
+				<dd style="margin: 0px; padding: 0px 20px; width: 537px; text-align: left; color: rgb(0, 0, 0); line-height: 20px; font-size: 14px; font-weight: 500; vertical-align: middle; display: table-cell;">{$title}</dd>
+			</dl>
+			<dl style="margin: 0px 0px 0px 10px; line-height: 71px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; display: table; min-height: 71px;">
+				<dt style="background: rgb(238, 238, 238); width: 140px; text-align: left; color: rgb(51, 51, 51); text-indent: 20px; font-size: 13px; font-weight: 500; vertical-align: middle; display: table-cell;">이름 (Writer)</dt>
+				<dd style="margin: 0px; padding: 0px 20px; width: 537px; text-align: left; color: rgb(0, 0, 0); line-height: 20px; letter-spacing: -0.5px; font-size: 14px; font-weight: 500; vertical-align: middle; display: table-cell;">{$writer}</dd>
+			</dl>
+			<?php
+			if($this->CI->_board['yn_email'] == 'y') :
+			?>
+			<dl style="margin: 0px 0px 0px 10px; line-height: 71px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; display: table; min-height: 71px;">
+				<dt style="background: rgb(238, 238, 238); width: 140px; text-align: left; color: rgb(51, 51, 51); text-indent: 20px; font-size: 13px; font-weight: 500; vertical-align: middle; display: table-cell;">E-mail</dt>
+				<dd style="margin: 0px; padding: 0px 20px; width: 537px; text-align: left; color: rgb(0, 0, 0); line-height: 20px; letter-spacing: -0.5px; font-size: 14px; font-weight: 500; vertical-align: middle; display: table-cell;">{$email}</dd>
+			</dl>
+			<?php
+			endif;
+			if($this->CI->_board['yn_mobile'] == 'y') :
+			?>
+			<dl style="margin: 0px 0px 0px 10px; line-height: 71px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; display: table; min-height: 71px;">
+				<dt style="background: rgb(238, 238, 238); width: 140px; text-align: left; color: rgb(51, 51, 51); text-indent: 20px; font-size: 13px; font-weight: 500; vertical-align: middle; display: table-cell;">연락처 (Mobile)</dt>
+				<dd style="margin: 0px; padding: 0px 20px; width: 537px; text-align: left; color: rgb(0, 0, 0); line-height: 20px; letter-spacing: -0.5px; font-size: 14px; font-weight: 500; vertical-align: middle; display: table-cell;">{$mobile}</dd>
+			</dl>
+			<?php
+			endif;
+			?>
+			<dl style="margin: 0px 0px 40px 10px; line-height: 110px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; display: table; min-height: 110px;">
+				<dt style="background: rgb(238, 238, 238); width: 140px; text-align: left; color: rgb(51, 51, 51); text-indent: 20px; font-size: 13px; font-weight: 500; vertical-align: middle; display: table-cell;">내용 (Content)</dt>
+				<dd style="margin: 0px; padding: 0px 20px; width: 537px; text-align: left; color: rgb(0, 0, 0); line-height: 20px; letter-spacing: -0.5px; font-size: 14px; font-weight: 500; vertical-align: middle; display: table-cell;">{$content}</dd>
+			</dl>
+			<h5 style="text-align: center; padding-bottom: 30px;"><div style="background: rgb(201, 65, 65); width: 210px; text-align: center; color: rgb(255, 255, 255); line-height: 18px; padding-top: 16px; padding-bottom: 16px; font-size: 18px; font-weight: 700; margin-left: 250px; border-bottom-color: rgb(135, 38, 38); border-bottom-width: 3px; border-bottom-style: solid;"><a style="color: rgb(255, 255, 255); line-height: 18px; font-size: 18px; font-weight: 700;" href="{$base_url()}" target="_blank">사이트 바로가기<br><b style="color: rgb(225, 225, 225); font-size: 14px;">Visit The Homepage</b></a></div></h5>
+			<div style="background: rgb(247, 247, 247); padding: 24px 30px 27px; color: rgb(119, 119, 119); line-height: 21px; font-size: 11px; font-weight: 500;">
+				{$nameKor} <span style="padding: 0px 7px; width: 1px; height: 10px; color: rgb(204, 204, 204); display: inline-block;">|</span>  주소(address) : {$address}<br>대표자(CEO) : {$ceoName} <span style="padding: 0px 7px; width: 1px; height: 10px; color: rgb(204, 204, 204); display: inline-block;">|</span> 사업자등록번호(Business license number) : {$compSerial}<br>팩스(Fax) : {$compFax} <span style="padding: 0px 7px; width: 1px; height: 10px; color: rgb(204, 204, 204); display: inline-block;">|</span> 전화번호(TEL) : {$compPhone} <br>이메일(E-mail) : {$adminEmail}
+				<p style="margin: 0px; padding: 3px 0px 0px; color: rgb(136, 136, 136); font-size: 11px; font-weight: 500;">Copyright © <span style="color: rgb(51, 51, 51); font-size: 11px; font-weight: 500;">{$nameEng}</span> All rights reserved.</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,439 @@
+<!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
+<script type="text/javascript" src="{js}/js/common_board.js"></script>
+<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script>
+	var Common_Board = new common_board({
+		code : "{board_info['code']}",
+		no : "{board_view['board_view']['no']}",
+		is_login : "{=defined('_IS_LOGIN')}"
+	});
+
+	$(function() {
+		$("form[name='frm']").validate({
+			rules : {
+				title : {required : true},
+				<!--{ ? board_info['yn_mobile'] == 'y' }-->mobile : {required : true, onlyNumHyphenValid : true},<!--{ / }-->
+				<!--{ ? board_info['yn_email'] == 'y' }-->email : {required : true, email : true},<!--{ / }-->
+				<!--{ ? board_info['yn_video'] == 'y' }-->video_url : {required : true, regUrlType : true},<!--{ / }-->
+				name : {required : true},
+				<!--{ ? board_info['mode'] != 'modify' }-->
+				password : {required : true, rangelength : [4, 20]},
+				<!--{ / }-->
+				<!--{ ? CI->uri->rsegments[1] != 'index_' && board_info['code'] != 'inquiry'}-->//메인에서 에디터 적용금지
+				content : {editorRequired : {depends : function(){return !getSmartEditor("contents")}}},
+				<!--{ / }-->
+				file : {},
+				nonMember : {required : {depends : function(){return <!--{ ? !defined('_IS_LOGIN')}-->true<!--{ : }-->false<!--{ / }-->}}},
+				// 추가필드 rules Start
+				<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']]) }-->
+					<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']] }-->
+						{=.key_}_{cfg_site['language']} : {
+							editorRequired : {
+								depends : function(){
+									<!--{ ? !empty(board_info['extraFieldInfo']['require'][cfg_site['language']][.key_])}-->
+										<!--{? board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'editor' }-->
+											return !getSmartEditor("{=.key_}_{=cfg_site['language']}");
+										<!--{ : board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'file' }-->
+											if(!$("[name={=.key_}_{=cfg_site['language']}_fname]").val()){
+												return true;
+											}
+										<!--{ : board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'checkbox' ||  board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'radio' }-->
+											if(!$("[name={=.key_}_{=cfg_site['language']}]:checked").val()){
+												return true;
+											}
+										<!--{ : }-->
+											if(!$("[name={=.key_}_{=cfg_site['language']}]").val()){
+												return true;
+											}
+										<!--{ / }-->
+										return false;
+									<!--{ : }-->
+										<!--{? board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'editor' }-->
+											getSmartEditor("{=.key_}_{=cfg_site['language']}");
+										<!--{ / }-->
+										return false;
+									<!--{ / }-->
+								}
+							}
+						},
+					<!--{ / }-->
+				<!--{ / }-->
+				// 추가필드 rules End
+				<!--{ ? board_info.use_captcha == "y" }-->
+				captcha: { required: true }
+				<!--{ / }-->
+			}, messages : {
+				title : {required : "Please enter the title."},
+				<!--{ ? board_info['yn_mobile'] == 'y' }-->mobile : {required : "Please enter the mobile phone number.", onlyNumHyphenValid : "mobile is only available in numbers and Hyphen."},<!--{ / }-->
+				<!--{ ? board_info['yn_email'] == 'y' }-->email : {required : "Please enter your e-mail.", email : "Please enter a valid email."},<!--{ / }-->
+				<!--{ ? board_info['yn_video'] == 'y' }-->video_url : {required : "Please enter the URL of the video.", regUrlType : "Please enter the correct url."},<!--{ / }-->
+				name : {required : "Please enter the author of the post."},
+				<!--{ ? board_info['mode'] != 'modify' }-->
+				password : {required : "Please enter a password.", rangelength: $.validator.format("The password is between {0}~{1} characters.")},
+				<!--{ / }-->
+				<!--{ ? CI->uri->rsegments[1] != 'index_' && board_info['code'] != 'inquiry' }-->//메인에서 에디터 적용금지
+				content : {editorRequired : "Please enter your content."},
+				<!--{ / }-->
+				file : {},
+				<!--{ ? CI->uri->rsegments[1] != 'index_'  && board_info['code'] != 'inquiry'}-->//메인에서 태그 가져오지 못하는 오류 수정
+				nonMember : {required : "please check {terms['nonMember']['title']}."},
+				<!--{ : }-->
+				nonMember : {required : "Please check the consent for nonmember personal data collection items."},
+				
+				<!--{ / }-->
+				// 추가필드 messages Start
+				<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']]) }-->
+					<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']] }-->
+					{.key_}_{cfg_site['language']} : {
+						editorRequired : "{=board_info['extraFieldInfo']['name'][cfg_site['language']][.key_]} is required."
+					},
+					<!--{ / }-->
+				<!--{ / }-->
+				// 추가필드 messages End
+				<!--{ ? board_info.use_captcha == "y" }-->
+				captcha: { required: "Please enter the automatic registration prevention code." }
+				<!--{ / }-->
+			}
+		});
+
+		<!--{ ? CI->uri->rsegments[1] != 'index_' && board_info['code'] != 'inquiry'}-->//메인에서 에디터 적용금지
+		attachSmartEditor("contents", "board");
+			<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']])}-->
+				<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']] }-->
+					<!--{ ? board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'editor' }-->
+						// 추가필드 에디터 적용
+						attachSmartEditor("{=.key_}_{=cfg_site['language']}", "board");
+					<!--{ / }-->
+				<!--{ / }-->
+			<!--{ / }-->
+		<!--{ / }-->
+		uploadForm.init(document.frm);
+		
+		$.ajax({
+			url : "/captchaRequest/get", 
+			datatype : "json",
+			type : "POST",
+			data : {"page" : "write"},
+			success : function(response, status, request){
+				if(status == "success") {
+					if(request.readyState == "4" && request.status == "200") {
+						var result = JSON.parse(response);
+						if(result.code) {
+							$("#captcha_box").html(result.captcha.image);
+						} else {
+							alert(result.error);
+						}
+					}
+				}
+			}, error : function(request, status, error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+		$("#refreshCode").on("click", function() {
+			$.ajax({
+				url : "/captchaRequest/get", 
+				datatype : "json",
+				type : "POST",
+				data : {"page" : "write"},
+				success : function(response, status, request){
+					if(status == "success") {
+						if(request.readyState == "4" && request.status == "200") {
+							var result = JSON.parse(response);
+							if(result.code) {
+								$("#captcha_box").html(result.captcha.image);
+							} else {
+								alert(result.error);
+							}
+						}
+					}
+				}, error : function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		});
+	});
+
+    function thumbnail_image_choice(value) {
+        var file_fname = $('[name="'+value+'_fname"]').val();
+
+        if ($('[name="'+value+'_image"]').is(":checked") === true) {
+            if (file_fname == "" || typeof file_fname === "undefined")
+            {
+                $('[name="'+value+'_image"]').prop("checked", false);
+                alert("No files selected.");
+                return false;
+            } else {
+                if ($(".thumbnail_image:checked").length > 1) {
+                    $('[name="'+value+'_image"]').prop("checked", false);
+                }else {
+                    $('[name="'+value+'_image"]').prop("checked", true);
+                    $('[name="'+value+'_image"]').val(file_fname);
+                }
+            }
+        }
+    }
+</script>
+	<form name="frm" id="frm" action="/board/board_write" target="ifr_processor" method="POST">
+		<fieldset>
+			<legend>게시글 작성</legend>
+			<input type="hidden" name="write_userid" value="{board_view['board_view']['userid']}" />
+			<input type="hidden" name="code" value="{board_info['code']}" />
+			<input type="hidden" name="mode" value="{board_info['mode']}" />
+			<input type="hidden" name="no" value="{board_view['board_view']['no']}" />
+			<input type="hidden" name="cref" value="{board_view['board_view']['cref']}" />
+			<input type="hidden" name="upload_path" value="{board_view['board_view']['upload_path']}" />
+			<!-- 메인에서 게시글 작성시 사용하는 폼 -->
+			<!--{ ? CI->uri->rsegments[1] == 'index_' }-->
+			<div class="contact_wrap">
+				<div class="title">
+					<h3>CONTACT</h3>
+					<p>Blooming Terra connects space and people, <br>providing the most reasonable solutions.</p>
+				</div>
+				<div class="table_box">
+					<div class="bbs_table_wrap">
+						<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']])}-->
+						<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']]}-->
+						<!--{ ? .key_ == "ex1"}-->
+						<div>
+							<dl>
+								<dt class="req"><span>Area of Interest</span></dt>
+								<dd><input type="text" name="{=.key_}_{=cfg_site['language']}" class="input" value="{board_view['board_view']['extraFieldInfo'][cfg_site['language']][.key_]}" /></dd>
+							</dl>
+						<!--{/}-->
+						<!--{/}-->
+						<!--{/}-->
+						</div>
+						<div class="">
+							<dl>
+								<dt class="req"><span>Company</span></dt>
+								<dd><input type="text" name="title" id="title" value="{board_view['board_view']['title']}" /><label for="title" class="dn">제목</label>	</dd>
+							</dl>	
+							<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']])}-->
+							<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']]}-->
+							<!--{ ? .key_ == "ex2"}-->
+							<!-- <dl>
+								<dt class="req"><span>Company</span></dt>
+								<dd><input type="text" name="{=.key_}_{=cfg_site['language']}" class="input" value="{board_view['board_view']['extraFieldInfo'][cfg_site['language']][.key_]}" /></dd>
+							</dl> -->
+							<!--{/}-->
+							<!--{/}-->
+							<!--{/}-->
+						</div>
+						<div class="dn">
+							<dl>
+								<dt>비밀번호</dt>
+								<dd><input type="password" name="password" id="password" value="{=time()}"/><label for="password" class="dn">게시글 비밀번호</label></dd>
+							</dl>
+						</div>
+						<div class="line2">
+							<dl>
+								<dt class="req"><span>Full Name</span></dt>
+								<dd><input type="text" name="name" id="name" value="<!--{? board_info['mode'] =='write' || board_info['mode'] =='answer' }--><!--{ ? defined('_IS_LOGIN') }-->{member['name']}<!--{ / }--><!--{ : }-->{board_view['board_view']['name']}<!--{ / }-->" {? board_info['mode'] =='write' || board_info['mode'] =='answer'}{ ? defined('_IS_LOGIN') }readonly{ / }{: board_info['mode'] =='modify' }{? defined('_IS_LOGIN') }readonly{ / }{ / }/><label for="name" class="dn">작성자</label></dd>
+							</dl>
+							<dl>
+								<dt class="req">Phone Number</dt>	
+								<dd><input type="text" name="mobile" class="input" value="{board_view['board_view']['mobile']}" /></dd>
+							</dl>
+						</div>
+						<div>
+							<dl>
+								<dt class="req"><span>Email</span></dt>
+								<dd><input type="text" name="email" class="input" value="{board_view['board_view']['email']}" required /></dd>
+							</dl>
+						</div>
+						<!--{ ? board_info['files'] == 'y' }-->
+						<!--{ @ range(1, board_info['file_count']) }-->
+						<div>
+							<dl>
+								<dt><span>File</span></dt>
+								<dd class="file_attach">
+									<input type="text" class="file_name" readonly placeholder="File">
+									<div class="file_close"><span></span><span></span></div>
+									<input type="file" name="file{.value_}" id="file" class="file_btn dn"><label for="file" class="label_btn_file">Upload</label>
+									<input type="hidden" name="file{.value_}_oname" value="{board_view['board_view']['board_file']['file'][(.key_)]['oname']}" />
+									<input type="hidden" name="file{.value_}_fname" value="{board_view['board_view']['board_file']['file'][(.key_)]['fname']}" />
+									<input type="hidden" name="file{.value_}_type" value="all" />
+									<input type="hidden" name="file{.value_}_size" value="{board_info['filesize']}" />
+									<input type="hidden" name="file{.value_}_folder" value="{C._UPLOAD}/board/{board_info['code']}" />
+									
+								</dd>
+							</dl>
+						</div>
+						<!--{/}-->
+						<!--{/}-->
+						<div>
+							<dl>
+								<dt class="req">Message</dt>
+								<dd>
+									<div class="edit-box" style="width:100%;"><textarea name="content" id="contents" title="내용을 입력하세요.">{board_view['board_view']['content']}</textarea></div>
+								</dd>
+							</dl>
+						</div>
+						<!--{ ? board_info.use_captcha == "y" }-->
+						<!--{ ? !board_view.board_view.no }-->
+						<div>
+							<dl class="board_capthca">
+								<dd>
+									<div class="capthca_wrap">
+										<span id="captcha_box">{ captcha.image }</span>
+										<span class="" id="refreshCode"><img src="/data/skin/respon_default_en/images/sub/icon_reset.svg" alt="icon_reset"></span>
+									</div>
+									<input type="text" name="captcha" id="captcha" class="input" placeholder="Please enter the captcha">
+									<label for="captcha" class="dn">자동가입방지 문자입력</label>
+								</dd>
+							</dl>
+						</div>
+						<!--{ / }-->
+						<!--{ / }-->
+					</div>
+					<div class="table_btn_box">
+						<div class="policy_cont">
+							<div>
+								<input type="checkbox" name="nonMember" id="checkbox-nonMember"  checked/>
+								<label for="checkbox-nonMember">I agree to the the Privacy Policy</label>
+								<a href="/service/usepolicy" target="_blank">View</a>
+							</div>
+						</div><!-- .policy_cont -->
+						<button onclick="Common_Board.board_write(this.form); return false;" class="btn_send"><a href="javascript://" >Send</a></button>
+					</div>
+				</div>
+			</div>
+			<!--{:}-->
+			<!-- 게시글 작성 페이지에서 게시글 작성시 사용하는 폼 -->
+
+			<div class="contact_wrap">
+				<div class="title">
+					<h3>CONTACT</h3>
+					<p>Blooming Terra connects space and people, <br>providing the most reasonable solutions.</p>
+				</div>
+				<div class="table_box">
+					<div class="bbs_table_wrap">
+						<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']])}-->
+						<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']]}-->
+						<!--{ ? .key_ == "ex1"}-->
+						<div>
+							<dl>
+								<dt class="req"><span>Area of Interest</span></dt>
+								<dd><input type="text" name="{=.key_}_{=cfg_site['language']}" class="input" value="{board_view['board_view']['extraFieldInfo'][cfg_site['language']][.key_]}" /></dd>
+							</dl>
+						<!--{/}-->
+						<!--{/}-->
+						<!--{/}-->
+						</div>
+						<div class="">
+							<dl>
+								<dt class="req"><span>Company</span></dt>
+								<dd><input type="text" name="title" id="title" value="{board_view['board_view']['title']}" /><label for="title" class="dn">제목</label>	</dd>
+							</dl>	
+							<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']])}-->
+							<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']]}-->
+							<!--{ ? .key_ == "ex2"}-->
+							<!-- <dl>
+								<dt class="req"><span>Company</span></dt>
+								<dd><input type="text" name="{=.key_}_{=cfg_site['language']}" class="input" value="{board_view['board_view']['extraFieldInfo'][cfg_site['language']][.key_]}" /></dd>
+							</dl> -->
+							<!--{/}-->
+							<!--{/}-->
+							<!--{/}-->
+						</div>
+						<div class="dn">
+							<dl>
+								<dt>비밀번호</dt>
+								<dd><input type="password" name="password" id="password" value="{=time()}"/><label for="password" class="dn">게시글 비밀번호</label></dd>
+							</dl>
+						</div>
+						<div class="line2">
+							<dl>
+								<dt class="req"><span>Full Name</span></dt>
+								<dd><input type="text" name="name" id="name" value="<!--{? board_info['mode'] =='write' || board_info['mode'] =='answer' }--><!--{ ? defined('_IS_LOGIN') }-->{member['name']}<!--{ / }--><!--{ : }-->{board_view['board_view']['name']}<!--{ / }-->" {? board_info['mode'] =='write' || board_info['mode'] =='answer'}{ ? defined('_IS_LOGIN') }readonly{ / }{: board_info['mode'] =='modify' }{? defined('_IS_LOGIN') }readonly{ / }{ / }/><label for="name" class="dn">작성자</label></dd>
+							</dl>
+							<dl>
+								<dt class="req">Phone Number</dt>	
+								<dd><input type="text" name="mobile" class="input" value="{board_view['board_view']['mobile']}" /></dd>
+							</dl>
+						</div>
+						<div>
+							<dl>
+								<dt class="req"><span>Email</span></dt>
+								<dd><input type="text" name="email" class="input" value="{board_view['board_view']['email']}" required /></dd>
+							</dl>
+						</div>
+						<!--{ ? board_info['files'] == 'y' }-->
+						<!--{ @ range(1, board_info['file_count']) }-->
+						<div>
+							<dl>
+								<dt><span>File</span></dt>
+								<dd class="file_attach">
+									<input type="text" class="file_name" readonly placeholder="File">
+									<div class="file_close"><span></span><span></span></div>
+									<input type="file" name="file{.value_}" id="file" class="file_btn dn"><label for="file" class="label_btn_file">Upload</label>
+									<input type="hidden" name="file{.value_}_oname" value="{board_view['board_view']['board_file']['file'][(.key_)]['oname']}" />
+									<input type="hidden" name="file{.value_}_fname" value="{board_view['board_view']['board_file']['file'][(.key_)]['fname']}" />
+									<input type="hidden" name="file{.value_}_type" value="all" />
+									<input type="hidden" name="file{.value_}_size" value="{board_info['filesize']}" />
+									<input type="hidden" name="file{.value_}_folder" value="{C._UPLOAD}/board/{board_info['code']}" />
+								</dd>
+							</dl>
+						</div>
+						<!--{/}-->
+						<!--{/}-->
+						<div>
+							<dl>
+								<dt class="req">Message</dt>
+								<dd>
+									<div class="edit-box" style="width:100%;"><textarea name="content" id="contents" title="내용을 입력하세요.">{board_view['board_view']['content']}</textarea></div>
+								</dd>
+							</dl>
+						</div>
+						<!--{ ? board_info.use_captcha == "y" }-->
+						<!--{ ? !board_view.board_view.no }-->
+						<div>
+							<dl class="board_capthca">
+								<dd>
+									<div class="capthca_wrap">
+										<span id="captcha_box">{ captcha.image }</span>
+										<span class="" id="refreshCode"><img src="/data/skin/respon_default_en/images/sub/icon_reset.svg" alt="icon_reset"></span>
+									</div>
+									<input type="text" name="captcha" id="captcha" class="input" placeholder="Please enter the captcha">
+									<label for="captcha" class="dn">자동가입방지 문자입력</label>
+								</dd>
+							</dl>
+						</div>
+						<!--{ / }-->
+						<!--{ / }-->
+					</div>
+					<div class="table_btn_box">
+						<div class="policy_cont">
+							<div>
+								<input type="checkbox" name="nonMember" id="checkbox-nonMember"  checked/>
+								<label for="checkbox-nonMember">I agree to the the Privacy Policy</label>
+								<a href="/service/usepolicy" target="_blank">View</a>
+							</div>
+						</div><!-- .policy_cont -->
+						<button onclick="Common_Board.board_write(this.form); return false;" class="btn_send"><a href="javascript://" ><span>Send</span></a></button>
+					</div>
+				</div>
+			</div>
+			<!--{? board_info['code'] == 'inquiry' }-->
+			<!--{:}-->
+			<div class="btn_wrap ta_center">
+				<button onclick="Common_Board.board_write(this.form); return false;"><a href="javascript://" class="btn btn_point">OK</a></button>
+				<a href="/board/board_list?code={board_info['code']}" class="btn btn_basic">Cancel</a>
+			</div><!--btn_center-->
+
+			<!--{/}-->
+			<!--{/}-->
+		</fieldset>
+	</form>
+
+<script>
+	$(document).ready(function(){
+		$('.file_btn').change(function(e){
+			$(this).siblings(".file_name").val(e.target.files[0].name);
+		});
+		
+		$('.file_close').on('click', function() {
+			$('.file_name').val('');
+		});
+	});
+</script>

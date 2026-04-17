@@ -1,0 +1,16 @@
+<?php
+$db_host   = "localhost";
+$db_user   = "0829askim";
+$db_pass   = "V2%wxfiS14rR2K6e";
+$db_name   = "db0829askim";
+
+$AlimTalkDBConf['db_host']   = "58.230.162.237";
+$AlimTalkDBConf['db_user']   = "alimtalk";
+$AlimTalkDBConf['db_pass']   = "24alimtalk#!@#";
+$AlimTalkDBConf['db_name']   = "alimtalk";
+
+$BankdaDBConf['dbhost']   = "";
+$BankdaDBConf['dbuser']   = "";
+$BankdaDBConf['dbpass']   = "";
+$BankdaDBConf['dbname']   = "";
+?>

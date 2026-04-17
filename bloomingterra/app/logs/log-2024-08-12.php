@@ -1,0 +1,15 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2024-08-12 15:32:29 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 15:32:59 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:18:23 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:19:57 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:20:23 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:20:59 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:34:03 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:58:45 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 16:59:02 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 17:00:15 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 17:00:54 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 17:01:16 --> Could not find the language line "board_no"
+ERROR - 2024-08-12 17:03:16 --> Could not find the language line "board_no"

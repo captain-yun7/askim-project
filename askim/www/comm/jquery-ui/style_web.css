@@ -1,0 +1,4 @@
+@charset "utf-8";
+
+.ui-datepicker{ font-size:13px; width: 250px; }
+.ui-datepicker-trigger{ margin-left:2px; vertical-align:middle; cursor: pointer; }

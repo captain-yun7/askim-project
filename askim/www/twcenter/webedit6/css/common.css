@@ -1,0 +1,68 @@
+/*
+ * CHEditor
+ * Copyright © 1997-2025 CHCODE. All rights reserved.
+ */
+:root {
+  --cheditor-font-size: 0.875em;
+  --cheditor-font-size-sm: 0.8125em;
+  --cheditor-font-size-xs: 0.75em;
+  --cheditor-font-family: "맑은 고딕", "Malgun Gothic", "Helvetica Neue", sans-serif;
+  --cheditor-font-family-macos: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, sans-serif;
+  --cheditor-modal-shadow-default: 0 2px 6px -1px rgba(0, 0, 0, 0.16), 0 1px 4px -1px rgba(0, 0, 0, 0.04);
+  --cheditor-modal-shadow: 0 0 0 1px rgba(20, 20, 31, 0.05), 0 2px 7px 1px rgba(20, 20, 31, 0.16);
+}
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: 0 !important;
+}
+.d-none {
+  display: none !important;
+}
+.visible {
+  visibility: visible !important;
+}
+.invisible {
+  visibility: hidden !important;
+}
+.fade {
+  transition: opacity 0.15s linear, box-shadow 0.15s ease-in-out;
+}
+.fade:not(.show) {
+  opacity: 0;
+}
+.cheditor-btn {
+  display: inline-block;
+  font-family: var(--cheditor-font-family), monospace;
+  font-weight: 400;
+  color: #363642;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  height: calc(1.5em + 0.65rem + 2px);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 0.2rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+body.macos .cheditor-btn {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.cheditor-btn:disabled {
+  cursor: default;
+}
+.btn-xs {
+  font-size: 0.8125rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.2rem;
+  height: auto;
+  line-height: 1.5;
+}
+

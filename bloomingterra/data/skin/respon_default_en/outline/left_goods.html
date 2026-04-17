@@ -1,0 +1,24 @@
+<div class="sub_menu">
+    <!--leftmenu영역시작-->
+	<dl>
+		<dt>PRODUCT</dt>
+		<!--{ ? isset(category_list['top_category_list'])}-->
+			<!--{ @ category_list['top_category_list']}-->
+			<dd class="menu0{.index_+1} <!--{ ? category_info['category'] == .category || substr(category_info['category'], 0, 3) == substr(.category, 0, 3) || substr(category_info['category'], 0, 3) == substr(.category, 0, 3) }-->on<!--{ / }-->">
+				<a href="/goods/goods_list?cate={.category}&display_type={display_type}">
+				<!--{ ? .multi_category }-->
+				{.multi_category}
+				<!--{ : }-->
+				{.categorynm}
+				<!--{ / }-->
+				</a>
+			</dd>
+			<!--{ / }-->
+		<!--{ : }-->
+			<dd>There are no categories.</dd>
+		<!--{ / }-->
+	</dl>
+    <!--leftmenu영역끝-->
+	{#left_bnr}
+</div><!-- .sub_menu -->
+

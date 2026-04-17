@@ -1,0 +1,41 @@
+{#header}
+<script type="text/javascript">
+	$(function() {
+		$("form[name='frm']").validate({
+			rules : {
+				userid : {required : true},
+				name : {required : true},
+				email : {required : true, email : true}
+			}, messages : {
+				userid : {required : "Please enter your ID."},
+				name : {required : "Please enter your name."},
+				email : {required : "Please enter your E-mail.", email : "Please enter the correct {memberField['name'][cfg_site['language']]['email']}."}
+			}
+		});
+	});
+</script>
+
+<div class="sub_content">
+	<div class="sub_login">
+		<div class="login_box">
+			{=form_open('member/find', 'name=frm')}
+			<fieldset>
+			<legend>Find Lost Password with Member ID, Name, and E-mail Information</legend>
+			<input type="hidden" name="mode" value="find_pw" />
+			<ul>
+				<li><input type="text" name="userid" id="userid" value="" placeholder="ID"><label for="userid" class="dn">ID</label></li>
+				<li><input type="text" name="name" id="name" value="" placeholder="Name"><label for="name" class="dn">Name</label></li>
+				<li><input type="text" name="email" id="email" value="" placeholder="E-mail"><label for="email" class="dn">E-mail</label></li>
+				<li><button type="submit" class="btn_wd btn_point">SEARCH</button></li>
+			</ul>
+			</fieldset>
+			{=form_close()}
+			<ul class="login_link">
+				<li class="first"><a href="/member/find_id">Find ID</a></li>
+				<li><a href="/member/find_pw">Find Password</a></li>
+				<li><a href="/member/join_agreement">Sign up</a></li>
+			</ul>
+		</div><!--login_box-->
+	 </div>
+</div><!--sub_content-->
+{#footer}
