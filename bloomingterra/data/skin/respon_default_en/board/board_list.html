@@ -1,4 +1,8 @@
 {#header}
+<!--{? board_info['code'] == 'gallery' }-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..500,0..1,-50..200" />
+<link rel="stylesheet" type="text/css" href="/data/skin/respon_default_en/css/insight_board.css?v=20260428">
+<!--{ / }-->
 <script type="text/javascript">
 	$(function() {
 		$("form[name='frm']").validate({
@@ -11,7 +15,7 @@
 	});
 </script>
 <div class="gallery_list_bg"></div>
-<div class="sub_cont w_custom">
+<div class="sub_cont w_custom <!--{? board_info['code'] == 'gallery' }-->insight_webzine<!--{ / }-->">
 	<div class="sub_board board_list">
 		<div class="clear">
 			{=form_open('', form_attribute)}

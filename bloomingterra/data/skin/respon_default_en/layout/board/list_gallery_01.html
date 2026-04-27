@@ -1,0 +1,72 @@
+<!--{ ? isset(board_list['notice_list']) }-->
+<!--{ ? count(board_list['notice_list']) > 0 }-->
+<ul class="gallery_notice">
+	<!--{ @ board_list['notice_list'] }-->
+	<li class="<!--{ ? ((.index_%3)+1) == '3' }-->last<!--{ / }--> ">
+		<!--{ ? .is_read == 's' }--><a href="/board/board_secret?code={.code}&no={.no}&page=view" alt="{.title}"><!--{ : }--><a href="/board/board_view?code={.code}&no={.no}" alt="{.title}"><!--{ / }--></a>
+		<div class="thumb">
+			<img src="{C._UPLOAD}/board/{.upload_path}/{ .board_file.thumbnail[0]['fname'] }" alt="{.title}" onerror="this.src='../../images/common/noimg.gif'">
+		</div>
+		<div class="txt_info">
+			<b>공지</b>
+			<div class="board_tit">
+				<div class="board_ico">
+					<!--{ ? .display_read == 's' }--><img src="../../images/common/icon_secret.gif" alt="비밀글"><!--{ / }-->
+					<!--{ ? count(.board_file['file']) > 0 }--><img src="/lib/images/icon_attach_file.png" alt="첨부파일"><!--{ / }-->
+				</div>
+				<h3>
+					<strong><!--{ ? .preface }-->[{.preface}]<!--{ / }--> {=mb_strimwidth((.title), 0, 150, "...")}</strong>
+					<!--{ ? board_info['comment'] == 'y' }-->
+						<!--{ ? .comment > '0' }-->[{.comment}]<!--{ / }-->
+					<!--{ / }-->
+				</h3>
+			</div>
+			<p>{.name}<span></span>{.regdt_date}</p>
+			{ ? extra[.no]['ex1']}
+			<p>{extra[.no]['ex1']}</p>
+			{/}
+		</div>
+	</li>
+	<!--{ / }-->
+</ul>
+<!--{ / }-->
+<!--{ / }-->
+
+<!--{ ? isset(board_list['board_list']) }-->
+<div class="masonry_gutter"></div>
+<ul class="gallery_list">
+	<!--{ @ board_list['board_list'] }-->
+	<li>
+		<div class="cont">
+			<!--{ ? .is_read == 's' }--><a href="/board/board_secret?code={.code}&no={.no}&page=view" alt="{.title}" class="link"><!--{ : }--><a href="/board/board_view?code={.code}&no={.no}<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }--><!--{ ? req.search }-->&search_type={ req.search_type }&search={ req.search }<!--{ / }-->" alt="{.title}" class="link"><!--{ / }--></a>
+			<span class="arw"><img src="../data/skin/respon_default/images/sub/gallery_arw.svg" alt=""></span>
+			<div class="thumb">
+				<img src="{C._UPLOAD}/board/{.upload_path}/{ .board_file.thumbnail[0]['fname'] }" alt="{.title}" onerror="this.src='../../images/common/noimg.gif'">
+			</div>
+			<div class="info">
+				<dl>
+					<dt><!--{ ? .preface }-->[{.preface}]<!--{ / }--> {=mb_strimwidth((.title), 0, 70, "...")}</dt>
+					{ ? extra[.no]['ex1']}
+					<dd>{extra[.no]['ex1']}</dd>
+					{/}
+				</dl>
+				<span>{=date_format(date_create(.regdt_date),'Y.m.d')}</span>
+			</div>
+		</div>
+		<!--{ ? count(tags[.no]) > 0 }-->
+		<ul class="tag_list">
+			<!--{ @ tags[.no] }-->
+			<li><a href="../board/board_list?code={ .code }&tag={ ..value_ }"<!--{ ? req.tag === ..value_ }--> class="current-tag"<!--{ / }-->>#{ ..value_ }</a></li>
+			<!--{ / }-->
+		</ul>
+		<!--{ / }-->
+	</li>
+	<!--{ / }-->
+</ul><!--gallery_list-->
+<!--{ : }-->
+<!--{ ? count(board_list['notice_list']) < 1 }-->
+<p class="nodate">There is No Posts.</p>
+<!--{ / }-->
+<!--{ / }-->
+<script src="{ js }/js/masonry.pkgd.min.js"></script>
+<script src="{ js }/js/gallery_list.js"></script>

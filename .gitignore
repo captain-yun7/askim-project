@@ -28,3 +28,5 @@ askim/tmp/
 
 # Sensitive config (DB credentials)
 bloomingterra/app/config/database.php
+*.pyc
+__pycache__/

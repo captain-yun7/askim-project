@@ -1,0 +1,71 @@
+<div class="bbs_num">Total of <strong>{board_list['total_rows']}</strong>posts</div>
+<table class="bbs_list" summary="게시글 제목, 작성자, 작성일, 조회수, 게시글 내용 등..">
+	<caption>게시글 내용</caption>
+	<colgroup>
+		<col width="7%">
+		<col >
+	</colgroup>
+	<thead>
+		<tr>
+			<th scope="col">No.</th>
+			<th scope="col">Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!--{ ? isset(board_list['notice_list']) }-->
+		<!--{ ? count(board_list['notice_list']) > 0 }-->
+		<!--{ @ board_list['notice_list'] }-->
+		<tr class="board_notice">
+			<td>Notice</td>
+			<td class="left">
+				<div class="board_tit">
+					<!--{ ? .is_read == 's' }--><a href="/board/board_secret?code={.code}&no={.no}&page=view"><!--{ : }--><a href="/board/board_view?code={.code}&no={.no}"><!--{ / }-->
+						<div class="board_ico">
+							<!--{ ? .display_read == 's' }--><img src="../../images/common/icon_secret.gif" alt="Secret post"><!--{ / }-->
+							<!--{ ? count(.board_file['file']) > 0 }--><img src="/lib/images/icon_attach_file.png" alt="Attachments"><!--{ / }-->
+						</div>
+						<h3>
+							<strong>{.title} </strong>
+							<!--{ ? board_info['comment'] == 'y' }-->
+								<!--{ ? .comment > '0' }-->[{.comment}]<!--{ / }-->
+							<!--{ / }-->
+						</h3>
+					</a>
+				</div>
+			</td>
+		</tr>
+		<!--{ / }-->
+		<!--{ / }-->
+		<!--{ / }-->
+		<!--{ ? isset(board_list['board_list']) }-->
+		<!--{ @ board_list['board_list'] }-->
+		<tr>
+			<td>{=board_list['total_rows'] - .key_ -  board_info['offset']}</td>
+			<td class="left">
+				<div class="board_tit">
+					<!--{ ? .is_read == 's' }--><a href="/board/board_secret?code={.code}&no={.no}&page=view"><!--{ : }--><a href="/board/board_view?code={.code}&no={.no}"><!--{ / }-->
+						<div class="board_ico">
+							<!--{ ? .clevel > '0'}--><img src="../../images/common/icon_re.gif" alt="reply"><!--{ / }-->
+							<!--{ ? .display_read == 's' }--><img src="../../images/common/icon_secret.gif" alt="Secret post"><!--{ / }-->
+							<!--{ ? count(.board_file['file']) > 0 }--><img src="/lib/images/icon_attach_file.png" alt="Attachments"><!--{ / }-->
+						</div>
+						<h3>
+							<strong>{.title} </strong>
+							<!--{ ? board_info['comment'] == 'y' }-->
+								<!--{ ? .comment > '0' }-->[{.comment}]<!--{ / }-->
+							<!--{ / }-->
+						</h3>
+					</a>
+				</div>
+			</td>
+		</tr>
+		<!--{ / }-->
+		<!--{ : }-->
+		<!--{ ? count(board_list['notice_list']) < 1 }-->
+		<tr>
+			<td colspan="2">No posts found.</td>
+		</tr>
+		<!--{ / }-->
+		<!--{ / }-->
+	</tbody>
+</table><!--board_list-->
