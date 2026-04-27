@@ -114,6 +114,44 @@
 /* ===== dn (히든 호환 영역) ===== */
 .portfolio_view .dn{display:none;}
 
+/* ===== Recent Posts ===== */
+.portfolio_view .recent_posts{padding-top:120px; overflow:hidden;}
+.portfolio_view .recent_posts .inner{max-width:1530px; margin:0 auto; padding:0 30px; box-sizing:border-box;}
+.portfolio_view .recent_posts .fs50{font-size:42px; padding-bottom:25px; font-weight:800; color:var(--pv-black); font-family:var(--pv-eng); line-height:130%; letter-spacing:0; margin:0;}
+
+.portfolio_view .marquee-wrapper{position:relative;}
+.portfolio_view .marquee-item a{display:block; width:100%; text-decoration:none;}
+.portfolio_view .marquee-item .thumb{aspect-ratio:4/2.5; overflow:hidden; position:relative;}
+.portfolio_view .marquee-item .thumb::after{content:''; display:block; width:100%; height:100%; background:var(--pv-main); position:absolute; left:0; top:0; opacity:0; transition:all .3s;}
+.portfolio_view .marquee-item:hover .thumb::after{opacity:0.4; transition:all .4s ease;}
+.portfolio_view .marquee-item .thumb span{display:block; background:var(--pv-main); position:absolute; transition:all .3s; z-index:5;}
+.portfolio_view .marquee-item .thumb .line1{width:0; height:10px; left:0; top:0;}
+.portfolio_view .marquee-item .thumb .line2{width:10px; height:0; right:0; top:0;}
+.portfolio_view .marquee-item .thumb .line3{width:0; height:10px; right:0; bottom:0;}
+.portfolio_view .marquee-item .thumb .line4{width:10px; height:0; left:0; bottom:0;}
+.portfolio_view .marquee-item:hover .thumb .line1{width:100%; transition:all .4s ease;}
+.portfolio_view .marquee-item:hover .thumb .line2{height:100%; transition:all .4s ease;}
+.portfolio_view .marquee-item:hover .thumb .line3{width:100%; transition:all .4s ease;}
+.portfolio_view .marquee-item:hover .thumb .line4{height:100%; transition:all .4s ease;}
+.portfolio_view .marquee-item .thumb img{display:block; width:100%; height:100%; object-fit:cover; transition:all .3s;}
+.portfolio_view .marquee-item:hover .thumb img{transform:scale(1.15); transition:all .6s ease;}
+.portfolio_view .marquee-item .desc{padding:20px 0 0;}
+.portfolio_view .marquee-item .desc .fs25{font-size:20px; line-height:120%; font-weight:700; color:var(--pv-black); letter-spacing:var(--pv-ls); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; display:block; transition:all .4s ease; margin:0;}
+.portfolio_view .marquee-item:hover .desc .fs25{color:var(--pv-main);}
+.portfolio_view .marquee-item .desc .loca{display:block; margin:8px 0 0; font-size:14px; color:var(--pv-light); line-height:140%; letter-spacing:var(--pv-ls); transition:all .4s ease;}
+.portfolio_view .marquee-item:hover .desc .loca{color:var(--pv-black);}
+.portfolio_view .marquee-item .desc .loca::before{content:'\e0c8'; display:inline-block; vertical-align:middle; margin:-2px 5px 0 0; width:18px; height:18px; line-height:18px; font-size:18px; font-family:var(--pv-icon);}
+
+.portfolio_view .marquee-arrow{display:block; width:30px; height:30px; position:absolute; right:0; top:-60px; z-index:9; border:0; padding:0; background:none; font-size:0; cursor:pointer; opacity:0.3; transition:all .4s ease;}
+.portfolio_view .marquee-arrow:hover{opacity:1;}
+.portfolio_view .marquee-arrow::after{content:'\e5e0'; display:block; width:100%; height:100%; line-height:30px; font-size:30px; font-family:var(--pv-icon); position:absolute; left:0; top:0; font-weight:400; color:var(--pv-black);}
+.portfolio_view .marquee-arrow.arrow-prev{transform:translateX(-120px);}
+.portfolio_view .marquee-arrow.arrow-next{transform:rotate(180deg);}
+
+.portfolio_view .marquee-pagination{position:absolute; left:auto !important; bottom:auto !important; width:auto !important; right:0 !important; top:-57px !important; z-index:7; font-size:14px; font-weight:500; color:var(--pv-light); font-family:var(--pv-eng); transform:translateX(-45px);}
+.portfolio_view .marquee-pagination span{display:inline-block; color:inherit; font-weight:inherit;}
+.portfolio_view .marquee-pagination .swiper-pagination-current{font-weight:700; color:var(--pv-main);}
+
 /*******************************************************************************
     @media 1680px
 *******************************************************************************/
@@ -131,6 +169,8 @@
 	.portfolio_view_in .con_area{width:60%;}
 
 	.portfolio_view .fs65{font-size:48px;}
+	.portfolio_view .recent_posts{padding-top:90px;}
+	.portfolio_view .recent_posts .fs50{font-size:34px;}
 }
 
 /*******************************************************************************
@@ -154,6 +194,15 @@
 	.portfolio_view .fs65{font-size:38px;}
 	.portfolio_view .view_button{margin-top:50px; padding:30px 20px 0;}
 	.portfolio_view .view_button .w_custom{gap:20px;}
+
+	.portfolio_view .recent_posts{padding-top:60px;}
+	.portfolio_view .recent_posts .inner{padding:0 20px;}
+	.portfolio_view .recent_posts .fs50{font-size:28px;}
+	.portfolio_view .marquee-item .desc{padding:15px 0 0;}
+	.portfolio_view .marquee-item .desc .fs25{font-size:17px;}
+	.portfolio_view .marquee-item .desc .loca::before{margin:-3px 5px 0 0;}
+	.portfolio_view .marquee-arrow.arrow-prev{transform:translateX(-100px);}
+	.portfolio_view .marquee-pagination{transform:translateX(-40px);}
 }
 
 /*******************************************************************************
@@ -174,4 +223,16 @@
 
 	.portfolio_view .fs19{font-size:15px;}
 	.portfolio_view .fs65{font-size:28px;}
+
+	.portfolio_view .recent_posts{padding-top:40px;}
+	.portfolio_view .recent_posts .inner{padding:0 16px;}
+	.portfolio_view .recent_posts .fs50{font-size:24px; padding-bottom:15px;}
+	.portfolio_view .marquee-item .thumb .line1{height:6px;}
+	.portfolio_view .marquee-item .thumb .line2{width:6px;}
+	.portfolio_view .marquee-item .thumb .line3{height:6px;}
+	.portfolio_view .marquee-item .thumb .line4{width:6px;}
+	.portfolio_view .marquee-arrow{width:24px; height:24px; top:-40px;}
+	.portfolio_view .marquee-arrow::after{line-height:24px; font-size:24px;}
+	.portfolio_view .marquee-arrow.arrow-prev{transform:translateX(-70px);}
+	.portfolio_view .marquee-pagination{top:-37px !important; transform:translateX(-25px);}
 }

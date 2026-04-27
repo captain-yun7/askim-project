@@ -121,6 +121,69 @@
 			</div>
 		</div>
 
+		<!--{ ? recent_goods['goods_list'] }-->
+		<section class="recent_posts">
+			<div class="inner">
+				<h3 class="fs50">Recent Posts</h3>
+				<div class="marquee-wrapper">
+					<div class="marquee swiper-wrapper">
+						<!--{ @ recent_goods['goods_list'] }-->
+						<div class="marquee-item swiper-slide">
+							<a href="/goods/goods_view?no={=.value['no']}&cate={=.value['category']}">
+								<div class="thumb">
+									<span class="line1"></span>
+									<span class="line2"></span>
+									<span class="line3"></span>
+									<span class="line4"></span>
+									<img src="{C._UPLOAD}/goods/img1/{=.value['img1']}" onerror="this.src='/data/skin/respon_default_en/images/common/noimg.gif'" alt="{=.value['name']}">
+								</div>
+								<div class="desc">
+									<h4 class="fs25">{=.value['name']}</h4>
+									<p class="loca">{=.value['categorynm']}</p>
+								</div>
+							</a>
+						</div>
+						<!--{ / }-->
+					</div>
+					<button type="button" class="marquee-arrow arrow-prev" aria-label="Previous">previous</button>
+					<button type="button" class="marquee-arrow arrow-next" aria-label="Next">next</button>
+					<div class="marquee-pagination"></div>
+				</div>
+			</div>
+		</section>
+		<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			if(typeof Swiper === 'undefined') return;
+			new Swiper(".recent_posts .marquee-wrapper", {
+				speed: 4000,
+				direction: "horizontal",
+				loop: true,
+				slidesPerView: 1,
+				spaceBetween: 10,
+				freeMode: true,
+				navigation: {
+					nextEl: '.recent_posts .arrow-next',
+					prevEl: '.recent_posts .arrow-prev'
+				},
+				autoplay: {
+					delay: 2000,
+					pauseOnMouseEnter: true
+				},
+				breakpoints: {
+					680: { slidesPerView: 2, spaceBetween: 20 },
+					980: { slidesPerView: 3, spaceBetween: 30 }
+				},
+				pagination: {
+					el: ".recent_posts .marquee-pagination",
+					type: "fraction",
+					formatFractionCurrent: function(n){ return n < 10 ? '0' + n : n; },
+					formatFractionTotal: function(n){ return n < 10 ? '0' + n : n; }
+				}
+			});
+		});
+		</script>
+		<!--{ / }-->
+
 		<div class="dn">
 			<div class="info">
 				<dl>

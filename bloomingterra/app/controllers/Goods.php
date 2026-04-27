@@ -340,6 +340,12 @@ class Goods extends FRONT_Controller {
 				$this->template_->assign('button', $button);
 			}
 
+			// Recent Posts (현재 글 제외 최근 30개)
+			$recent_arr_where = array();
+			$recent_arr_where[] = array("Go.no !=", $no);
+			$recent_goods = $this->front_Goods_model->get_list_goods(null, $recent_arr_where, null, 30, 0, null);
+			$this->template_->assign("recent_goods", $recent_goods);
+
 			//조회수 상승
 			$this->front_Goods_model->set_hit_cnt_up($no);
 			$this->template_->assign("category_info", $category_info);
