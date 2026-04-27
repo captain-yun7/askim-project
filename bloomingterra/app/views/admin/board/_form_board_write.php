@@ -325,6 +325,21 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 							<th>키워드(Keywords)</th>
 							<td><input type="text" name="seo_keywords" value="<?=$board_view['seo_keywords']?>" style="width: 100%;"></td>
 						</tr>
+						<?php if($board_info['code'] == 'gallery') : ?>
+						<tr>
+							<th>관련 게시글 1<br><small style="color:#888;font-weight:normal;">글 번호(no)</small></th>
+							<td>
+								<input type="number" name="related_no1" value="<?=$board_view['related_no1']?>" min="1" placeholder="예: 82" style="width: 200px;">
+								<span style="color:#888;font-size:12px;margin-left:8px;">같은 게시판의 다른 글 번호를 입력하세요. 비워두면 표시되지 않습니다.</span>
+							</td>
+						</tr>
+						<tr>
+							<th>관련 게시글 2<br><small style="color:#888;font-weight:normal;">글 번호(no)</small></th>
+							<td>
+								<input type="number" name="related_no2" value="<?=$board_view['related_no2']?>" min="1" placeholder="예: 81" style="width: 200px;">
+							</td>
+						</tr>
+						<?php endif ?>
 					</tbody>
 				</table>
 			</div>

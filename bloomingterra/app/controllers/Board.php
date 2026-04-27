@@ -266,6 +266,31 @@ class Board extends FRONT_Controller {
 
 			$this->template_->assign('button', $button);
 
+			// Related Posts (Insight 게시판만, 어드민이 수동 지정한 글 번호 2개 페치)
+			// Front_Board_model::get_view_board가 related_no* 컬럼을 SELECT 안 하므로 별도 쿼리
+			if($this->_board['code'] == 'gallery') {
+				$main_row = $this->dm->get('da_board_gallery', [], ['no' => $no])[0] ?? null;
+				$related_posts = [];
+				if($main_row) {
+					foreach(['related_no1', 'related_no2'] as $rk) {
+						$rno = (int)($main_row[$rk] ?? 0);
+						if($rno <= 0 || $rno == (int)$no) continue;
+						$row = $this->dm->get('da_board_gallery', [], ['no' => $rno])[0] ?? null;
+						if(!$row) continue;
+						$thumb = '';
+						if(!empty($row['thumbnail_image']) && file_exists($this->input->server('DOCUMENT_ROOT').'/upload/board/gallery/'.$row['thumbnail_image'])) {
+							$thumb = '/upload/board/gallery/'.$row['thumbnail_image'];
+						}
+						$related_posts[] = [
+							'no' => $row['no'],
+							'title' => $row['title'],
+							'regdt' => $row['regdt'],
+							'thumb' => $thumb,
+						];
+					}
+				}
+				$this->template_->assign('related_posts', $related_posts);
+			}
 
 			//2020-05-27 Inbet Matthew 썸네일 복수 등록할때 대표 이미지 등록이 안되 있을시 첫번째 이미지를 대표이미지로 변경
 			if(count($board_view['board_view']['board_file']['thumbnail']) > 0 && empty($board_view['board_view']['thumbnail_image'])) {

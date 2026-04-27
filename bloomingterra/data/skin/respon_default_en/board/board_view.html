@@ -151,6 +151,33 @@
 				</a>
 			</div>
 		</div>
+		<!--{ ? board_info['code'] == 'gallery' && related_posts && count(related_posts) > 0 }-->
+		<section class="related_posts">
+			<div class="rp_inner">
+				<h3 class="rp_heading">Related Posts</h3>
+				<ul class="rp_list">
+					<!--{ @ related_posts }-->
+					<li>
+						<a href="/board/board_view?code=gallery&no={.no}">
+							<div class="rp_thumb">
+								<!--{ ? .thumb }-->
+								<img src="{.thumb}" alt="{.title}" onerror="this.src='/data/skin/respon_default_en/images/common/noimg.gif'">
+								<!--{ : }-->
+								<img src="/data/skin/respon_default_en/images/common/noimg.gif" alt="{.title}">
+								<!--{ / }-->
+							</div>
+							<div class="rp_meta">
+								<h4 class="rp_title">{.title}</h4>
+								<span class="rp_date">{=date('Y.m.d', strtotime(.regdt))}</span>
+							</div>
+						</a>
+					</li>
+					<!--{ / }-->
+				</ul>
+			</div>
+		</section>
+		<!--{ / }-->
+
 		<div class="bbs_view dn">
 			<!--{ ? board_info['yn_mobile'] == 'y' || board_info['yn_email'] == 'y' }-->
 			<div class="view_etc dn">

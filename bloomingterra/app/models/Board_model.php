@@ -595,6 +595,9 @@ class Board_model extends CI_Model {
 			$set_data['seo_author'] = $data['seo_author'];
 			$set_data['seo_description'] = $data['seo_description'];
 			$set_data['seo_keywords'] = $data['seo_keywords'];
+			// related posts (gallery 테이블에만 컬럼 존재 - table_data_match가 자동 필터)
+			$set_data['related_no1'] = !empty($data['related_no1']) ? intval($data['related_no1']) : null;
+			$set_data['related_no2'] = !empty($data['related_no2']) ? intval($data['related_no2']) : null;
 			// 수정 시 이전 extraFieldInfo 가져오기
 			if($mode == "write") {
 				$extraFieldInfo = array();
