@@ -6,3 +6,6 @@ Options +SymLinksIfOwnerMatch
 RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
 RewriteRule .*$ https://www.askim.kr%{REQUEST_URI} [L,R=301]
 Options +SymLinksIfOwnerMatch
+
+# Dynamic sitemap: /sitemap.xml -> /sitemap.php (DB 기반 동적 생성)
+RewriteRule ^sitemap\.xml$ /sitemap.php [L]
