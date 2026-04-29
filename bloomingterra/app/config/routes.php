@@ -62,6 +62,8 @@ $route['admin/index'] = 'admin/index_';
 $route['admin/login'] = 'admin/index_/login';
 $route['admin/logout'] = 'admin/index_/logout';
 
+$route['sitemap.xml'] = 'sitemap';
+
 $route['404_override'] = 'errors';
 $route['translate_uri_dashes'] = FALSE;
 
