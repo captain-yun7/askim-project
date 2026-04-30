@@ -9,9 +9,16 @@
 					<p class="fs19 date">{=date('Y. m', strtotime(goods_view.goods_view.regdt))}</p>
 					<h2 class="fs65 subject">{goods_view['goods_view']['name']}</h2>
 					<div class="info">
+						<!-- 본문에서 자동 추출된 메타 (askim 스타일 정렬) -->
+						<!--{ ? auto_meta['Client'] }--><dl><dt>Client.</dt><dd>{auto_meta['Client']}</dd></dl><!--{ / }-->
+						<!--{ ? auto_meta['Location'] }--><dl><dt>Location.</dt><dd>{auto_meta['Location']}</dd></dl><!--{ / }-->
+						<!--{ ? auto_meta['Region'] }--><dl><dt>Region.</dt><dd>{auto_meta['Region']}</dd></dl><!--{ / }-->
+						<!--{ ? auto_meta['Media'] }--><dl><dt>Media.</dt><dd>{auto_meta['Media']}</dd></dl><!--{ / }-->
+						<!--{ ? auto_meta['Period'] }--><dl><dt>Period.</dt><dd>{auto_meta['Period']}</dd></dl><!--{ / }-->
+						<!-- 어드민 ex 필드 (Client/Location/Media/Period 명시 입력한 경우. 자동추출과 중복되면 위가 우선이라 아래는 다른 값만) -->
 						<!--{ ? extraFieldData }-->
 							<!--{ @ extraFieldData }-->
-								<!--{ ? .name == 'Client' || .name == 'Location' || .name == 'Media' || .name == 'Period'}-->
+								<!--{ ? (.name == 'Client' && !auto_meta['Client']) || (.name == 'Location' && !auto_meta['Location']) || (.name == 'Media' && !auto_meta['Media']) || (.name == 'Period' && !auto_meta['Period'])}-->
 									<dl>
 										<dt>{.name}.</dt>
 										<dd>{.value}</dd>

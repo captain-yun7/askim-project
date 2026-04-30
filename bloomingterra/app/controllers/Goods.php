@@ -356,6 +356,29 @@ class Goods extends FRONT_Controller {
 			//Matthew end
             unset($old_goods_view);
 
+			// 본문(info)에서 Region/Period/Client/Location/Media 패턴 자동 추출 → 좌측 info dl
+			// 운영자가 본문 평문에 메타정보를 적어둔 케이스를 askim 스타일로 정렬
+			$info_html_raw = $goods_view['goods_view']['info'] ?? '';
+			$auto_meta = [];
+			$keys_in_order = ['Client', 'Location', 'Region', 'Media', 'Period'];
+			foreach ($keys_in_order as $k) {
+				if (preg_match('/' . $k . '\s*[:：]\s*([^<\r\n]+?)(?:<|$|\r|\n)/iu', $info_html_raw, $m)) {
+					$val = trim(strip_tags($m[1]));
+					if ($val !== '') $auto_meta[$k] = $val;
+				}
+			}
+			if (!empty($auto_meta)) {
+				$cleaned = $info_html_raw;
+				foreach (array_keys($auto_meta) as $k) {
+					// <p>Region: ...</p> 한 줄 단위로 제거
+					$cleaned = preg_replace('/<p[^>]*>\s*' . $k . '\s*[:：][^<]*<\/p>/iu', '', $cleaned);
+					// <p><span>...</span>Region: ...</p> 등 변형
+					$cleaned = preg_replace('/<p[^>]*>(?:<[^>]+>)?\s*' . $k . '\s*[:：][^<]*?(?:<\/[^>]+>)?\s*<\/p>/iu', '', $cleaned);
+				}
+				$goods_view['goods_view']['info'] = $cleaned;
+			}
+			$this->template_->assign('auto_meta', $auto_meta);
+
 			// previous, next
 			$button = [
 				'next' => 'nothing',
