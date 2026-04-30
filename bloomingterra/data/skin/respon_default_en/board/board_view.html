@@ -73,7 +73,11 @@
 	}
 </script>
 <!-- 2026-04-30: insight_webzine_view 디자인은 사용자 피드백으로 원복. 원래 블루밍 board 디자인 사용. -->
-<div class="sub_content">
+<!-- 2026-04-30: gallery(Insight) 게시판 한정 매거진 스타일(ohbrown 톤) -->
+<!--{ ? board_info['code'] == 'gallery' }-->
+<link rel="stylesheet" href="/data/skin/respon_default_en/css/magazine_view.css">
+<!--{ / }-->
+<div class="sub_content<!--{ ? board_info['code'] == 'gallery' }--> magazine_view<!--{ / }-->">
 	<div class="sub_board">
 		<div class="view_visual">
 			<!--{ ? board_info['thumbnail'] == 'y' }-->
