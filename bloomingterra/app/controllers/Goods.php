@@ -216,6 +216,26 @@ class Goods extends FRONT_Controller {
 		}
 	}
 
+	/**
+	 * /service/<slug> 라우트 처리. 내부적으로 goods_view 호출.
+	 * slug로 da_goods 조회 후 ?no=<no>&cate=<cate>로 set한 다음 goods_view 동작.
+	 */
+	public function goods_view_by_slug($slug = null) {
+		if (empty($slug)) show_404();
+		// CodeIgniter route(:any)는 URL-encode되어 들어옴 → 원래 한글 복원
+		$slug = urldecode($slug);
+		$row = $this->dm->get('da_goods', ['no', 'category'], ['slug' => $slug])[0] ?? null;
+		if (!$row) show_404();
+		$_GET['no'] = (int)$row['no'];
+		$_GET['cate'] = $row['category'];
+		$_REQUEST['no'] = $_GET['no'];
+		$_REQUEST['cate'] = $_GET['cate'];
+		$_GET['_via_slug'] = '1'; // goods_view에서 redirect 무한루프 방지 플래그
+		// template_path()가 goods/goods_view.html을 반환하도록 rsegments 변조
+		$this->uri->rsegments = [1 => 'goods', 2 => 'goods_view'];
+		$this->goods_view();
+	}
+
 	public function goods_view() {
 		try {
 			$this->load->model("category_model");
@@ -231,9 +251,19 @@ class Goods extends FRONT_Controller {
 			if(!$goods_view) {
 				throw new Exception(print_language("could_not_get_the_goods_information"));
 			} else if($goods_view['goods_view']['cate_yn_state'] == "n") {
-                // 카테고리 활성유무 확인하여 예외처리 2020-06-26 
+                // 카테고리 활성유무 확인하여 예외처리 2020-06-26
                 throw new Exception(print_language("category_permission_denied"));
             }
+
+			// URL Slug: 신규 글(slug 있음) 한정 query URL → /service/<slug> 301 redirect
+			// (단, /service/<slug>로 들어온 요청은 _via_slug 플래그로 redirect 스킵 — loop 방지)
+			$slug_row = $this->dm->get('da_goods', ['slug'], ['no' => $no])[0] ?? null;
+			$canonical_slug = $slug_row['slug'] ?? null;
+			if (!empty($canonical_slug) && empty($get['_via_slug'])) {
+				header('Location: /service/' . rawurlencode($canonical_slug), true, 301);
+				exit;
+			}
+			$this->template_->assign('canonical_slug', $canonical_slug);
 
 			$this->category_model->initialize($goods_view["goods_view"]["category"]);
 
@@ -344,6 +374,23 @@ class Goods extends FRONT_Controller {
 			$recent_arr_where = array();
 			$recent_arr_where[] = array("Go.no !=", $no);
 			$recent_goods = $this->front_Goods_model->get_list_goods(null, $recent_arr_where, null, 30, 0, null);
+			// slug 매핑 (모델은 slug 컬럼 SELECT 안 함 → 별도 조회 후 url 필드 추가)
+			if (!empty($recent_goods['goods_list'])) {
+				$no_list = array_column($recent_goods['goods_list'], 'no');
+				$slug_map = [];
+				if ($no_list) {
+					$rows = $this->dm->get('da_goods', ['no', 'slug'], [], [], ['no' => $no_list]);
+					foreach ($rows as $r) $slug_map[$r['no']] = $r['slug'];
+				}
+				foreach ($recent_goods['goods_list'] as &$g) {
+					$slug = $slug_map[$g['no']] ?? null;
+					$g['slug'] = $slug;
+					$g['url'] = $slug
+						? '/service/' . rawurlencode($slug)
+						: '/goods/goods_view?no=' . (int)$g['no'] . (!empty($g['category']) ? '&cate=' . $g['category'] : '');
+				}
+				unset($g);
+			}
 			$this->template_->assign("recent_goods", $recent_goods);
 
 			//조회수 상승

@@ -432,6 +432,13 @@
 					<td><input type="text" name="name" value="<?=$goods_view["name"]?>" /></td>
 				</tr>
 				<? } ?>
+				<tr>
+					<th class="ta_left">URL Slug<br><small style="color:#888;font-weight:normal;">/service/&lt;slug&gt;</small></th>
+					<td>
+						<input type="text" name="slug" value="<?=htmlspecialchars($goods_view["slug"] ?? '', ENT_QUOTES)?>" placeholder="예: tirtir-pop-up-store-seongsu" maxlength="150" style="width: 400px;" pattern="[a-zA-Z0-9가-힣\-]+">
+						<span style="color:#888;font-size:12px;margin-left:8px;">영문/한글/숫자/하이픈만. 비워두면 기존 query URL 사용. 한 번 저장 후 변경 시 SEO 색인 손실 위험.</span>
+					</td>
+				</tr>
 				<? if($mode == "modify") : ?>
 					<tr>
 						<th class="ta_left">고유 <?=$goodsField["name"][$site_language]["no"]?></th>

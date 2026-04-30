@@ -11,7 +11,11 @@
 <meta name="description" content="{ seo['description'] }">
 <meta name="keywords" content="{ seo['keywords'] }">
 <meta name="author" content="블루밍테라">
+<!--{ ? canonical_slug }-->
+<link rel="canonical" href="https://bloomingterra.com/service/{=rawurlencode(canonical_slug)}">
+<!--{ : }-->
 <link rel="canonical" href="https://bloomingterra.com/{=CI->uri->uri_string()}">
+<!--{ / }-->
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">

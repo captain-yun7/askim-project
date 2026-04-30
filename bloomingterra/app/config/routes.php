@@ -64,6 +64,9 @@ $route['admin/logout'] = 'admin/index_/logout';
 
 $route['sitemap.xml'] = 'sitemap';
 
+// URL slug routing: /service/<slug> -> Goods controller
+$route['service/(:any)'] = 'goods/goods_view_by_slug/$1';
+
 $route['404_override'] = 'errors';
 $route['translate_uri_dashes'] = FALSE;
 

@@ -50,15 +50,19 @@ class Sitemap extends FRONT_Controller {
 			}
 		}
 
-		// ── goods view (활성 상태인 글만)
-		$goods_q = $this->db->select('no, category, regdt, moddt')
+		// ── goods view (활성 상태인 글만; slug 있는 글은 /service/<slug>로 출력)
+		$goods_q = $this->db->select('no, category, slug, regdt, moddt')
 		                    ->where('yn_state', 'y')
 		                    ->order_by('no', 'DESC')
 		                    ->get('da_goods');
 		if ($goods_q) {
 			foreach ($goods_q->result_array() as $row) {
-				$loc = $base . '/goods/goods_view?no=' . (int)$row['no'];
-				if (!empty($row['category'])) $loc .= '&cate=' . $row['category'];
+				if (!empty($row['slug'])) {
+					$loc = $base . '/service/' . rawurlencode($row['slug']);
+				} else {
+					$loc = $base . '/goods/goods_view?no=' . (int)$row['no'];
+					if (!empty($row['category'])) $loc .= '&cate=' . $row['category'];
+				}
 				$lastmod = !empty($row['moddt']) ? $row['moddt'] : $row['regdt'];
 				$entry = [
 					'loc'        => $loc,
