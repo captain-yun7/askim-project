@@ -133,9 +133,45 @@ class TestHeaderRendersForOtherPosts:
 
     @pytest.mark.parametrize("no,cate", [(170, "001007"), (228, "005"), (227, "005")])
     def test_layout_not_broken(self, page: Page, no, cate):
+        page.set_viewport_size({"width": 1440, "height": 900})
         page.goto(_bloom_url(no, cate), wait_until="networkidle", timeout=60000)
         m = page.evaluate("""() => {
             const r = document.querySelector('.portfolio_view_in');
             return r ? getComputedStyle(r).display : null;
         }""")
         assert m == "flex"
+
+
+class TestScrollLuminosity:
+    """askim과 동일한 스크롤 시 body 클래스 light↔dark 전환 효과"""
+
+    def test_initial_section_light(self, page: Page):
+        page.set_viewport_size({"width": 1440, "height": 900})
+        page.goto(_bloom_url(171, "001007"), wait_until="networkidle", timeout=60000)
+        page.wait_for_timeout(1200)  # GSAP 초기화
+        cls = page.evaluate("() => document.body.className")
+        assert "section-light" in cls
+
+    def test_recent_posts_triggers_dark(self, page: Page):
+        page.set_viewport_size({"width": 1440, "height": 900})
+        page.goto(_bloom_url(171, "001007"), wait_until="networkidle", timeout=60000)
+        page.wait_for_timeout(1200)
+        page.evaluate("""() => {
+            const el = document.querySelector('.recent_posts');
+            if(el) window.scrollTo({top: el.offsetTop - 200, behavior: 'instant'});
+        }""")
+        page.wait_for_timeout(800)
+        cls = page.evaluate("() => document.body.className")
+        assert "section-dark" in cls
+
+    def test_body_has_transition(self, page: Page):
+        page.set_viewport_size({"width": 1440, "height": 900})
+        page.goto(_bloom_url(171, "001007"), wait_until="networkidle", timeout=60000)
+        t = page.evaluate("() => getComputedStyle(document.body).transition")
+        assert "background" in t and ("1s" in t or "1000ms" in t)
+
+    def test_two_luminosity_sections(self, page: Page):
+        page.set_viewport_size({"width": 1440, "height": 900})
+        page.goto(_bloom_url(171, "001007"), wait_until="networkidle", timeout=60000)
+        n = page.evaluate("() => document.querySelectorAll('section[data-section-luminosity]').length")
+        assert n >= 2  # 본문 light + recent_posts dark

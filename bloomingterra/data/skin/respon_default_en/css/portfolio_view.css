@@ -50,7 +50,7 @@
    ============================================================ */
 
 .portfolio_view{padding: 80px 0 0;}
-.portfolio_view_in{display: flex; max-width: 1530px; margin: 0 auto; padding: 0 30px;}
+.portfolio_view_in{display: flex; max-width: 1530px; margin: 0 auto; padding: 0 30px; align-items: flex-start; min-height: 70vh;}
 .portfolio_view_in article{box-sizing:border-box;}
 
 .portfolio_view_in .txt_area{width: calc(50% - 115px); display: flex; justify-content: flex-end; align-items: flex-start;}
@@ -112,29 +112,83 @@
 .portfolio_view .viewImg:hover::after{opacity: 1; transition: all .4s ease;}
 .portfolio_view .viewImg img{max-width: 100% !important; width: 100% !important; height: auto !important;}
 
-/* view_button (PREV / LIST / NEXT) */
+/* view_button (PREV / LIST / NEXT) — Material Symbols 아이콘 사용, svg img 의존 제거 */
 .portfolio_view .view_button{max-width:1530px; margin:80px auto 0; padding:40px 30px 0; border-top:1px solid var(--pv-border); box-sizing:border-box;}
-.portfolio_view .view_button .w_custom{display:flex; align-items:center; justify-content:center; gap:30px;}
-.portfolio_view .view_button .page_btn{display:inline-flex; align-items:center; gap:12px; text-decoration:none; color:var(--pv-basic); transition:color .3s;}
-.portfolio_view .view_button .page_btn:hover{color:var(--pv-main);}
-.portfolio_view .view_button .page_btn dl{display:flex; align-items:center; gap:12px; margin:0;}
-.portfolio_view .view_button .page_btn dt{margin:0;}
-.portfolio_view .view_button .page_btn dt img{width:20px; height:auto;}
-.portfolio_view .view_button .page_btn dd{margin:0; font-size:14px; font-weight:600; font-family:var(--pv-eng); letter-spacing:0.05em;}
-.portfolio_view .view_button .page_btn.next{flex-direction:row-reverse;}
-.portfolio_view .view_button .page_btn.next dt img{transform:rotate(180deg);}
+.portfolio_view .view_button .w_custom{display:flex; align-items:center; justify-content:center; gap:60px;}
+.portfolio_view .view_button .page_btn{
+	display:inline-flex; align-items:center; gap:14px;
+	text-decoration:none; color:var(--pv-basic);
+	padding:10px 18px;
+	border:1px solid var(--pv-border); border-radius:999px;
+	background:var(--pv-white);
+	transition: color .25s, border-color .25s, background .25s;
+}
+.portfolio_view .view_button .page_btn:hover{color:var(--pv-main); border-color:var(--pv-main);}
+.portfolio_view .view_button .page_btn.disabled{opacity:0.4; pointer-events:none;}
+.portfolio_view .view_button .page_btn .lbl{font-size:14px; font-weight:600; font-family:var(--pv-eng); letter-spacing:0.08em;}
+.portfolio_view .view_button .page_btn .arrow_ico{
+	display:inline-flex; align-items:center; justify-content:center;
+	width:22px; height:22px;
+	font-family:var(--pv-icon); font-size:22px; font-weight:400;
+	color:inherit;
+	line-height:1;
+}
+.portfolio_view .view_button .page_btn .arrow_ico::before{content:'\e5e0';}
+.portfolio_view .view_button .page_btn:not(.next) .arrow_ico::before{transform:rotate(180deg); display:inline-block;}
 .portfolio_view .view_button .list_btn{
-	display:inline-flex; flex-direction:column; justify-content:center; align-items:center; gap:4px;
-	width:40px; height:40px; padding:0;
+	display:inline-flex; flex-direction:column; justify-content:center; align-items:center; gap:5px;
+	width:46px; height:46px; padding:0;
 	border:1px solid var(--pv-border); border-radius:50%;
-	background:var(--pv-white); transition:all .3s;
+	background:var(--pv-white); transition:all .25s;
 }
 .portfolio_view .view_button .list_btn:hover{border-color:var(--pv-main); background:var(--pv-main);}
-.portfolio_view .view_button .list_btn span{display:block; width:14px; height:1px; background:var(--pv-basic); transition:background .3s;}
+.portfolio_view .view_button .list_btn span{display:block; width:16px; height:1.5px; background:var(--pv-basic); transition:background .25s;}
 .portfolio_view .view_button .list_btn:hover span{background:var(--pv-white);}
 
 /* dn (히든 호환 영역) */
 .portfolio_view .dn{display: none;}
+
+/* ============================================================
+   Scroll-driven luminosity transition (askim LADOR 효과 그대로)
+   - body.section-light: 기본 (white bg)
+   - body.section-dark: 검은 배경 + 모든 자식 색상 반전
+   - GSAP ScrollTrigger가 본문/recent_posts 섹션마다 body 클래스 토글
+   ============================================================ */
+body{transition: background 1s ease-in-out;}
+body.section-dark{background: var(--pv-black, #000);}
+body.section-dark .portfolio_view_in .txt_area .date{color: var(--pv-sub, #E92B5A);}
+body.section-dark .portfolio_view_in .txt_area .fs65,
+body.section-dark .portfolio_view_in .txt_area .subject{color: var(--pv-white, #fff);}
+body.section-dark .portfolio_view_in .txt_area .info dl dt{color: var(--pv-white, #fff);}
+body.section-dark .portfolio_view_in .txt_area .info dl dd{color: rgba(255,255,255,.6);}
+body.section-dark .portfolio_view_in .txt_area .btn_area a{background: var(--pv-sub, #E92B5A); border-color: var(--pv-sub, #E92B5A); color: var(--pv-white, #fff);}
+body.section-dark .portfolio_view_in .txt_area .btn_area a:hover{background: var(--pv-white, #fff) !important; border-color: var(--pv-white, #fff) !important; color: var(--pv-sub, #E92B5A) !important;}
+body.section-dark .portfolio_view_in .txt_area .btn_area .btn_w_ver2{border-color: rgba(255,255,255,.2); background: none; color: rgba(255,255,255,.6);}
+body.section-dark .portfolio_view_in .txt_area .btn_area .btn_w_ver2:hover{border-color: var(--pv-white, #fff) !important; background: none !important; color: var(--pv-white, #fff) !important;}
+body.section-dark .portfolio_view_in .con_area,
+body.section-dark .portfolio_view_in .con_area *{color: rgba(255,255,255,.7);}
+body.section-dark .portfolio_view_in .con_area .cont{color: rgba(255,255,255,.7);}
+
+/* recent_posts 다크 톤 */
+body.section-dark .recent_posts .fs50{color: var(--pv-white, #fff);}
+body.section-dark .marquee-item .thumb::after{background: var(--pv-sub, #E92B5A);}
+body.section-dark .marquee-item .thumb span{background: var(--pv-sub, #E92B5A);}
+body.section-dark .marquee-item .desc .fs25{color: var(--pv-white, #fff);}
+body.section-dark .marquee-item:hover .desc .fs25{color: var(--pv-sub, #E92B5A);}
+body.section-dark .marquee-item .desc .loca{color: rgba(255,255,255,.4);}
+body.section-dark .marquee-item:hover .desc .loca{color: var(--pv-white, #fff);}
+body.section-dark .marquee-arrow{background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2);}
+body.section-dark .marquee-arrow::after{color: var(--pv-white, #fff);}
+body.section-dark .marquee-arrow:hover{background: var(--pv-sub, #E92B5A); border-color: var(--pv-sub, #E92B5A);}
+body.section-dark .marquee-pagination{color: rgba(255,255,255,.4);}
+body.section-dark .marquee-pagination .swiper-pagination-current{color: var(--pv-sub, #E92B5A);}
+
+/* PREV/LIST/NEXT 버튼 다크 톤 */
+body.section-dark .portfolio_view .view_button{border-top-color: rgba(255,255,255,0.15);}
+body.section-dark .portfolio_view .view_button .page_btn{background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);}
+body.section-dark .portfolio_view .view_button .page_btn:hover{background: var(--pv-white, #fff); border-color: var(--pv-white, #fff); color: var(--pv-black, #000);}
+body.section-dark .portfolio_view .view_button .list_btn{background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2);}
+body.section-dark .portfolio_view .view_button .list_btn span{background: rgba(255,255,255,0.7);}
 
 /* ============================================================
    Recent Posts — askim 1:1 이식
@@ -166,14 +220,16 @@
 .portfolio_view .marquee-item:hover .desc .loca{color: var(--pv-black);}
 .portfolio_view .marquee-item .desc .loca::before{content:'\e0c8'; display: inline-block; vertical-align: middle; margin: -2px 5px 0 0; width: 20px; height: 20px; line-height: 20px; font-size: 20px; font-family: var(--pv-icon);}
 
-.portfolio_view .marquee-arrow{display: block; width: 30px; height: 30px; position: absolute; right: 0; margin-right: 0; top: -60px; z-index: 9; border: 0; padding: 0; background: none; font-size: 0; cursor: pointer; opacity: 0.3; transition: all .4s ease;}
-.portfolio_view .marquee-arrow:hover{opacity: 1;}
-.portfolio_view .marquee-arrow::after{content:'\e5e0'; display: block; width: 100%; height: 100%; line-height: 30px; font-size: 30px; font-family: var(--pv-icon); position: absolute; left: 0; top: 0; font-weight: 400; color: var(--pv-black);}
-.portfolio_view .marquee-arrow.arrow-prev{transform: translateX(-120px);}
-.portfolio_view .marquee-arrow.arrow-next{transform: rotate(180deg);}
+/* marquee-arrow + pagination — 우상단 컨트롤 (askim 스타일 + 간격 보강) */
+.portfolio_view .marquee-arrow{display: block; width: 36px; height: 36px; position: absolute; right: 0; top: -60px; z-index: 9; border: 1px solid var(--pv-border); border-radius:50%; padding: 0; background: var(--pv-white); font-size: 0; cursor: pointer; opacity: 0.7; transition: all .25s ease;}
+.portfolio_view .marquee-arrow:hover{opacity: 1; border-color: var(--pv-main); background: var(--pv-main);}
+.portfolio_view .marquee-arrow::after{content:'\e5e0'; display: flex; align-items:center; justify-content:center; width: 100%; height: 100%; font-size: 22px; font-family: var(--pv-icon); font-weight: 400; color: var(--pv-black); transition: color .25s;}
+.portfolio_view .marquee-arrow:hover::after{color: var(--pv-white);}
+.portfolio_view .marquee-arrow.arrow-prev{transform: translateX(-200px);}
+.portfolio_view .marquee-arrow.arrow-next{transform: translateX(-50px) rotate(180deg);}
 
-.portfolio_view .marquee-pagination{position: absolute; left: auto !important; bottom: auto !important; width: auto !important; right: 0 !important; top: -57px !important; z-index: 7; font-size: 16px; font-weight: 500; color: var(--pv-light); font-family: var(--pv-eng); transform: translateX(-45px);}
-.portfolio_view .marquee-pagination span{display: inline-block; color: inherit; font-weight: inherit; line-height: inherit; font-family: inherit;}
+.portfolio_view .marquee-pagination{position: absolute; left: auto !important; bottom: auto !important; width: auto !important; right: 0 !important; top: -55px !important; z-index: 7; font-size: 16px; font-weight: 500; color: var(--pv-light); font-family: var(--pv-eng); transform: translateX(-110px); white-space: nowrap; line-height: 36px; letter-spacing: 0.04em;}
+.portfolio_view .marquee-pagination span{display: inline-block; color: inherit; font-weight: inherit; line-height: inherit; font-family: inherit; padding: 0 4px;}
 .portfolio_view .marquee-pagination .swiper-pagination-current{font-weight: 700; color: var(--pv-main); line-height: inherit; font-family: inherit;}
 
 /* ============================================================
@@ -213,8 +269,9 @@
 	.portfolio_view .marquee-item .desc{padding: 15px 0 0;}
 	.portfolio_view .marquee-item .desc .fs25{font-size: 21px;}
 	.portfolio_view .marquee-item .desc .loca::before{margin: -3px 5px 0 0;}
-	.portfolio_view .marquee-arrow.arrow-prev{transform: translateX(-100px);}
-	.portfolio_view .marquee-pagination{transform: translateX(-40px);}
+	.portfolio_view .marquee-arrow.arrow-prev{transform: translateX(-160px);}
+	.portfolio_view .marquee-arrow.arrow-next{transform: translateX(-40px) rotate(180deg);}
+	.portfolio_view .marquee-pagination{transform: translateX(-90px);}
 	.portfolio_view .viewImg::after{width: 80px; height: 80px; line-height: 80px; font-size: 24px; margin-left: -40px; margin-top: -40px;}
 	.portfolio_view .view_button{margin-top: 50px; padding: 30px 20px 0;}
 	.portfolio_view .view_button .w_custom{gap: 20px;}
@@ -236,9 +293,10 @@
 	.portfolio_view .marquee-item .thumb .line3{height: 6px;}
 	.portfolio_view .marquee-item .thumb .line4{width: 6px;}
 	.portfolio_view .marquee-item .desc .loca::before{width: 16px; height: 16px; line-height: 16px; font-size: 16px;}
-	.portfolio_view .marquee-arrow{width: 24px; height: 24px; top: -40px;}
-	.portfolio_view .marquee-arrow::after{line-height: 24px; font-size: 24px;}
-	.portfolio_view .marquee-arrow.arrow-prev{transform: translateX(-70px);}
-	.portfolio_view .marquee-pagination{top: -37px !important; transform: translateX(-25px);}
+	.portfolio_view .marquee-arrow{width: 30px; height: 30px; top: -40px;}
+	.portfolio_view .marquee-arrow::after{font-size: 18px;}
+	.portfolio_view .marquee-arrow.arrow-prev{transform: translateX(-130px);}
+	.portfolio_view .marquee-arrow.arrow-next{transform: translateX(-35px) rotate(180deg);}
+	.portfolio_view .marquee-pagination{top: -33px !important; transform: translateX(-75px); line-height: 30px;}
 	.portfolio_view .viewImg::after{width: 50px; height: 50px; line-height: 50px; font-size: 20px; margin-left: -25px; margin-top: -25px;}
 }

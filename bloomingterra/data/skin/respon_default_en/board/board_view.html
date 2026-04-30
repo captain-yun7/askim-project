@@ -72,11 +72,8 @@
 		}
 	}
 </script>
-<!--{? board_info['code'] == 'gallery' }-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..500,0..1,-50..200" />
-<link rel="stylesheet" type="text/css" href="/data/skin/respon_default_en/css/insight_board.css?v=20260428">
-<!--{ / }-->
-<div class="sub_content <!--{? board_info['code'] == 'gallery' }-->insight_webzine_view<!--{ / }-->">
+<!-- 2026-04-30: insight_webzine_view 디자인은 사용자 피드백으로 원복. 원래 블루밍 board 디자인 사용. -->
+<div class="sub_content">
 	<div class="sub_board">
 		<div class="view_visual">
 			<!--{ ? board_info['thumbnail'] == 'y' }-->
@@ -151,32 +148,12 @@
 				</a>
 			</div>
 		</div>
+		<!-- 2026-04-30: 관련 게시글 디자인 시안 미확보로 일단 hide. DB 기능(related_no1/2)은 유지. 디자이너 시안 받은 후 재구현. -->
+		<!--
 		<!--{ ? board_info['code'] == 'gallery' && related_posts && count(related_posts) > 0 }-->
-		<section class="related_posts">
-			<div class="rp_inner">
-				<h3 class="rp_heading">Related Posts</h3>
-				<ul class="rp_list">
-					<!--{ @ related_posts }-->
-					<li>
-						<a href="/board/board_view?code=gallery&no={.no}">
-							<div class="rp_thumb">
-								<!--{ ? .thumb }-->
-								<img src="{.thumb}" alt="{.title}" onerror="this.src='/data/skin/respon_default_en/images/common/noimg.gif'">
-								<!--{ : }-->
-								<img src="/data/skin/respon_default_en/images/common/noimg.gif" alt="{.title}">
-								<!--{ / }-->
-							</div>
-							<div class="rp_meta">
-								<h4 class="rp_title">{.title}</h4>
-								<span class="rp_date">{=date('Y.m.d', strtotime(.regdt))}</span>
-							</div>
-						</a>
-					</li>
-					<!--{ / }-->
-				</ul>
-			</div>
-		</section>
+		.related_posts 마크업 (시안 대기) ...
 		<!--{ / }-->
+		-->
 
 		<div class="bbs_view dn">
 			<!--{ ? board_info['yn_mobile'] == 'y' || board_info['yn_email'] == 'y' }-->
