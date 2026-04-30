@@ -374,7 +374,7 @@ class Goods extends FRONT_Controller {
 			$recent_arr_where = array();
 			$recent_arr_where[] = array("Go.no !=", $no);
 			$recent_goods = $this->front_Goods_model->get_list_goods(null, $recent_arr_where, null, 30, 0, null);
-			// slug 매핑 (모델은 slug 컬럼 SELECT 안 함 → 별도 조회 후 url 필드 추가)
+			// slug 매핑 + url + thumb_url (모델은 slug SELECT 안 함 → 별도 조회)
 			if (!empty($recent_goods['goods_list'])) {
 				$no_list = array_column($recent_goods['goods_list'], 'no');
 				$slug_map = [];
@@ -382,12 +382,50 @@ class Goods extends FRONT_Controller {
 					$rows = $this->dm->get('da_goods', ['no', 'slug'], [], [], ['no' => $no_list]);
 					foreach ($rows as $r) $slug_map[$r['no']] = $r['slug'];
 				}
+				$noimg = '/data/skin/respon_default_en/images/common/noimg.gif';
 				foreach ($recent_goods['goods_list'] as &$g) {
 					$slug = $slug_map[$g['no']] ?? null;
 					$g['slug'] = $slug;
 					$g['url'] = $slug
 						? '/service/' . rawurlencode($slug)
 						: '/goods/goods_view?no=' . (int)$g['no'] . (!empty($g['category']) ? '&cate=' . $g['category'] : '');
+
+					// thumb URL — img1 JSON({oname,fname}) 파싱, 없으면 detail_img 시도, 최종 fallback noimg
+					$thumb = '';
+					foreach (['img1', 'img2'] as $field) {
+						$raw = $g[$field] ?? '';
+						if (!$raw) continue;
+						if ($raw[0] === '{') {
+							$dec = json_decode($raw, true);
+							$fname = $dec['fname'] ?? '';
+							if ($fname) {
+								$thumb = '/upload/goods/' . $field . '/' . $fname;
+								break;
+							}
+						} elseif (is_string($raw) && trim($raw) !== '') {
+							$thumb = '/upload/goods/' . $field . '/' . $raw;
+							break;
+						}
+					}
+					if (!$thumb) {
+						// detail_img 1~10 중 첫 번째 비어있지 않은 거
+						for ($di = 1; $di <= 10; $di++) {
+							$d = $g['detail_img' . $di] ?? '';
+							if (!$d) continue;
+							if (is_string($d) && $d[0] === '{') {
+								$dec = json_decode($d, true);
+								$fname = $dec['fname'] ?? '';
+								if ($fname) {
+									$thumb = '/upload/goods/detail_img' . $di . '/' . $fname;
+									break;
+								}
+							} elseif (is_string($d) && trim($d) !== '') {
+								$thumb = '/upload/goods/detail_img' . $di . '/' . $d;
+								break;
+							}
+						}
+					}
+					$g['thumb_url'] = $thumb ?: $noimg;
 				}
 				unset($g);
 			}

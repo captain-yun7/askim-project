@@ -135,7 +135,7 @@
 									<span class="line2"></span>
 									<span class="line3"></span>
 									<span class="line4"></span>
-									<img src="{C._UPLOAD}/goods/img1/{.img1}" onerror="this.src='/data/skin/respon_default_en/images/common/noimg.gif'" alt="{.name}">
+									<img src="{.thumb_url}" onerror="this.src='/data/skin/respon_default_en/images/common/noimg.gif'" alt="{.name}">
 								</div>
 								<div class="desc">
 									<h4 class="fs25">{.name}</h4>
@@ -184,10 +184,10 @@
 		</script>
 		<!--{ / }-->
 
-		<div class="dn">
+		<div class="dn" aria-hidden="true">
 			<div class="info">
 				<dl>
-					<dt class="thumb_box"><img src="{C._UPLOAD}/goods/img1/{goods_view['goods_view']['img1']}" onerror="this.src='../images/common/noimg.gif'" alt="{goods_view['goods_view']['name']}"></dt>
+					<dt class="thumb_box"><img src="/data/skin/respon_default_en/images/common/noimg.gif" alt="{goods_view['goods_view']['name']}"></dt>
 					<dd class="goods_tit">{goods_view['goods_view']['name']}</dd>
 				</dl>
 			</div>
