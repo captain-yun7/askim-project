@@ -130,25 +130,21 @@
 		<div class="view_button">
 			<div class="w_custom">
 				<!--{ ? button.prev === "nothing" }-->
-				<a href="#" class="page_btn" onclick="alert('이전 게시물이 없습니다.'); return false;">
+				<a href="#" class="page_btn disabled" onclick="alert('이전 게시물이 없습니다.'); return false;">
 				<!--{ : }-->
 				<a href="?code={ board_info.code }&no={ button.prev }<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }--><!--{ ? req.search }-->&search_type=title&search={ req.search }<!--{ / }-->" class="page_btn">
 				<!--{ / }-->
-					<dl>
-						<dt><img src="/data/skin/respon_default/images/sub/page_btn.svg" alt="이전"></dt>
-						<dd>PREV</dd>
-					</dl>
+					<span class="arrow_ico" aria-hidden="true"></span>
+					<span class="lbl">PREV</span>
 				</a>
-				<a href="/board/board_list?code={board_info['code']}<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }--><!--{ ? req.search }-->&search_type=title&search={ req.search }<!--{ / }-->" class="list_btn"><span></span><span></span><span></span></a>
+				<a href="/board/board_list?code={board_info['code']}<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }--><!--{ ? req.search }-->&search_type=title&search={ req.search }<!--{ / }-->" class="list_btn" aria-label="목록으로"><span></span><span></span><span></span></a>
 				<!--{ ? button.next === "nothing" }-->
-				<a href="#" class="page_btn next" onclick="alert('다음 게시물이 없습니다.'); return false;">
+				<a href="#" class="page_btn next disabled" onclick="alert('다음 게시물이 없습니다.'); return false;">
 				<!--{ : }-->
 				<a href="?code={ board_info.code }&no={ button.next }<!--{ ? req.tag }-->&tag={ req.tag }<!--{ / }-->" class="page_btn next">
 				<!--{ / }-->
-					<dl>
-						<dt><img src="/data/skin/respon_default/images/sub/page_btn.svg" alt="이전"></dt>
-						<dd>NEXT</dd>
-					</dl>
+					<span class="lbl">NEXT</span>
+					<span class="arrow_ico" aria-hidden="true"></span>
 				</a>
 			</div>
 		</div>

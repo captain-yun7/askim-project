@@ -345,33 +345,35 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     border-top:none !important;
 }
 .magazine_view .view_button .page_btn{
-    position:relative; display:inline-block;
-    color:rgba(255,255,255,0.85);
-}
-.magazine_view .view_button .page_btn dl{
-    display:flex; gap:18px; align-items:center;
-    transition:transform 0.3s ease;
-}
-.magazine_view .view_button .page_btn.next dl{flex-direction:row-reverse;}
-.magazine_view .view_button .page_btn.next dl dt{transform:scale(-1);}
-.magazine_view .view_button .page_btn dl dt{font-size:0;}
-.magazine_view .view_button .page_btn dl dt img{
-    width:32px; height:auto;
-    filter:brightness(0) invert(1);
-    opacity:0.7;
-}
-.magazine_view .view_button .page_btn dl dd{
-    font-size:14px;
-    font-weight:500;
+    position:relative;
+    display:inline-flex; align-items:center; gap:12px;
     color:#fff;
+    text-decoration:none;
+    padding:10px 20px;
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:999px;
+    transition: color .25s, border-color .25s, background .25s, transform .25s;
+}
+.magazine_view .view_button .page_btn:hover{color:#0F0F0F; background:#fff; border-color:#fff;}
+.magazine_view .view_button .page_btn.disabled{opacity:0.35; pointer-events:none;}
+.magazine_view .view_button .page_btn .lbl{
+    font-size:14px;
+    font-weight:600;
     letter-spacing:0.08em;
     font-family:'Montserrat','Pretendard',sans-serif;
 }
-.magazine_view .view_button .page_btn:hover{color:#fff;}
-.magazine_view .view_button .page_btn:hover dl{transform:translateX(-6px);}
-.magazine_view .view_button .page_btn.next:hover dl{transform:translateX(6px);}
-.magazine_view .view_button .page_btn:hover dl dt img{opacity:1;}
-.magazine_view .view_button .page_btn:hover dl dt:before{display:none;}
+.magazine_view .view_button .page_btn .arrow_ico{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:22px; height:22px;
+    font-family:'Material Symbols Outlined';
+    font-size:22px; font-weight:400;
+    color:inherit;
+    line-height:1;
+}
+.magazine_view .view_button .page_btn .arrow_ico::before{content:'\e5e0';}
+.magazine_view .view_button .page_btn:not(.next) .arrow_ico::before{transform:rotate(180deg); display:inline-block;}
+.magazine_view .view_button .page_btn:hover:not(.next){transform:translateX(-4px);}
+.magazine_view .view_button .page_btn.next:hover{transform:translateX(4px);}
 
 /* List 버튼 — 햄버거 → 그리드 아이콘 톤 */
 .magazine_view .view_button .list_btn{
