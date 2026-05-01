@@ -533,6 +533,38 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 /* 슬라이드 / 유튜브 */
 .magazine_view .portfolio_view_in .con_area .prodSwiper{margin-top:32px;}
 .magazine_view .portfolio_view_in .con_area .prodSwiper img{width:100%; height:auto; display:block;}
+
+/* 본문 슬라이드 swiper-pagination — 기본 동그란 dot 비활성, 가는 line 톤 */
+.magazine_view .swiper-pagination,
+.magazine_view .prodSwiper .swiper-pagination{
+    position:static !important;
+    bottom:auto !important;
+    width:auto !important;
+    padding:20px 0 0;
+    text-align:center;
+    transform:none !important;
+}
+.magazine_view .swiper-pagination .swiper-pagination-bullet,
+.magazine_view .prodSwiper .swiper-pagination-bullet{
+    display:inline-block;
+    width:32px !important; height:2px !important;
+    margin:0 4px !important;
+    border-radius:0 !important;
+    background:rgba(255,255,255,0.25) !important;
+    opacity:1 !important;
+    transition: background .25s, width .25s;
+    vertical-align:middle;
+    cursor:pointer;
+}
+.magazine_view .swiper-pagination .swiper-pagination-bullet:hover,
+.magazine_view .prodSwiper .swiper-pagination-bullet:hover{
+    background:rgba(255,255,255,0.5) !important;
+}
+.magazine_view .swiper-pagination .swiper-pagination-bullet-active,
+.magazine_view .prodSwiper .swiper-pagination-bullet-active{
+    background:#fff !important;
+    width:48px !important;
+}
 .magazine_view .portfolio_view_in .con_area .youtube{margin-top:32px;}
 .magazine_view .portfolio_view_in .con_area .youtube .youtube_thumb{margin-bottom:16px;}
 .magazine_view .portfolio_view_in .con_area .youtube dl{display:flex; align-items:center; gap:14px;}
