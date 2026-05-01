@@ -30,3 +30,4 @@ askim/tmp/
 bloomingterra/app/config/database.php
 *.pyc
 __pycache__/
+.claude/
