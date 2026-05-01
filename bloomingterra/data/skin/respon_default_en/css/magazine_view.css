@@ -400,6 +400,220 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 .magazine_view .bbs_view{display:none;}
 .magazine_view .view_btn{display:none;}
 
+/* ============================================================
+   6. Goods view (Service 게시글) 매거진 톤
+   - portfolio_view 마크업 그대로 두고 매거진 톤만 덮어쓰기
+   - sticky 2-column → 단일 컬럼 매거진 레이아웃
+   - 색/타이포/spacing은 board_view code=gallery와 동일
+   ============================================================ */
+.magazine_view .portfolio_view{background:#0F0F0F; color:#B8B8B8; padding:0;}
+.magazine_view .portfolio_view_in{
+    display:block !important;
+    max-width:var(--mv-container);
+    margin:0 auto;
+    padding:80px var(--mv-padding) 0;
+    align-items:initial;
+    min-height:auto;
+}
+.magazine_view .portfolio_view_in article{display:block; box-sizing:border-box;}
+.magazine_view .portfolio_view_in .txt_area{
+    width:100% !important;
+    display:block !important;
+    justify-content:initial !important;
+    align-items:initial !important;
+    margin-bottom:48px;
+}
+.magazine_view .portfolio_view_in .txt_area .in{
+    position:static !important;
+    width:100% !important; max-width:none !important;
+    padding:0 !important; top:auto !important;
+}
+
+/* 날짜 라벨 */
+.magazine_view .portfolio_view_in .txt_area .date{
+    color:var(--mv-accent) !important;
+    font-family:'Montserrat','Pretendard',sans-serif !important;
+    font-size:14px !important; font-weight:600 !important;
+    letter-spacing:0.08em !important; line-height:1.4 !important;
+    padding:0 0 12px !important; margin:0 !important;
+    text-transform:uppercase;
+}
+
+/* 메인 타이틀 (subject / fs65) */
+.magazine_view .portfolio_view_in .txt_area .fs65,
+.magazine_view .portfolio_view_in .txt_area .subject{
+    font-family:'Pretendard','Noto Sans KR',sans-serif !important;
+    font-size:40px !important; font-weight:700 !important;
+    line-height:1.35 !important; letter-spacing:-0.5px !important;
+    color:#fff !important;
+    margin:0 0 28px !important;
+    text-wrap:balance;
+}
+
+/* 메타 info (Region/Period/Category/Date 등) */
+.magazine_view .portfolio_view_in .txt_area .info{
+    display:flex !important; flex-wrap:wrap; gap:8px 24px;
+    margin:0 0 32px !important;
+    padding:16px 0 0; border-top:1px solid var(--mv-border);
+}
+.magazine_view .portfolio_view_in .txt_area .info dl{
+    display:flex !important; align-items:center; gap:8px;
+    margin:0 !important; padding:0;
+}
+.magazine_view .portfolio_view_in .txt_area .info dl + dl{margin-top:0 !important;}
+.magazine_view .portfolio_view_in .txt_area .info dl dt{
+    width:auto !important;
+    font-family:'Montserrat','Pretendard',sans-serif !important;
+    font-size:13px !important; font-weight:600 !important;
+    color:#fff !important; line-height:1.4 !important;
+    letter-spacing:0.05em;
+}
+.magazine_view .portfolio_view_in .txt_area .info dl dt::after{content:''; display:inline-block; width:1px; height:10px; background:rgba(255,255,255,0.25); margin-left:8px;}
+.magazine_view .portfolio_view_in .txt_area .info dl dd{
+    width:auto !important;
+    font-family:'Pretendard',sans-serif !important;
+    font-size:14px !important; font-weight:400 !important;
+    color:rgba(255,255,255,0.7) !important;
+    line-height:1.4 !important;
+}
+
+/* 버튼 영역 (Contact Us / List) */
+.magazine_view .portfolio_view_in .txt_area .btn_area{
+    display:flex !important; gap:12px !important;
+    margin:32px 0 0 !important;
+    flex-wrap:wrap !important;
+}
+.magazine_view .portfolio_view_in .txt_area .btn_area a{
+    width:auto !important;
+    display:inline-flex !important; align-items:center; justify-content:center; gap:10px;
+    height:auto !important;
+    padding:12px 24px !important;
+    border:1px solid rgba(255,255,255,0.25) !important;
+    border-radius:999px !important;
+    background:transparent !important;
+    color:#fff !important;
+    font-size:14px !important; font-weight:500 !important;
+    letter-spacing:0.05em !important;
+    text-decoration:none;
+    transition: all .25s !important;
+}
+.magazine_view .portfolio_view_in .txt_area .btn_area a:hover{
+    background:#fff !important; color:#0F0F0F !important; border-color:#fff !important;
+}
+.magazine_view .portfolio_view_in .txt_area .btn_area a::before{display:none !important;}
+
+/* con_area 본문 */
+.magazine_view .portfolio_view_in .con_area{
+    width:100% !important;
+    overflow:visible !important;
+    padding-top:0 !important;
+}
+.magazine_view .portfolio_view_in .con_area section{
+    width:100% !important; max-width:none !important;
+    padding:0 0 60px !important;
+}
+.magazine_view .portfolio_view_in .con_area .view_img{margin:0 0 32px;}
+.magazine_view .portfolio_view_in .con_area .view_img img{width:100%; height:auto; display:block;}
+.magazine_view .portfolio_view_in .con_area .cont{
+    font-family:'Pretendard','Noto Sans KR',sans-serif !important;
+    font-size:18px !important; font-weight:500 !important;
+    line-height:32px !important;
+    color:#B8B8B8 !important;
+    letter-spacing:-0.3px !important;
+    word-break:keep-all;
+}
+.magazine_view .portfolio_view_in .con_area .cont *{color:inherit !important; background-color:transparent !important;}
+.magazine_view .portfolio_view_in .con_area .cont p,
+.magazine_view .portfolio_view_in .con_area .cont div{
+    margin:0 0 0 !important;
+    line-height:32px !important;
+    font-size:18px !important;
+}
+
+/* 슬라이드 / 유튜브 */
+.magazine_view .portfolio_view_in .con_area .prodSwiper{margin-top:32px;}
+.magazine_view .portfolio_view_in .con_area .prodSwiper img{width:100%; height:auto; display:block;}
+.magazine_view .portfolio_view_in .con_area .youtube{margin-top:32px;}
+.magazine_view .portfolio_view_in .con_area .youtube .youtube_thumb{margin-bottom:16px;}
+.magazine_view .portfolio_view_in .con_area .youtube dl{display:flex; align-items:center; gap:14px;}
+.magazine_view .portfolio_view_in .con_area .youtube dl dt{position:relative; width:48px; height:48px;}
+.magazine_view .portfolio_view_in .con_area .youtube dl dd{font-size:14px; color:#B8B8B8;}
+
+/* view_button (PREV/LIST/NEXT) — board_view와 동일 매거진 톤 */
+.magazine_view .portfolio_view .view_button{
+    max-width:var(--mv-container);
+    margin:80px auto 0;
+    padding:40px var(--mv-padding) 60px;
+    border-top:1px solid var(--mv-border);
+    background:transparent;
+    box-sizing:border-box;
+}
+.magazine_view .portfolio_view .view_button .w_custom{
+    display:flex; justify-content:space-between; align-items:center;
+    gap:30px;
+}
+.magazine_view .portfolio_view .view_button .page_btn{
+    display:inline-flex; align-items:center; gap:12px;
+    color:#fff; text-decoration:none;
+    padding:10px 20px;
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:999px; background:transparent;
+    transition: color .25s, border-color .25s, background .25s, transform .25s;
+}
+.magazine_view .portfolio_view .view_button .page_btn:hover{color:#0F0F0F; background:#fff; border-color:#fff;}
+.magazine_view .portfolio_view .view_button .page_btn.disabled{opacity:0.35; pointer-events:none;}
+.magazine_view .portfolio_view .view_button .page_btn .lbl{font-size:14px; font-weight:600; letter-spacing:0.08em; font-family:'Montserrat','Pretendard',sans-serif;}
+.magazine_view .portfolio_view .view_button .page_btn .arrow_ico{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; font-family:'Material Symbols Outlined'; font-size:22px; color:inherit; line-height:1;}
+.magazine_view .portfolio_view .view_button .page_btn .arrow_ico::before{content:'\e5e0';}
+.magazine_view .portfolio_view .view_button .page_btn:not(.next) .arrow_ico::before{transform:rotate(180deg); display:inline-block;}
+.magazine_view .portfolio_view .view_button .list_btn{
+    width:48px; height:48px; padding:0;
+    border:1px solid rgba(255,255,255,0.4); border-radius:50%; background:transparent;
+    display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    transition:all .25s;
+}
+.magazine_view .portfolio_view .view_button .list_btn:hover{background:rgba(255,255,255,0.08); border-color:#fff;}
+.magazine_view .portfolio_view .view_button .list_btn span{display:block; width:16px; height:1.5px; background:#fff; transition:none;}
+
+/* recent_posts 매거진 다크 톤 */
+.magazine_view .portfolio_view .recent_posts{padding:120px 0 80px;}
+.magazine_view .portfolio_view .recent_posts .inner{max-width:var(--mv-container); margin:0 auto; padding:0 var(--mv-padding);}
+.magazine_view .portfolio_view .recent_posts .fs50{color:#fff !important; font-size:32px !important; font-family:'Pretendard',sans-serif !important; font-weight:700 !important; letter-spacing:-0.5px;}
+.magazine_view .portfolio_view .marquee-item .desc .fs25{color:#fff !important; font-size:18px !important;}
+.magazine_view .portfolio_view .marquee-item .desc .loca{color:rgba(255,255,255,0.5) !important;}
+.magazine_view .portfolio_view .marquee-item .thumb::after{background:var(--mv-accent) !important;}
+.magazine_view .portfolio_view .marquee-item .thumb span{background:var(--mv-accent) !important;}
+.magazine_view .portfolio_view .marquee-arrow{background:rgba(255,255,255,0.06) !important; border-color:rgba(255,255,255,0.2) !important;}
+.magazine_view .portfolio_view .marquee-arrow::after{color:#fff !important;}
+.magazine_view .portfolio_view .marquee-arrow:hover{background:#fff !important; border-color:#fff !important;}
+.magazine_view .portfolio_view .marquee-arrow:hover::after{color:#0F0F0F !important;}
+.magazine_view .portfolio_view .marquee-pagination{color:rgba(255,255,255,0.4) !important;}
+.magazine_view .portfolio_view .marquee-pagination .swiper-pagination-current{color:var(--mv-accent) !important;}
+
+/* GSAP scroll luminosity 효과 비활성 (매거진은 항상 dark) */
+body.section-light:has(.magazine_view .portfolio_view),
+body.section-dark:has(.magazine_view .portfolio_view){background:#0F0F0F !important;}
+
+/* 반응형 */
+@media (max-width:980px){
+    .magazine_view .portfolio_view_in{padding:50px var(--mv-padding) 0;}
+    .magazine_view .portfolio_view_in .txt_area .fs65,
+    .magazine_view .portfolio_view_in .txt_area .subject{font-size:30px !important;}
+    .magazine_view .portfolio_view .recent_posts{padding:80px 0 60px;}
+    .magazine_view .portfolio_view .recent_posts .fs50{font-size:24px !important;}
+}
+@media (max-width:680px){
+    .magazine_view .portfolio_view_in{padding:32px 16px 0;}
+    .magazine_view .portfolio_view_in .txt_area .fs65,
+    .magazine_view .portfolio_view_in .txt_area .subject{font-size:24px !important;}
+    .magazine_view .portfolio_view_in .con_area .cont{font-size:16px !important; line-height:28px !important;}
+    .magazine_view .portfolio_view_in .con_area .cont p,
+    .magazine_view .portfolio_view_in .con_area .cont div{font-size:16px !important; line-height:28px !important;}
+    .magazine_view .portfolio_view .view_button{padding:30px 16px 40px;}
+    .magazine_view .portfolio_view .view_button .w_custom{gap:12px;}
+    .magazine_view .portfolio_view .recent_posts{padding:60px 0 40px;}
+}
+
 /* === 반응형 === */
 @media screen and (max-width:1280px){
     .magazine_view{--mv-container:960px;}
