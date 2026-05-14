@@ -49,6 +49,7 @@
 				</div>
 			</article>
 			<article class="con_area">
+				<!-- askim 1:1 패턴: light section(본문+detail_img) → dark section(슬라이드+유튜브) → recent_posts dark section -->
 				<section data-section-luminosity="light" class="pv-section pv-section-light">
 					<!--{ @ goods_view['goods_view']['detail_img'] }-->
 						<div class="view_img">
@@ -61,7 +62,10 @@
 							{=htmlspecialchars_decode(goods_view['goods_view']['info'])}
 						</div>
 					<!--{ / }-->
+				</section>
 
+				<!--{ ? extraFieldData || (goods_view['goods_view']['ex4'] && goods_view['goods_view']['ex5'] && goods_view['goods_view']['ex7']) }-->
+				<section data-section-luminosity="dark" class="pv-section pv-section-dark">
 					<!--{ ? extraFieldData }-->
 						<div class="prodSwiper">
 							<ul class="swiper-wrapper">
@@ -100,6 +104,7 @@
 						</div>
 					<!--{ / }-->
 				</section>
+				<!--{ / }-->
 			</article>
 		</div>
 
