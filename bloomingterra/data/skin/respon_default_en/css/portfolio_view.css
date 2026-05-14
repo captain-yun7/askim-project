@@ -184,8 +184,9 @@ body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-button-next::
 	color:inherit;
 	line-height:1;
 }
-.portfolio_view .view_button .page_btn .arrow_ico::before{content:'\e5e0';}
-.portfolio_view .view_button .page_btn:not(.next) .arrow_ico::before{transform:rotate(180deg); display:inline-block;}
+/* 화살표 방향: PREV는 좌향(<), NEXT는 우향(>) — 명시적 코드포인트 사용 (회전 트릭 폐기) */
+.portfolio_view .view_button .page_btn:not(.next) .arrow_ico::before{content:'\e5cb';}  /* chevron_left */
+.portfolio_view .view_button .page_btn.next .arrow_ico::before{content:'\e5cc';}        /* chevron_right */
 .portfolio_view .view_button .list_btn{
 	display:inline-flex; flex-direction:column; justify-content:center; align-items:center; gap:5px;
 	width:46px; height:46px; padding:0;

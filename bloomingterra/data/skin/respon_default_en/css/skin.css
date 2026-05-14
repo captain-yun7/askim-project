@@ -43,7 +43,7 @@
 
 		#header{position: fixed;top:0;left:0;width:100%;z-index:10;padding:35px 0;}
 		#header .header_cont{position: relative;box-sizing:border-box;width:100%;padding:0 80px;display: flex;align-items: center;justify-content: space-between;}
-		#header .header_cont h1{width:384px;height:51px;}
+		#header .header_cont h1{width:auto; height:28px; aspect-ratio:384/51;}  /* 메뉴 텍스트(24px)와 시각 균형 — 2026-05-14 피드백 #6 */
 		#header .header_cont h1 a{font-size:0;display: block;width:100%;height:100%;background:url('../images/skin/hd_logo.png')no-repeat left center;background-size:auto 100%;}
 		
 		#header .header_cont .hd_right{display: flex;align-items: center;}
@@ -80,7 +80,7 @@
 		@media only screen and (max-width:1500px) {
 			#header{padding:25px 0;}
 			#header .header_cont{padding:0 30px;}
-			#header .header_cont h1{width:278px;height:36px;}
+			#header .header_cont h1{width:auto; height:26px; aspect-ratio:384/51;}
 
 			#header .header_cont .hd_lnb{margin-right:50px;}
 			#header .header_cont .hd_lnb li + li{margin-left:40px;}
@@ -90,7 +90,7 @@
 			#header .multi_lang dt span{font-size:20px;}
 		}
 		@media only screen and (max-width:900px) {
-			#header .header_cont h1{width:230px;height:30px;}
+			#header .header_cont h1{width:auto; height:24px; aspect-ratio:384/51;}
 
 			#header .header_cont .hd_lnb{margin-right:20px;}
 			#header .header_cont .hd_lnb li + li{margin-left:25px;}

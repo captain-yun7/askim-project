@@ -370,8 +370,9 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     color:inherit;
     line-height:1;
 }
-.magazine_view .view_button .page_btn .arrow_ico::before{content:'\e5e0';}
-.magazine_view .view_button .page_btn:not(.next) .arrow_ico::before{transform:rotate(180deg); display:inline-block;}
+/* 화살표 방향: PREV 좌향(<), NEXT 우향(>) — 명시 코드포인트 */
+.magazine_view .view_button .page_btn:not(.next) .arrow_ico::before{content:'\e5cb';}  /* chevron_left */
+.magazine_view .view_button .page_btn.next .arrow_ico::before{content:'\e5cc';}        /* chevron_right */
 .magazine_view .view_button .page_btn:hover:not(.next){transform:translateX(-4px);}
 .magazine_view .view_button .page_btn.next:hover{transform:translateX(4px);}
 
@@ -596,8 +597,9 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 .magazine_view .portfolio_view .view_button .page_btn.disabled{opacity:0.35; pointer-events:none;}
 .magazine_view .portfolio_view .view_button .page_btn .lbl{font-size:14px; font-weight:600; letter-spacing:0.08em; font-family:'Montserrat','Pretendard',sans-serif;}
 .magazine_view .portfolio_view .view_button .page_btn .arrow_ico{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; font-family:'Material Symbols Outlined'; font-size:22px; color:inherit; line-height:1;}
-.magazine_view .portfolio_view .view_button .page_btn .arrow_ico::before{content:'\e5e0';}
-.magazine_view .portfolio_view .view_button .page_btn:not(.next) .arrow_ico::before{transform:rotate(180deg); display:inline-block;}
+/* 화살표 방향: PREV 좌향(<), NEXT 우향(>) */
+.magazine_view .portfolio_view .view_button .page_btn:not(.next) .arrow_ico::before{content:'\e5cb';}  /* chevron_left */
+.magazine_view .portfolio_view .view_button .page_btn.next .arrow_ico::before{content:'\e5cc';}        /* chevron_right */
 .magazine_view .portfolio_view .view_button .list_btn{
     width:48px; height:48px; padding:0;
     border:1px solid rgba(255,255,255,0.4); border-radius:50%; background:transparent;

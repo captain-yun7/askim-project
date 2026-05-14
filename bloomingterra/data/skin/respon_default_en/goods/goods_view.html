@@ -1,6 +1,6 @@
 {#header}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..500,0..1,-50..200" />
-<link rel="stylesheet" type="text/css" href="/data/skin/respon_default_en/css/portfolio_view.css?v=20260514">
+<link rel="stylesheet" type="text/css" href="/data/skin/respon_default_en/css/portfolio_view.css?v=20260514b">
 <!-- 2026-05-14: 고객 피드백 "에스킴컴퍼니처럼 스크롤 라이트→다크 반전" → goods_view에서 매거진 톤(.magazine_view) 분리. portfolio_view.css의 askim 1:1 톤 + GSAP scroll luminosity 효과 활성화. Insight(board_view)는 매거진 톤 유지. -->
 <div class="sub_content">
 	<div class="portfolio_view compad">
@@ -49,38 +49,9 @@
 				</div>
 			</article>
 			<article class="con_area">
-				<!-- askim 1:1 패턴: light section(본문+detail_img) → dark section(슬라이드+유튜브) → recent_posts dark section -->
+				<!-- askim 1:1 패턴: light section(영상 hero + 본문 + detail_img) → dark section(슬라이드) → recent_posts dark section -->
 				<section data-section-luminosity="light" class="pv-section pv-section-light">
-					<!--{ @ goods_view['goods_view']['detail_img'] }-->
-						<div class="view_img">
-							<img src="{C._UPLOAD}/goods/detail_img/{.value_}" onerror="this.src='../images/common/noimg.gif'" alt="{goods_view['goods_view']['name']}">
-						</div>
-					<!--{ / }-->
-
-					<!--{ ? goods_view['goods_view']['info'] }-->
-						<div class="cont">
-							{=htmlspecialchars_decode(goods_view['goods_view']['info'])}
-						</div>
-					<!--{ / }-->
-				</section>
-
-				<!--{ ? extraFieldData || (goods_view['goods_view']['ex4'] && goods_view['goods_view']['ex5'] && goods_view['goods_view']['ex7']) }-->
-				<section data-section-luminosity="dark" class="pv-section pv-section-dark">
-					<!--{ ? extraFieldData }-->
-						<div class="prodSwiper">
-							<ul class="swiper-wrapper">
-								<!--{ @ extraFieldData }-->
-									<!--{ ? .name == '슬라이드 이미지 01' || .name == '슬라이드 이미지 02' || .name == '슬라이드 이미지 03'}-->
-										<li class="swiper-slide">{.value}</li>
-									<!--{ / }-->
-								<!--{ / }-->
-							</ul>
-							<div class="swiper-pagination"></div>
-							<div class="swiper-button-prev" aria-label="Previous slide"></div>
-							<div class="swiper-button-next" aria-label="Next slide"></div>
-						</div>
-					<!--{ / }-->
-
+					<!-- 2026-05-14 피드백 #3: 영상을 최상단(hero)에. 영상 있는 글에 한해 표시. -->
 					<!--{ ? goods_view['goods_view']['ex4'] && goods_view['goods_view']['ex5'] && goods_view['goods_view']['ex7']}-->
 						<div class="youtube">
 							<!--{ @ extraFieldData }-->
@@ -105,6 +76,34 @@
 							</dl>
 						</div>
 					<!--{ / }-->
+
+					<!--{ @ goods_view['goods_view']['detail_img'] }-->
+						<div class="view_img">
+							<img src="{C._UPLOAD}/goods/detail_img/{.value_}" onerror="this.src='../images/common/noimg.gif'" alt="{goods_view['goods_view']['name']}">
+						</div>
+					<!--{ / }-->
+
+					<!--{ ? goods_view['goods_view']['info'] }-->
+						<div class="cont">
+							{=htmlspecialchars_decode(goods_view['goods_view']['info'])}
+						</div>
+					<!--{ / }-->
+				</section>
+
+				<!--{ ? extraFieldData }-->
+				<section data-section-luminosity="dark" class="pv-section pv-section-dark">
+					<div class="prodSwiper">
+						<ul class="swiper-wrapper">
+							<!--{ @ extraFieldData }-->
+								<!--{ ? .name == '슬라이드 이미지 01' || .name == '슬라이드 이미지 02' || .name == '슬라이드 이미지 03'}-->
+									<li class="swiper-slide">{.value}</li>
+								<!--{ / }-->
+							<!--{ / }-->
+						</ul>
+						<div class="swiper-pagination"></div>
+						<div class="swiper-button-prev" aria-label="Previous slide"></div>
+						<div class="swiper-button-next" aria-label="Next slide"></div>
+					</div>
 				</section>
 				<!--{ / }-->
 			</article>
@@ -166,18 +165,21 @@
 		document.addEventListener('DOMContentLoaded', function(){
 			if(typeof Swiper === 'undefined') return;
 			new Swiper(".recent_posts .marquee-wrapper", {
-				speed: 4000,
+				speed: 5000,
 				direction: "horizontal",
 				loop: true,
 				slidesPerView: 1,
 				spaceBetween: 10,
-				freeMode: true,
+				// 2026-05-14 피드백 #5: 끊김 없는 연속 마퀴 (자동 롤링)
+				freeMode: { enabled: true, momentum: false },
+				allowTouchMove: true,
 				navigation: {
 					nextEl: '.recent_posts .arrow-next',
 					prevEl: '.recent_posts .arrow-prev'
 				},
 				autoplay: {
-					delay: 2000,
+					delay: 0,
+					disableOnInteraction: false,
 					pauseOnMouseEnter: true
 				},
 				breakpoints: {
