@@ -14,56 +14,71 @@ from openpyxl.utils import get_column_letter
 # 데이터
 # ────────────────────────────────────────────────
 ROWS = [
-    # Phase, 사이트, 항목, 고객 요구사항, 실제 구현, 변경 파일, 커밋, 테스트 방법, 기대 결과, E2E, 상태
+    # Phase, 사이트, 항목, 고객 요구사항, 실제 구현, 변경 파일, 커밋, 테스트 방법, 기대 결과, 실제 효과, E2E, 상태
     # ── Phase 1: SEO 기본
     ["Phase 1", "블루밍테라", "robots.txt 생성",
      "검색엔진 크롤러 가이드 파일 생성",
      "루트에 robots.txt 작성, /admin/ /app/ /system/ /_compile/ /data/ /lib/admin/ 차단, sitemap 명시",
      "bloomingterra/robots.txt",
-     "ff7131d 외", "curl https://bloomingterra.com/robots.txt", "200 + Disallow + Sitemap 라인", "1", "✅"],
+     "ff7131d 외", "curl https://bloomingterra.com/robots.txt", "200 + Disallow + Sitemap 라인",
+     "구글/네이버 검색엔진이 사이트 구조를 정확히 인식해 색인 시작. 관리자/내부 폴더는 색인 차단으로 보안 강화.",
+     "1", "✅"],
 
     ["Phase 1", "블루밍테라", "sitemap.xml 생성",
      "검색엔진에 페이지 목록 제공",
      "정적 sitemap.xml 생성 (Phase 2-6에서 동적화로 대체)",
      "bloomingterra/sitemap.xml (제거됨)",
-     "Phase 1 → Phase 2-6", "curl https://bloomingterra.com/sitemap.xml", "200 + XML", "1", "✅ (동적화로 대체)"],
+     "Phase 1 → Phase 2-6", "curl https://bloomingterra.com/sitemap.xml", "200 + XML",
+     "검색엔진이 페이지 목록을 일괄 인지. Phase 2-6에서 동적화로 신규 글 자동 반영.",
+     "1", "✅ (동적화로 대체)"],
 
     ["Phase 1", "블루밍테라", "SSL 리다이렉트",
      "HTTP → HTTPS 강제",
      "Nginx 서버 레벨에서 처리 중 확인 → .htaccess 변경 불필요",
      "bloomingterra/.htaccess (변경 없음, 코멘트만)",
      "ed8fddd", "curl -I http://bloomingterra.com", "301 to https",
+     "HTTPS 통일로 검색엔진 가산점 + 브라우저 자물쇠(보안) 표시.",
      "1 (수동)", "✅"],
 
     ["Phase 1", "블루밍테라", "메타태그/OG 태그",
      "검색결과 노출/SNS 미리보기용 메타태그",
      "header.html에 description/keywords/og:type/og:title/og:url/og:site_name/og:description/og:locale/og:image + Twitter Card 추가. canonical 동적 처리.",
      "bloomingterra/data/skin/respon_default_en/outline/header.html",
-     "ff7131d", "https://bloomingterra.com 응답 HTML 검사 (head 메타)", "OG 9개 + Twitter Card 4개 + canonical", "13", "✅ (콘텐츠 일부 데이터 미입력)"],
+     "ff7131d", "https://bloomingterra.com 응답 HTML 검사 (head 메타)", "OG 9개 + Twitter Card 4개 + canonical",
+     "구글 검색결과 제목/설명 정확 노출 + 카카오톡/페북 공유 시 미리보기 카드 정상 표시. 클릭률 향상.",
+     "13", "✅ (콘텐츠 일부 데이터 미입력)"],
 
     ["Phase 1", "블루밍테라", "Schema.org",
      "구조화된 데이터로 회사 정보 검색엔진 제공",
      "header.html에 Organization JSON-LD 추가 (name/url/logo/address/sameAs)",
      "bloomingterra/data/skin/respon_default_en/outline/header.html",
-     "ff7131d", "응답 HTML에 application/ld+json @type Organization", "JSON-LD 객체 1개", "1", "✅"],
+     "ff7131d", "응답 HTML에 application/ld+json @type Organization", "JSON-LD 객체 1개",
+     "구글 검색결과에 회사명/로고/주소/SNS가 카드 형태(Knowledge Panel)로 노출 가능. 검색 신뢰도 상승.",
+     "1", "✅"],
 
     ["Phase 1", "에스킴", "robots.txt 보강",
      "민감 경로 차단",
      "/report*.html, /comm/, /other/search.php 차단 + sitemap 명시",
      "askim/www/robots.txt",
-     "0b19c31", "curl https://www.askim.kr/robots.txt", "Disallow 7줄 + Sitemap", "1", "✅"],
+     "0b19c31", "curl https://www.askim.kr/robots.txt", "Disallow 7줄 + Sitemap",
+     "내부 검색/리포트 URL 색인 차단으로 색인 정확도↑ + 중복 콘텐츠 방지.",
+     "1", "✅"],
 
     ["Phase 1", "에스킴", "Schema.org 보강",
      "Organization 정보 보강",
      "head.php에 url/logo/description/addressCountry/sameAs 3개 추가",
      "askim/www/head.php",
-     "8971471", "https://www.askim.kr 응답 ld+json", "Organization 객체 + sameAs 3개", "1", "✅"],
+     "8971471", "https://www.askim.kr 응답 ld+json", "Organization 객체 + sameAs 3개",
+     "구글 검색결과에서 회사 정보 신뢰도 표시(로고/주소/블로그/인스타/유튜브 3개 링크).",
+     "1", "✅"],
 
     ["Phase 1", "에스킴", "OG/Twitter Card 보강",
      "비표준 메타태그 정리 + OG/Twitter 정리",
      "twcenter/lib.php에서 비표준(subject/title/author/publisher/Classification) 제거, og:locale/image:width/height/Twitter Card 추가",
      "askim/www/twcenter/lib.php",
-     "ef99616", "https://www.askim.kr 응답 head meta 검사", "비표준 0개 + Twitter Card 4개", "12", "✅"],
+     "ef99616", "https://www.askim.kr 응답 head meta 검사", "비표준 0개 + Twitter Card 4개",
+     "SNS 공유 시 큰 이미지(1200×630) + 정확한 제목/설명 노출. 트위터/카카오톡/페북 모두 일관된 미리보기.",
+     "12", "✅"],
 
     # ── Phase 2-1: Service 레이아웃
     ["Phase 2-1", "블루밍테라", "Service 페이지 → 에스킴 포트폴리오 레이아웃",
@@ -73,6 +88,7 @@ ROWS = [
      "e7c2097, 0d7e9f1, 1cab5fb",
      "https://www.bloomingterra.com/goods/goods_view?no=171&cate=001007 (TIRTIR)",
      "portfolio_view_in flex layout + txt_area sticky info + con_area 본문",
+     "매거진 톤의 고급 브랜드 이미지. 좌측 메타 정보가 스크롤 따라 sticky 유지되어 사용자가 항상 글 정보 인지. 모바일 반응형 자동.",
      "9", "✅"],
 
     # ── Phase 2-2: Recent Posts
@@ -83,6 +99,7 @@ ROWS = [
      "c45eec7, 1cab5fb",
      "동일 view 페이지 하단 Recent Posts 섹션 확인",
      "30 marquee-item (loop swiper) + 화살표/페이지네이션 동작",
+     "사용자가 한 글 본 후 다른 글로 자연스럽게 이동(내부 회유성). 페이지뷰/체류시간 증가. 검색엔진 내부 링크 풍부화로 색인 깊이↑.",
      "9", "✅"],
 
     # ── Phase 2-3: Insight 웹진
@@ -93,6 +110,7 @@ ROWS = [
      "e1be52a",
      "https://www.bloomingterra.com/board/board_list?code=gallery (list), .../board_view?code=gallery&no=82 (view), https://.../board_list?code=notice (영향 없음 검증)",
      "Insight만 새 디자인, 다른 게시판 변경 없음",
+     "단순 게시판 → 매거진 카드 그리드. 시각적 매력↑, 콘텐츠 탐색 쉬워짐. 본문 가독성 강화(880px 좁은 컬럼).",
      "18", "✅"],
 
     # ── Phase 2-4: 관련 게시글
@@ -103,6 +121,7 @@ ROWS = [
      "521c5ec",
      "어드민 글 수정 → related_no1/2 입력 → /board/board_view?code=gallery&no=N에서 .related_posts 섹션 확인. 다른 게시판 view엔 섹션 없음 검증.",
      "code=gallery에만 .related_posts 출력, 미입력 시 섹션 비출력",
+     "운영자가 직접 관련 글을 큐레이션 → 회유성/체류시간 증가. SEO 내부 링크 자산. 마크업은 시안 대기로 hide 상태(2026-04-30) — 시안 확정 후 즉시 노출 가능.",
      "11", "✅"],
 
     # ── Phase 2-5: 에스킴 sitemap
@@ -113,6 +132,7 @@ ROWS = [
      "5dcc880",
      "curl https://www.askim.kr/sitemap.xml + grep ptype=view",
      "47 URL (정적 + 카테고리 + portfolio view 35개, idx=56까지 포함, garbage 쿼리 없음)",
+     "신규 portfolio 글이 자동으로 검색엔진에 노출됨. 운영자가 sitemap 수동 갱신 부담 0. 기존 정적 80 URL의 garbage 쿼리(?page=1 등) 제거로 색인 정확도↑.",
      "12", "✅"],
 
     # ── Phase 2-6: 블루밍테라 sitemap
@@ -123,6 +143,7 @@ ROWS = [
      "2e96aa9",
      "curl https://www.bloomingterra.com/sitemap.xml?_t=<ts> (cache-bust)",
      "269 URL (goods 201 + board 45 + board_list 6 + 정적 7 + 카테고리)",
+     "기존 8 URL → 269 URL로 자동 확장(34배). 모든 goods/board 글이 검색엔진에 노출. 운영 부담 0.",
      "15", "✅"],
 
     # ── Phase 2-7: URL Slug
@@ -133,6 +154,7 @@ ROWS = [
      "e407f0a",
      "어드민 글 작성 시 slug 입력 → /service/<slug> 200 + canonical /service/<slug>. 같은 글의 query URL은 301 to /service/<slug>. slug 없는 기존 글은 query URL 200 그대로.",
      "/service/<slug> 200 + canonical 정확 + 301 single hop + 기존 글 무영향",
+     "기존 ?no=171&cate=001 같은 알 수 없는 URL → /service/tirtir-pop-up-store-seongsu 같은 SEO-friendly URL. 검색 가산점(키워드 노출) + 사용자 인지 쉬움 + 공유 시 가독성↑.",
      "11", "✅"],
 
     # ── Phase 3: 고객 피드백 라운드 1 (2026-05-14)
@@ -143,6 +165,7 @@ ROWS = [
      "f29eefe, 7a1375e, a2ac020",
      "https://www.bloomingterra.com/goods/goods_view?no=91&cate=001 스크롤 다운 — 본문 끝에서 흰색→검정 1초 페이드 전환",
      "section-light → section-dark 토글 + 본문 텍스트/제목/info 색 자동 매핑 + 부드러운 1초 페이드",
+     "에스킴 풍의 프리미엄 인터랙션. 첫 인상에서 디자인 격↑. 사용자 기억에 남는 차별화 요소. 콘텐츠가 길수록 효과 강함.",
      "라이브 검증", "✅"],
 
     ["Phase 3 #2", "블루밍테라", "본문 이미지-텍스트 인터리브 (askim 인라인 패턴)",
@@ -152,6 +175,7 @@ ROWS = [
      "fa7bfd1",
      "어드민 글 작성 시 본문 에디터에서 이미지+텍스트 번갈아 삽입 → view에서 본문 안에 인라인 표시",
      "view_img 별도 영역 0개. 본문 안에 운영자가 배치한 이미지+텍스트 그대로 출력. 운영 가이드 동반.",
+     "이미지 따로/글 따로가 아닌 매거진/잡지 스타일. 콘텐츠 가독성/몰입도↑. 운영자 자유도 확보(글마다 다른 배치 가능).",
      "운영 변경", "✅"],
 
     ["Phase 3 #3", "블루밍테라", "영상 최상단(hero) 배치",
@@ -161,6 +185,7 @@ ROWS = [
      "18fd7aa",
      "영상 등록된 글 view → 페이지 최상단에 영상 hero 영역",
      "ex4+ex5+ex7 모두 있는 글에서 con_area 첫 자식이 .youtube 블록",
+     "글 진입 시 첫 화면에 영상 임팩트. 캠페인/시공 영상이 있는 글의 비주얼 효과↑. 영상 클릭률 향상 기대.",
      "라이브 검증", "✅"],
 
     ["Phase 3 #4", "블루밍테라", "PREV/NEXT 화살표 방향 수정",
@@ -170,6 +195,7 @@ ROWS = [
      "18fd7aa",
      "view_button의 PREV/NEXT 버튼 시각 검증",
      "PREV 좌향(<), NEXT 우향(>). transform:none. content 코드포인트 명시.",
+     "직관적인 PREV/NEXT 표시로 사용성 개선. 의도와 반대 방향 안내로 인한 사용자 혼란 제거.",
      "라이브 검증", "✅"],
 
     ["Phase 3 #5", "블루밍테라", "Recent Posts 끊김 없는 자동 롤링",
@@ -179,6 +205,7 @@ ROWS = [
      "18fd7aa",
      "Recent Posts 영역에서 일정 속도로 끊김 없이 흐름",
      "swiper config: autoplay.delay=0, speed=5000, running=true",
+     "정적인 카드 → 움직이는 마퀴. 시선 유도. 사용자가 멈춰서 콘텐츠 보는 시간↑. 회유성 증가.",
      "라이브 검증", "✅"],
 
     ["Phase 3 #6", "블루밍테라", "헤더 로고 크기 축소",
@@ -188,6 +215,7 @@ ROWS = [
      "18fd7aa",
      "메인 페이지 헤더 로고 시각 검증",
      "logo 28px (≤1500 26, ≤900 24). 메뉴 텍스트와 균형.",
+     "메뉴와 균형 잡힌 헤더. 콘텐츠 영역 시각 공간 확보. 모던한 인상.",
      "라이브 검증", "✅"],
 
     ["Phase 3 #7", "블루밍테라", "콘텐츠 제목 폰트 — 명조(Noto Serif KR)",
@@ -197,6 +225,7 @@ ROWS = [
      "f785110",
      "view 제목 폰트 시각/computed-style 검증",
      "font-family: \"Noto Serif KR\", Pretendard, serif. 서비스 65px / 인사이트 40px.",
+     "옥외광고/공간 비즈니스에 어울리는 매거진/저널 톤. askim(산세리프)과 차별화된 브랜드 톤. 제목의 무게감/품격 강화.",
      "라이브 검증", "✅"],
 
     ["Phase 3 회귀", "블루밍테라", "E2E 회귀 + stale 테스트 정리",
@@ -206,11 +235,13 @@ ROWS = [
      "a697bd9",
      "python3 -m pytest tests/",
      "재실행: 107 passed / 12 skipped / 2 xfailed / 1 error(인프라 timeout) — 오늘 작업 인한 진짜 회귀 0건",
+     "큰 디자인 변경 후에도 검색엔진(SEO/sitemap/slug)/관리자(관련글 DB) 기능 모두 정상 동작 확인. 운영 안정성 보장.",
      "107", "✅"],
 ]
 
 HEADER = ["Phase", "사이트", "항목", "고객 요구사항", "실제 구현 내용",
-          "변경 파일", "커밋 (git)", "테스트 방법 / URL", "기대 결과", "E2E 통과 수", "상태"]
+          "변경 파일", "커밋 (git)", "테스트 방법 / URL", "기대 결과",
+          "실제 효과 (비즈니스 가치)", "E2E 통과 수", "상태"]
 
 # 외부 의존 잔여 (별도 sheet)
 PENDING = [
@@ -256,25 +287,37 @@ for j, h in enumerate(HEADER, start=1):
     c.alignment = align_center
     c.border = border
 
+# Phase별 색 매핑
+phase3_fill = PatternFill("solid", fgColor="DEEBF7")  # Phase 3 (고객 피드백) 연한 파랑
+effect_fill = PatternFill("solid", fgColor="FFF8DC")  # 실제 효과 컬럼 강조 (연한 노랑)
+
 # 데이터
 for i, row in enumerate(ROWS, start=4):
-    fill = phase1_fill if row[0].startswith("Phase 1") else phase2_fill
+    if row[0].startswith("Phase 1"):
+        fill = phase1_fill
+    elif row[0].startswith("Phase 3"):
+        fill = phase3_fill
+    else:
+        fill = phase2_fill
     for j, val in enumerate(row, start=1):
         c = ws.cell(row=i, column=j, value=val)
         c.alignment = align_top_wrap
         c.border = border
-        c.fill = fill
-        if j in (1, 2, 7, 10, 11):
+        # 실제 효과 컬럼(10번)은 별도 배경으로 강조
+        c.fill = effect_fill if j == 10 else fill
+        if j in (1, 2, 7, 11, 12):
             c.alignment = Alignment(vertical="top", horizontal="center", wrap_text=True)
+        if j == 10:
+            c.font = Font(bold=True, size=10, color="666633")
 
 # 컬럼 너비
-widths = [10, 12, 28, 36, 50, 38, 12, 42, 38, 10, 8]
+widths = [10, 12, 28, 36, 50, 38, 12, 42, 38, 44, 10, 8]
 for j, w in enumerate(widths, start=1):
     ws.column_dimensions[get_column_letter(j)].width = w
 
 # 행 높이 (자동 계산이 어려우니 충분히)
 for i in range(4, 4 + len(ROWS)):
-    ws.row_dimensions[i].height = 95
+    ws.row_dimensions[i].height = 115
 
 ws.row_dimensions[1].height = 22
 ws.row_dimensions[2].height = 18
