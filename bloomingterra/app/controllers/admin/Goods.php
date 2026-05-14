@@ -477,10 +477,60 @@ class Goods extends ADMIN_Controller {
 				$get_data["max_file_uploads"] = ini_get("max_file_uploads");
 				$get_data["site_language"] = $site_language;
 				$get_data['ref'] = http_build_query($this->input->get(null, true));
+				// 2026-05-14: 에디터 선택 (B: 운영자 토글)
+				$editor_choice = $this->input->get('editor', true);
+				if (!$editor_choice) $editor_choice = $this->input->cookie('preferred_editor', true);
+				if (!$editor_choice) $editor_choice = 'smart';
+				$get_data['_editor_choice'] = $editor_choice;
+				$get_data['_use_tui'] = ($editor_choice === 'tui');
 				$this->set_view("admin/goods/goods_reg", $get_data);
 			}
 		} catch(Exception $e) {
 			msg($e->getMessage(), -1);
+		}
+	}
+
+	/**
+	 * 에디터(Toast UI) 이미지 업로드 endpoint — 2026-05-14 신규
+	 * Toast UI Editor의 addImageBlobHook이 multipart로 POST하면 저장 후 JSON {url: "/upload/editor/..."} 응답
+	 * admin 인증은 ADMIN_Controller가 처리 (parent::__construct).
+	 */
+	public function editor_image_upload() {
+		header('Content-Type: application/json; charset=UTF-8');
+		try {
+			if (empty($_FILES['image']) || !is_uploaded_file($_FILES['image']['tmp_name'])) {
+				http_response_code(400);
+				echo json_encode(['error' => 'no file uploaded']);
+				return;
+			}
+			$f = $_FILES['image'];
+			// 안전: 확장자 화이트리스트
+			$ext = strtolower(pathinfo($f['name'], PATHINFO_EXTENSION));
+			$allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+			if (!in_array($ext, $allowed)) {
+				http_response_code(400);
+				echo json_encode(['error' => 'invalid file type']);
+				return;
+			}
+			// 안전: 사이즈 제한 10MB
+			if ($f['size'] > 10 * 1024 * 1024) {
+				http_response_code(400);
+				echo json_encode(['error' => 'file too large']);
+				return;
+			}
+			$ym = date('Ym');
+			$dir = $_SERVER['DOCUMENT_ROOT'] . '/upload/editor/' . $ym . '/';
+			if (!is_dir($dir)) @mkdir($dir, 0755, true);
+			$name = date('YmdHis') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+			if (!move_uploaded_file($f['tmp_name'], $dir . $name)) {
+				http_response_code(500);
+				echo json_encode(['error' => 'move_uploaded_file failed']);
+				return;
+			}
+			echo json_encode(['url' => '/upload/editor/' . $ym . '/' . $name]);
+		} catch (Exception $e) {
+			http_response_code(500);
+			echo json_encode(['error' => $e->getMessage()]);
 		}
 	}
 
