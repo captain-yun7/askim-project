@@ -134,7 +134,10 @@ class TestHeaderRendersForOtherPosts:
     @pytest.mark.parametrize("no,cate", [(170, "001007"), (228, "005"), (227, "005")])
     def test_layout_not_broken(self, page: Page, no, cate):
         page.set_viewport_size({"width": 1440, "height": 900})
-        page.goto(_bloom_url(no, cate), wait_until="networkidle", timeout=60000)
+        # 2026-05-14: networkidle은 페이지 내 외부 자원(swiper autoplay, 폰트 등)으로 60s 타임아웃 자주 발생.
+        # layout 검증만이 목적이므로 domcontentloaded로 변경.
+        page.goto(_bloom_url(no, cate), wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(800)
         m = page.evaluate("""() => {
             const r = document.querySelector('.portfolio_view_in');
             return r ? getComputedStyle(r).display : null;
