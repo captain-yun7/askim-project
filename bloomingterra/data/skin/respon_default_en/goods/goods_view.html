@@ -77,12 +77,7 @@
 						</div>
 					<!--{ / }-->
 
-					<!--{ @ goods_view['goods_view']['detail_img'] }-->
-						<div class="view_img">
-							<img src="{C._UPLOAD}/goods/detail_img/{.value_}" onerror="this.src='../images/common/noimg.gif'" alt="{goods_view['goods_view']['name']}">
-						</div>
-					<!--{ / }-->
-
+					<!-- 2026-05-14 피드백 #2: detail_img 별도 출력 제거. askim 패턴 — 운영자가 본문(info) 에디터에서 이미지+텍스트를 인라인으로 직접 작성. detail_img는 dn(숨김) 영역에만 보존(스킨 호환). -->
 					<!--{ ? goods_view['goods_view']['info'] }-->
 						<div class="cont">
 							{=htmlspecialchars_decode(goods_view['goods_view']['info'])}
