@@ -92,9 +92,60 @@
 .portfolio_view_in .con_area .cont{font-size: 19px; line-height: 170%; color: var(--pv-basic); letter-spacing: var(--pv-ls);}
 .portfolio_view_in .con_area .cont p{margin: 0 0 1em;}
 
-.portfolio_view_in .con_area .prodSwiper{margin-top: 40px;}
+.portfolio_view_in .con_area .prodSwiper{margin-top: 40px; position: relative; padding-bottom: 40px;}
 .portfolio_view_in .con_area .prodSwiper .swiper-wrapper{padding: 0; margin: 0; list-style: none;}
 .portfolio_view_in .con_area .prodSwiper .swiper-slide img{display: block; width: 100%; height: auto;}
+
+/* prodSwiper pagination — askim 톤 가는 라인 디자인 (swiper 기본 파란 dot 폐기) */
+.portfolio_view_in .con_area .prodSwiper .swiper-pagination{
+	position: absolute; bottom: 0; left: 0; width: 100%;
+	display: flex; justify-content: center; align-items: center; gap: 8px;
+	font-size: 0;
+}
+.portfolio_view_in .con_area .prodSwiper .swiper-pagination-bullet{
+	display: inline-block; width: 32px; height: 2px;
+	background: rgba(0,0,0,.2); border-radius: 0;
+	opacity: 1; cursor: pointer;
+	transition: width .3s ease, background .3s ease;
+	margin: 0 !important;
+}
+.portfolio_view_in .con_area .prodSwiper .swiper-pagination-bullet-active{
+	width: 56px; background: var(--pv-main, #0A2C51);
+}
+
+/* prodSwiper navigation arrows — Material Symbols chevron */
+.portfolio_view_in .con_area .prodSwiper .swiper-button-prev,
+.portfolio_view_in .con_area .prodSwiper .swiper-button-next{
+	position: absolute; top: 50%; transform: translateY(-50%);
+	width: 44px; height: 44px; z-index: 10;
+	display: flex; align-items: center; justify-content: center;
+	border-radius: 50%;
+	background: rgba(255,255,255,.92); color: var(--pv-black, #000);
+	cursor: pointer; transition: all .3s; opacity: 0.85;
+	border: 1px solid rgba(0,0,0,.08);
+}
+.portfolio_view_in .con_area .prodSwiper .swiper-button-prev:hover,
+.portfolio_view_in .con_area .prodSwiper .swiper-button-next:hover{opacity: 1; background: #fff;}
+.portfolio_view_in .con_area .prodSwiper .swiper-button-prev{left: 16px;}
+.portfolio_view_in .con_area .prodSwiper .swiper-button-next{right: 16px;}
+.portfolio_view_in .con_area .prodSwiper .swiper-button-prev::after,
+.portfolio_view_in .con_area .prodSwiper .swiper-button-next::after{
+	font-family: 'Material Symbols Outlined';
+	font-size: 24px; font-weight: 400;
+	line-height: 1; text-transform: none;
+	color: var(--pv-black, #000);
+}
+.portfolio_view_in .con_area .prodSwiper .swiper-button-prev::after{content: '\e5cb';}  /* chevron_left */
+.portfolio_view_in .con_area .prodSwiper .swiper-button-next::after{content: '\e5cc';}  /* chevron_right */
+.portfolio_view_in .con_area .prodSwiper .swiper-button-disabled{opacity: 0.3; pointer-events: none;}
+
+/* 다크 톤일 때 (section-dark): pagination + nav 색 반전 */
+body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-pagination-bullet{background: rgba(255,255,255,.25);}
+body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-pagination-bullet-active{background: var(--pv-white, #fff);}
+body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-button-prev,
+body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-button-next{background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2);}
+body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-button-prev::after,
+body.section-dark .portfolio_view_in .con_area .prodSwiper .swiper-button-next::after{color: var(--pv-white, #fff);}
 
 .portfolio_view_in .con_area .youtube{margin-top: 40px;}
 .portfolio_view_in .con_area .youtube .youtube_thumb{position: relative;}

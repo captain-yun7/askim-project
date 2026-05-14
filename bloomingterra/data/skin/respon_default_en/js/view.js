@@ -25,7 +25,10 @@ $(document).ready(function(){
 			el: ".prodSwiper .swiper-pagination",
 			clickable: true,
         },
-		
+		navigation: {
+			nextEl: ".prodSwiper .swiper-button-next",
+			prevEl: ".prodSwiper .swiper-button-prev",
+		},
 	})
 	$(window).resize(function(){
 		setTimeout(function(){
