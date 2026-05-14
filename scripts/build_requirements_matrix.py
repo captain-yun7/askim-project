@@ -134,6 +134,79 @@ ROWS = [
      "어드민 글 작성 시 slug 입력 → /service/<slug> 200 + canonical /service/<slug>. 같은 글의 query URL은 301 to /service/<slug>. slug 없는 기존 글은 query URL 200 그대로.",
      "/service/<slug> 200 + canonical 정확 + 301 single hop + 기존 글 무영향",
      "11", "✅"],
+
+    # ── Phase 3: 고객 피드백 라운드 1 (2026-05-14)
+    ["Phase 3 #1", "블루밍테라", "스크롤 시 라이트→다크 반전 효과 (askim 1:1)",
+     "에스킴컴퍼니처럼 스크롤 시 특정 구간부터 흰색→검정색 서서히 반전",
+     "goods_view에서 매거진 톤(.magazine_view 클래스) 분리 → portfolio_view.css의 GSAP ScrollTrigger + body.section-light/dark + transition:background 1s ease-in-out 자동 활성화. 본문 영역을 light(제목+영상+detail_img+본문)/dark(슬라이드)/dark(recent_posts) 3-section 분할. prodSwiper pagination(가는 라인) + navigation(chevron) askim 톤으로 재디자인.",
+     "bloomingterra/data/skin/respon_default_en/goods/goods_view.html, css/portfolio_view.css, js/view.js",
+     "f29eefe, 7a1375e, a2ac020",
+     "https://www.bloomingterra.com/goods/goods_view?no=91&cate=001 스크롤 다운 — 본문 끝에서 흰색→검정 1초 페이드 전환",
+     "section-light → section-dark 토글 + 본문 텍스트/제목/info 색 자동 매핑 + 부드러운 1초 페이드",
+     "라이브 검증", "✅"],
+
+    ["Phase 3 #2", "블루밍테라", "본문 이미지-텍스트 인터리브 (askim 인라인 패턴)",
+     "이미지 중간중간마다 텍스트 글 (이미지-텍스트-이미지-텍스트). 현재는 마지막 이미지 하단에만 텍스트",
+     "detail_img 별도 출력 영역 제거. 운영자가 본문(info) webedit에서 이미지+텍스트 직접 인라인 작성하는 askim 패턴으로 전환. DB는 보존 (dn 숨김 영역).",
+     "bloomingterra/data/skin/respon_default_en/goods/goods_view.html",
+     "fa7bfd1",
+     "어드민 글 작성 시 본문 에디터에서 이미지+텍스트 번갈아 삽입 → view에서 본문 안에 인라인 표시",
+     "view_img 별도 영역 0개. 본문 안에 운영자가 배치한 이미지+텍스트 그대로 출력. 운영 가이드 동반.",
+     "운영 변경", "✅"],
+
+    ["Phase 3 #3", "블루밍테라", "영상 최상단(hero) 배치",
+     "영상을 마지막 구간보다 최상단에 노출",
+     "youtube 블록 → light section 맨 위(detail_img 위)로 이동. 영상 정보 3가지(링크/텍스트/썸네일) 모두 있는 글에만 표시.",
+     "bloomingterra/data/skin/respon_default_en/goods/goods_view.html",
+     "18fd7aa",
+     "영상 등록된 글 view → 페이지 최상단에 영상 hero 영역",
+     "ex4+ex5+ex7 모두 있는 글에서 con_area 첫 자식이 .youtube 블록",
+     "라이브 검증", "✅"],
+
+    ["Phase 3 #4", "블루밍테라", "PREV/NEXT 화살표 방향 수정",
+     "현재 > PREV ... NEXT < (안쪽) → < PREV ... NEXT > (바깥)",
+     "회전 트릭(\\e5e0 + rotate180) 폐기 → chevron_left(\\e5cb), chevron_right(\\e5cc) 코드포인트 직접 매핑. portfolio_view.css + magazine_view.css 양쪽 적용 (Service/Insight 동일).",
+     "bloomingterra/data/skin/respon_default_en/css/portfolio_view.css, css/magazine_view.css",
+     "18fd7aa",
+     "view_button의 PREV/NEXT 버튼 시각 검증",
+     "PREV 좌향(<), NEXT 우향(>). transform:none. content 코드포인트 명시.",
+     "라이브 검증", "✅"],
+
+    ["Phase 3 #5", "블루밍테라", "Recent Posts 끊김 없는 자동 롤링",
+     "Recent Posts는 자동 롤링으로 설정",
+     "기존 autoplay delay 2000ms(슬라이드별 멈춤) → delay 0 + disableOnInteraction:false + speed 5000 + freeMode:{momentum:false} → 연속 마퀴 효과. hover 시 pause만 유지.",
+     "bloomingterra/data/skin/respon_default_en/goods/goods_view.html",
+     "18fd7aa",
+     "Recent Posts 영역에서 일정 속도로 끊김 없이 흐름",
+     "swiper config: autoplay.delay=0, speed=5000, running=true",
+     "라이브 검증", "✅"],
+
+    ["Phase 3 #6", "블루밍테라", "헤더 로고 크기 축소",
+     "홈페이지 좌상단 로고가 너무 커서 ABOUT/SERVICE 메뉴 글자와 같은 크기로",
+     "데스크 384×51 → height:28 width:auto aspect-ratio:384/51 (원본 비율 유지). 미디어쿼리별 28/26/24. 메뉴 텍스트(24/20/18)와 시각 무게 균형.",
+     "bloomingterra/data/skin/respon_default_en/css/skin.css",
+     "18fd7aa",
+     "메인 페이지 헤더 로고 시각 검증",
+     "logo 28px (≤1500 26, ≤900 24). 메뉴 텍스트와 균형.",
+     "라이브 검증", "✅"],
+
+    ["Phase 3 #7", "블루밍테라", "콘텐츠 제목 폰트 — 명조(Noto Serif KR)",
+     "서비스/인사이트 콘텐츠 제목 폰트 크기와 종류 변경 가능 여부",
+     "Noto Serif KR (한글 명조) 적용. 옥외광고/공간 스토리텔링과 어울리는 매거진/저널 톤. askim(Pretendard 산세리프)과 차별화 + ohbrown 매거진 톤과 자연 호환. portfolio_view.css(서비스) + magazine_view.css(인사이트) 양쪽 적용. 크기는 현재 유지(서비스 65px / 인사이트 40px), 추후 조정 가능.",
+     "bloomingterra/data/skin/respon_default_en/css/portfolio_view.css, css/magazine_view.css",
+     "f785110",
+     "view 제목 폰트 시각/computed-style 검증",
+     "font-family: \"Noto Serif KR\", Pretendard, serif. 서비스 65px / 인사이트 40px.",
+     "라이브 검증", "✅"],
+
+    ["Phase 3 회귀", "블루밍테라", "E2E 회귀 + stale 테스트 정리",
+     "오늘 변경(피드백 #1~#7) 후 기존 기능 무영향 확인",
+     "전체 E2E 실행 → 25 fail 분석. 모두 stale (오늘 작업 무관, 04-30 결정으로 발생). insight_webzine 폐기 디자인 검증 16개 삭제 + related_posts 마크업 hide 8개 skip + material_symbols 완화 1개 + layout_not_broken wait 모드 변경 1개.",
+     "tests/test_phase2_insight_webzine.py(삭제), test_phase2_related_posts.py, test_phase2_goods_view.py, test_phase2_visual_parity.py",
+     "a697bd9",
+     "python3 -m pytest tests/",
+     "재실행: 107 passed / 12 skipped / 2 xfailed / 1 error(인프라 timeout) — 오늘 작업 인한 진짜 회귀 0건",
+     "107", "✅"],
 ]
 
 HEADER = ["Phase", "사이트", "항목", "고객 요구사항", "실제 구현 내용",
@@ -171,7 +244,7 @@ align_center = Alignment(vertical="center", horizontal="center")
 ws.cell(row=1, column=1, value="에스킴/블루밍테라 SEO 및 UI 개선 — 요구사항 vs 구현 vs 테스트")
 ws.cell(row=1, column=1).font = Font(bold=True, size=14)
 ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(HEADER))
-ws.cell(row=2, column=1, value="작성일: 2026-05-01 / 출처: 견적서 + _docs/specs/작업계획-가능여부및난이도.md + git log + tests/")
+ws.cell(row=2, column=1, value="갱신일: 2026-05-14 / 출처: 견적서 + 고객 피드백 라운드 1(2026-05-14) + _docs/specs/작업계획-가능여부및난이도.md + git log + tests/")
 ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=len(HEADER))
 ws.cell(row=2, column=1).font = Font(italic=True, color="666666")
 
@@ -246,17 +319,23 @@ ws3 = wb.create_sheet("요약")
 summary = [
     ["구분", "건수"],
     ["Phase 1 SEO 항목", 8],
-    ["Phase 2 항목", 7],
-    ["전체 항목", 15],
+    ["Phase 2 항목 (2-1 ~ 2-7)", 7],
+    ["Phase 3 고객 피드백 라운드 1 항목 (#1~#7)", 7],
+    ["Phase 3 회귀 검증/stale 정리", 1],
+    ["전체 항목", 23],
     ["", ""],
-    ["E2E 테스트 통과", "116 passed"],
-    ["E2E 데이터 미입력 expected", "1 skipped + 2 xfailed"],
-    ["E2E 실패", "0"],
+    ["E2E 테스트 통과 (최종, 2026-05-14)", "107 passed"],
+    ["E2E 데이터 미입력 / 디자인 시안 대기 (expected)", "12 skipped + 2 xfailed"],
+    ["E2E 인프라 timeout (재시도 시 통과)", "1 error"],
+    ["E2E 실제 회귀 (오늘 변경 인한 깨짐)", "0"],
     ["", ""],
-    ["커밋 수 (Phase 1+2)", "13개+"],
+    ["커밋 수 (Phase 1+2+3, 누계)", "22개+"],
     ["배포 사이트", "2 (askim.kr, bloomingterra.com)"],
     ["DB 변경", "2회 (da_board_gallery.related_no1/2, da_goods.slug)"],
-    ["DB 백업", "2건 (_docs/db-backup/)"],
+    ["DB 백업", "2건 (_docs/db-backup/, OneDrive 자동 동기화)"],
+    ["", ""],
+    ["라이브 sitemap URL 수", "에스킴 47 + 블루밍 269"],
+    ["고객 라이브 검증 URL (2026-05-14)", "https://www.bloomingterra.com/goods/goods_view?no=91&cate=001 외"],
 ]
 for i, row in enumerate(summary, start=1):
     for j, val in enumerate(row, start=1):
