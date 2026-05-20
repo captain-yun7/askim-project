@@ -202,7 +202,7 @@ $(document).ready(function(){
 </script>
 <div id="contents">
 	<div class="main_tit">
-		<h2>상품 필드 세팅</h2>
+		<h2>서비스 필드 세팅</h2>
 		
 		<div class="lang_icon_tab">
 			<?php if($this->_site_language["multilingual"]) : ?>

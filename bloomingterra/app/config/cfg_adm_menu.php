@@ -29,7 +29,7 @@ $config = array(
 					'name' => '메뉴 설정',
 					'segment' => 'menu_manage',
 				), array(
-					'name' => '메인 상품진열',
+					'name' => '메인 서비스 진열',  // 2026-05-20 #3(a): 상품→서비스 톤 통일
 					'segment' => 'display_main_list',
 				), array(
 					'name' => '회원 필드세팅',
@@ -102,19 +102,20 @@ $config = array(
 			)
 		),
 		'goods' => array(
-			'name' => '상품',
+			// 2026-05-20 #3(a): "상품" → "서비스 사례" — 옥외광고 캠페인 글
+			'name' => '서비스 사례',
 			'default' => 'goods_list',
 			'low_menu' => array(
 				array(
-					'name' => '상품 필드 세팅',
+					'name' => '서비스 필드 세팅',
 					'segment' => 'goods_field',
 				),
 				array(
-					'name' => '상품 리스트',
+					'name' => '서비스 사례 목록',
 					'segment' => 'goods_list',
 				),
 				array(
-					'name' => '상품 등록',
+					'name' => '서비스 사례 등록',
 					'segment' => 'goods_reg',
 				),
 				array(

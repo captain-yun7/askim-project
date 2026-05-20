@@ -371,7 +371,7 @@ $_editor_choice = 'tui';
 		<? } ?>
 		<input type="hidden" name="upload_path" value="<?=$goods_view["upload_path"]?>" />
 		<div class="main_tit">
-			<h2>상품 <? if($mode == "register") : echo "등록"; else : echo "수정 "; endif; ?><!--a target='_blank' class='btn-sm' href='<?=base_url()?>goods/goods_view?no=<?=$this->input->get('no', true)?>'>화면 보기</a--></h2>
+			<h2>서비스 사례 <? if($mode == "register") : echo "등록"; else : echo "수정 "; endif; ?><!--a target='_blank' class='btn-sm' href='<?=base_url()?>goods/goods_view?no=<?=$this->input->get('no', true)?>'>화면 보기</a--></h2>
 			<? if($this->_site_language["multilingual"]) { // 다국어 지원할때 ?>
 			<div class="gd_top">
 				상세정보입력 바로가기 <? foreach($this->_site_language["set_language"] as $languageKey => $languageVal){ // 다국어 사용체크 된 언어들 ?>
@@ -1040,7 +1040,7 @@ $_editor_choice = 'tui';
 					</tbody>
 				</table>
 			</div>
-			<div class="sub_tit dn"><h3>상품 개별 SEO 설정</h3></div>
+			<div class="sub_tit dn"><h3>서비스 사례 개별 SEO 설정</h3></div>
 			<div class="table_write dn">
 				<table width="100%" cellpadding="0" cellspacing="0" border="0">
 					<colgroup>

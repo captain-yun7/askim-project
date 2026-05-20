@@ -76,9 +76,9 @@
 </script>
 <div id="contents">
 	<div class="main_tit">
-		<h2>상품 리스트</h2>
+		<h2>서비스 사례 목록</h2>
 		<div class="btn_right btn_num3">
-			<a href="goods_reg" class="btn point new_plus">+ 신규 상품 등록</a>
+			<a href="goods_reg" class="btn point new_plus">+ 신규 서비스 사례 등록</a>
 		</div><!--btn_right-->
 	</div>
 	<div class="clear">
@@ -180,7 +180,7 @@
 		</dl>
 		<dl class="mt20">
 			<dt>- "카테고리 노출순서"는 어떤 기능인가요?</dt>
-			<dd>카테고리 접속 시, 노출되는 상품 리스트 순서를 변경하고 싶을 때 활용 가능한 메뉴입니다. </dd>
+			<dd>카테고리 접속 시, 노출되는 서비스 사례 목록 순서를 변경하고 싶을 때 활용 가능한 메뉴입니다. </dd>
 		</dl>
 	</div>
 </div>
