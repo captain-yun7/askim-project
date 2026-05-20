@@ -49,7 +49,8 @@
 		#header .header_cont .hd_right{display: flex;align-items: center;}
 		#header .header_cont .hd_lnb{display: flex;align-items: center;margin-right:80px;}
 		#header .header_cont .hd_lnb li + li{margin-left:80px;}
-		#header .header_cont .hd_lnb li a{font-size:24px;color:#fff;font-weight:400;position: relative;padding-bottom:4px;}
+		/* 2026-05-14 #4: askim 메뉴 톤 매칭 (Montserrat 600 16px) */
+		#header .header_cont .hd_lnb li a{font-size:16px;color:#fff;font-weight:600;position: relative;padding-bottom:4px;font-family:'Montserrat','Pretendard','Malgun Gothic',sans-serif;letter-spacing:normal;}
 		#header .header_cont .hd_lnb li a:before{width:0;height:2px;content:"";background: #fff;position: absolute;bottom:0;left:50%;transform:translate(-50%);transition:width 0.5s;}
 		#header .header_cont .hd_lnb li.on a:before{width:100%;}
 
@@ -84,7 +85,7 @@
 
 			#header .header_cont .hd_lnb{margin-right:50px;}
 			#header .header_cont .hd_lnb li + li{margin-left:40px;}
-			#header .header_cont .hd_lnb li a{font-size:20px;}
+			#header .header_cont .hd_lnb li a{font-size:15px;}  /* askim 톤 유지 */
 
 			#header .multi_lang dt{width:50px;height:50px;}
 			#header .multi_lang dt span{font-size:20px;}
@@ -94,7 +95,7 @@
 
 			#header .header_cont .hd_lnb{margin-right:20px;}
 			#header .header_cont .hd_lnb li + li{margin-left:25px;}
-			#header .header_cont .hd_lnb li a{font-size:18px;}
+			#header .header_cont .hd_lnb li a{font-size:14px;}  /* askim 톤 유지 */
 		}
 		@media only screen and (max-width:767px) {
 			#header .header_cont .hd_lnb{display: none;}

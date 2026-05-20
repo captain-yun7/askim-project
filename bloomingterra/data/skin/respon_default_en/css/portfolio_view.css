@@ -86,6 +86,9 @@
 .portfolio_view_in .con_area{width: calc(50% + 115px); overflow: hidden;}
 .portfolio_view_in .con_area section{padding: 0 0 70px; width: 90%; max-width:calc(765px + 115px);}
 .portfolio_view_in .con_area section:last-of-type{padding: 0;}
+/* 2026-05-14 #1+#2: 콘텐츠가 짧은 글에도 스크롤 라이트→다크 반전 효과가 충분히 보이도록 min-height 보강 */
+.portfolio_view_in .con_area .pv-section-light{min-height: 60vh;}
+.portfolio_view_in .con_area .pv-section-dark{min-height: 50vh;}
 .portfolio_view_in .con_area section img{max-width:100% !important; width:100% !important; height: auto !important;}
 .portfolio_view_in .con_area section .viewImg{width: calc(50vw + 115px); margin: 20px 0;}
 .portfolio_view_in .con_area section iframe{max-width: 100% !important;}
