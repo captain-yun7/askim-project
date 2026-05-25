@@ -10,6 +10,8 @@
  */
 (function(global){
 	var TUI_BASE = 'https://uicdn.toast.com/editor/latest';
+	var COLOR_PICKER_BASE = 'https://uicdn.toast.com/tui-color-picker/latest';
+	var COLOR_PLUGIN_BASE = 'https://uicdn.toast.com/editor-plugin-color-syntax/latest';
 	// folder(컨텍스트) → 이미지 업로드 endpoint 매핑. 어드민은 인증 자동.
 	var UPLOAD_ENDPOINTS = {
 		'goods':  '/admin/goods/editor_image_upload',
@@ -21,27 +23,36 @@
 	var assetsLoaded = false;
 	var assetsLoading = null;
 
+	function injectCss(href) {
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.href = href;
+		document.head.appendChild(link);
+	}
+
+	function injectScript(src) {
+		return new Promise(function(resolve, reject){
+			var s = document.createElement('script');
+			s.src = src;
+			s.onload = resolve;
+			s.onerror = reject;
+			document.head.appendChild(s);
+		});
+	}
+
 	function loadAssets() {
 		if (assetsLoaded) return Promise.resolve();
 		if (assetsLoading) return assetsLoading;
-		assetsLoading = new Promise(function(resolve, reject){
-			var css = document.createElement('link');
-			css.rel = 'stylesheet';
-			css.href = TUI_BASE + '/toastui-editor.min.css';
-			document.head.appendChild(css);
-
-			var s1 = document.createElement('script');
-			s1.src = TUI_BASE + '/toastui-editor-all.min.js';
-			s1.onload = function(){
-				var s2 = document.createElement('script');
-				s2.src = TUI_BASE + '/i18n/ko-kr.js';
-				s2.onload = function(){ assetsLoaded = true; resolve(); };
-				s2.onerror = reject;
-				document.head.appendChild(s2);
-			};
-			s1.onerror = reject;
-			document.head.appendChild(s1);
-		});
+		// CSS는 순서 무관, 한꺼번에 inject
+		injectCss(TUI_BASE + '/toastui-editor.min.css');
+		injectCss(COLOR_PICKER_BASE + '/tui-color-picker.min.css');
+		injectCss(COLOR_PLUGIN_BASE + '/toastui-editor-plugin-color-syntax.min.css');
+		// JS는 의존성 순서: color-picker → editor + i18n → color-syntax plugin
+		assetsLoading = injectScript(COLOR_PICKER_BASE + '/tui-color-picker.min.js')
+			.then(function(){ return injectScript(TUI_BASE + '/toastui-editor-all.min.js'); })
+			.then(function(){ return injectScript(TUI_BASE + '/i18n/ko-kr.js'); })
+			.then(function(){ return injectScript(COLOR_PLUGIN_BASE + '/toastui-editor-plugin-color-syntax.min.js'); })
+			.then(function(){ assetsLoaded = true; });
 		return assetsLoading;
 	}
 
@@ -65,6 +76,10 @@
 		}
 
 		loadAssets().then(function(){
+			var colorSyntax = (toastui.Editor && toastui.Editor.plugin && toastui.Editor.plugin.colorSyntax)
+				|| (window.toastui && window.toastui.Editor && window.toastui.Editor.plugin && window.toastui.Editor.plugin.colorSyntax)
+				|| window.toastuiEditorPluginColorSyntax;
+			var plugins = colorSyntax ? [colorSyntax] : [];
 			var editor = new toastui.Editor({
 				el: wrap,
 				height: height,
@@ -72,6 +87,7 @@
 				previewStyle: 'tab',
 				language: 'ko-KR',
 				initialValue: ta.value || '',
+				plugins: plugins,
 				hooks: {
 					addImageBlobHook: function(blob, callback){
 						var fd = new FormData();
