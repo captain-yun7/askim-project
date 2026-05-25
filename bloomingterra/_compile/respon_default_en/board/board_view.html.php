@@ -17,7 +17,7 @@ $TPL_extraFieldData_1=empty($TPL_VAR["extraFieldData"])||!is_array($TPL_VAR["ext
 			rules : {
 				name : {required : true},
 				password : {required : true, rangelength : [4, 20]},
-				//content : {required : {depends : function(){return !getSmartEditor("comment");}}},
+				//content : {required : {depends : function(){return !getToastEditor("comment");}}},
 				content : {required : true},
 				file : {}
 			}, messages : {

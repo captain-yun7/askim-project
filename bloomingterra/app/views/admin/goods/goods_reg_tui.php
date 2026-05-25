@@ -2,30 +2,9 @@
 .categories { width: 200px; height: 110px !important; padding: 5px !important; }
 #btnSelected { padding: 5px 20px; background: #000; color: #fff; }
 .btn-remove-category { background: red; color: white; font-size: 10px; padding: 2px 5px; vertical-align: top; margin-left: 10px; }
-/* 2026-05-14: 에디터 토글 UI */
-.editor-toggle-bar { padding: 10px 12px; margin-bottom: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; display: flex; align-items: center; gap: 16px; font-size: 13px; }
-.editor-toggle-bar label { cursor: pointer; }
-.editor-toggle-bar .badge-new { display: inline-block; padding: 2px 6px; background: #0A2C51; color: #fff; border-radius: 3px; font-size: 11px; margin-left: 4px; }
-.editor-toggle-bar .note { color: #888; margin-left: auto; font-size: 12px; }
-/* Toast UI Editor 영역 */
 .tui-editor-wrap { min-height: 500px; }
 </style>
 <script type="text/javascript" src="/lib/admin/js/admin_goods.js" charset="utf-8"></script>
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-
-<?php
-// 2026-05-14: 이 view는 Toast UI 모드 전용 (controller가 $_use_tui=true일 때 호출)
-// OPCache 우회를 위해 별도 file로 분리 (신규 path → 옛 캐시 영향 없음)
-$_use_tui = true;
-$_editor_choice = 'tui';
-?>
-
-<?php if ($_use_tui): ?>
-<!-- Toast UI Editor 4.x (2026-05-14 시범 도입) -->
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.js"></script>
-<?php endif; ?>
 <script>
 	var fieldOption = <?=json_encode($fieldOption["option"])?>;
 	$(function() {
@@ -284,13 +263,7 @@ $_editor_choice = 'tui';
 			if(fieldOption[languageKey][columnKey]["type"] == "file") {
 				value = $("input[name='"+ name +"_fname']").val();
 			} else if(fieldOption[languageKey][columnKey]["type"] == "editor") {
-				// 2026-05-14: Toast UI Editor 사용 중이면 그쪽에서 추출
-				if (window['__tuiEditor_' + name]) {
-					value = window['__tuiEditor_' + name].getHTML();
-					if (value === '<p><br></p>' || value === '<p></p>') value = '';
-				} else {
-					value = getSmartEditor(name);
-				}
+				value = getToastEditor(name);
 			} else if(fieldOption[languageKey][columnKey]["type"] == "checkbox" || fieldOption[languageKey][columnKey]["type"] == "radio") {
 				value = $("[name='"+ name +"']:checked").val();
 			} else if(fieldOption[languageKey][columnKey]["type"] == "select") {
@@ -337,31 +310,6 @@ $_editor_choice = 'tui';
 	$('#leftmenu >ul > li:nth-of-type(1)').addClass('on');
 </script>
 <div id="contents">
-	<!-- 2026-05-14: 에디터 토글 (운영자 선택). 기본은 SmartEditor 유지, 신규 글부터 Toast UI 권장. -->
-	<div class="editor-toggle-bar">
-		<strong>본문 에디터:</strong>
-		<label><input type="radio" name="editor_choice" value="smart"<?= !$_use_tui ? ' checked' : '' ?>> SmartEditor (기존, 안정)</label>
-		<label><input type="radio" name="editor_choice" value="tui"<?= $_use_tui ? ' checked' : '' ?>> Toast UI Editor<span class="badge-new">NEW</span></label>
-		<span class="note">변경 시 페이지 새로고침. 기존 글은 SmartEditor 권장. 신규 글은 Toast UI 권장 (이미지+텍스트 인터리브 쉬움).</span>
-	</div>
-	<script>
-	document.addEventListener('DOMContentLoaded', function(){
-		document.querySelectorAll('input[name="editor_choice"]').forEach(function(el){
-			el.addEventListener('change', function(){
-				document.cookie = 'preferred_editor=' + this.value + '; max-age=31536000; path=/';
-				var u = new URL(location.href);
-				u.searchParams.set('editor', this.value);
-				if (confirm('에디터를 변경하려면 페이지를 새로고침합니다. 작성 중인 내용이 사라질 수 있습니다. 계속하시겠습니까?')) {
-					location.href = u.toString();
-				} else {
-					// 원복
-					document.querySelector('input[name="editor_choice"][value="<?= $_use_tui ? 'tui' : 'smart' ?>"]').checked = true;
-				}
-			});
-		});
-	});
-	</script>
-
 	<?=form_open("", array("name" => "frm", "id" => "frm"))?>
 		<input type="hidden" name="admin_page_flag" value="y">
 		<input type="hidden" name="mode" value="<?=$mode?>" />
@@ -517,47 +465,8 @@ $_editor_choice = 'tui';
 											<? endforeach; ?>
 										<select>
 									<? elseif($goodsField["option"][$site_language][$key]["type"] == "editor") : ?>
-										<!-- DBG: key=<?=$key?> use_tui=<?=isset($_use_tui)?($_use_tui?'1':'0'):'undef'?> editor_choice=<?=isset($_editor_choice)?$_editor_choice:'undef'?> get=<?=isset($_GET['editor'])?$_GET['editor']:'noget'?> cookie=<?=isset($_COOKIE['preferred_editor'])?$_COOKIE['preferred_editor']:'nocookie'?> -->
-										<? if ($_use_tui && $key === 'info'): ?>
-											<!-- 2026-05-14 Toast UI Editor (info 필드 한정 시범 도입) -->
-											<textarea name="<?=$key?>" id="<?=$key?>" class="editor" style="display:none"><?=$goods_view[$key]?></textarea>
-											<div id="<?=$key?>_tui" class="tui-editor-wrap"></div>
-											<script>
-											(function(){
-												var initialValue = document.getElementById('<?=$key?>').value || '';
-												var editor = new toastui.Editor({
-													el: document.querySelector('#<?=$key?>_tui'),
-													height: '550px',
-													initialEditType: 'wysiwyg',
-													previewStyle: 'tab',
-													language: 'ko-KR',
-													initialValue: initialValue,
-													hooks: {
-														addImageBlobHook: function(blob, callback){
-															var fd = new FormData();
-															fd.append('image', blob, blob.name || ('image_' + Date.now() + '.png'));
-															fetch('/admin/goods/editor_image_upload', { method:'POST', body:fd, credentials:'same-origin' })
-																.then(function(r){ return r.json(); })
-																.then(function(d){
-																	if (d.url) { callback(d.url, ''); }
-																	else { alert('이미지 업로드 실패: ' + (d.error || 'unknown')); }
-																})
-																.catch(function(e){ alert('이미지 업로드 오류: ' + e.message); });
-														}
-													}
-												});
-												// submit 직전 본문 추출 → textarea로 반영
-												document.forms['frm'].addEventListener('submit', function(){
-													document.getElementById('<?=$key?>').value = editor.getHTML();
-												});
-												// 외부 노출 (검증 호환용)
-												window['__tuiEditor_<?=$key?>'] = editor;
-											})();
-											</script>
-										<? else: ?>
-											<div class="editor-box"><textarea name="<?=$key?>" id="<?=$key?>" class="editor"><?=$goods_view[$key]?></textarea></div>
-											<script>attachSmartEditor("<?=$key?>", "goods");</script>
-										<? endif; ?>
+										<div class="editor-box"><textarea name="<?=$key?>" id="<?=$key?>" class="editor"><?=$goods_view[$key]?></textarea></div>
+										<script>attachToastEditor("<?=$key?>", "goods");</script>
 									<? elseif($goodsField["option"][$site_language][$key]["type"] == "file" && $key != "detail_img") : ?>
 										<input type="file" name="<?=$key?>"/>
 										<input type="hidden" name="<?=$key?>_oname" value="<?=$goods_view[$key.'_oname']?>"/>
@@ -760,7 +669,7 @@ $_editor_choice = 'tui';
 													$htmlStr .= $goods_view[$columnKey];
 													$htmlStr .= "</textarea>";
 													$htmlStr .= "</div>";
-													$htmlStr .= "<script>attachSmartEditor('".$columnKey."', 'goods');</script>";
+													$htmlStr .= "<script>attachToastEditor('".$columnKey."', 'goods');</script>";
 													break;
 												case "file":
 													$htmlStr .= "<input type = 'file' name = '".$columnKey."'>";
@@ -869,7 +778,7 @@ $_editor_choice = 'tui';
 													$htmlStr .= $goods_view["multi"][$columnKey][$languageKey];
 													$htmlStr .= "</textarea>";
 													$htmlStr .= "</div>";
-													$htmlStr .= "<script>attachSmartEditor('".$columnKey."_".$languageKey."', 'goods');</script>";
+													$htmlStr .= "<script>attachToastEditor('".$columnKey."_".$languageKey."', 'goods');</script>";
 													break;
 												case "file":
 													$htmlStr .= "<input type = 'file' name = '".$columnKey."_".$languageKey."'>";
@@ -979,7 +888,7 @@ $_editor_choice = 'tui';
 													$htmlStr .= $goods_view[$columnKey];
 													$htmlStr .= "</textarea>";
 													$htmlStr .= "</div>";
-													$htmlStr .= "<script>attachSmartEditor('".$columnKey."', 'goods');</script>";
+													$htmlStr .= "<script>attachToastEditor('".$columnKey."', 'goods');</script>";
 													break;
 												case "file":
 													$htmlStr .= "<input type = 'file' name = '".$columnKey."'>";

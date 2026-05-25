@@ -15,7 +15,6 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 }
 </style>
 <script type="text/javascript" src="/lib/admin/js/admin_board.js"></script>
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script>
 	$('#leftmenu >ul > li:nth-of-type(1)').addClass('on').find('ul li:nth-of-type(1)').addClass('active');
 </script>
@@ -188,46 +187,8 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 				<tr>
 					<th class="ta_left">내용</th>
 					<td colspan="3">
-						<!-- 2026-05-14 #5: 본문 에디터를 Toast UI Editor로 전환. -->
-						<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-						<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-						<script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.js"></script>
-						<textarea id="content" name="content" style="display:none;"><?=$board_view["content"]?></textarea>
-						<div id="content_tui" style="min-height:550px;"></div>
-						<script>
-						(function(){
-							function initContentTui(){
-								if (typeof toastui === 'undefined') { setTimeout(initContentTui, 100); return; }
-								var initialValue = document.getElementById('content').value || '';
-								var editor = new toastui.Editor({
-									el: document.querySelector('#content_tui'),
-									height: '550px',
-									initialEditType: 'wysiwyg',
-									previewStyle: 'tab',
-									language: 'ko-KR',
-									initialValue: initialValue,
-									hooks: {
-										addImageBlobHook: function(blob, callback){
-											var fd = new FormData();
-											fd.append('image', blob, blob.name || ('image_' + Date.now() + '.png'));
-											fetch('/admin/goods/editor_image_upload', { method:'POST', body:fd, credentials:'same-origin' })
-												.then(function(r){ return r.json(); })
-												.then(function(d){ if (d.url) callback(d.url, ''); else alert('이미지 업로드 실패: ' + (d.error || 'unknown')); })
-												.catch(function(e){ alert('이미지 업로드 오류: ' + e.message); });
-										}
-									}
-								});
-								window.__tuiEditor_content = editor;
-								// submit 직전 본문 추출
-								var frm = document.forms['frm'];
-								if (frm) frm.addEventListener('submit', function(){
-									document.getElementById('content').value = editor.getHTML();
-								});
-							}
-							if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initContentTui);
-							else initContentTui();
-						})();
-						</script>
+						<textarea id="content" name="content"><?=$board_view["content"]?></textarea>
+						<script>attachToastEditor("content", "board");</script>
 					</td>
 				</tr>
 				<!--추가필드-->
@@ -274,8 +235,7 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 											$htmlStr .= $board_view["extraFieldInfo"][$languageKey][$columnKey]; // 내용
 											$htmlStr .= "</textarea>";
 											$htmlStr .= "</div>";
-											$arrEditScript[$languageKey][] = "attachSmartEditor('".$columnKey."_".$languageKey."', 'board');";
-											//$htmlStr .= "<script>attachSmartEditor('".$columnKey."_".$languageKey."', 'board');</script>";
+											$arrEditScript[$languageKey][] = "attachToastEditor('".$columnKey."_".$languageKey."', 'board');";
 											break;
 										case "file":
                                             ?>
@@ -444,14 +404,7 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 				<?php if($board_info["yn_video"] == "y") : ?>video_url : {required : true, regUrlType : true},<?php endif?>
 				"fixed-radio" : {required : true},
 				fixed : {required : {depends : function(){return $("[name='fixed-radio'][value='y']").is(":checked")}}, number : true},
-				content : {editorRequired : {depends : function(){
-				// 2026-05-14 #5: Toast UI 우선, fallback SmartEditor
-				if (window.__tuiEditor_content) {
-					var h = window.__tuiEditor_content.getHTML();
-					return !h || h === '<p><br></p>' || h === '<p></p>';
-				}
-				return !getSmartEditor("content");
-			}}},
+				content : {editorRequired : {depends : function(){ return !getToastEditor("content"); }}},
 				file : {},
 				<? if($board_info["extraFl"] == "y") { ?>
 						<? foreach($this->_site_language["set_language"] as $languageKey => $languageVal) { ?>
@@ -462,7 +415,7 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 											if(site_language == "<?=$languageKey?>"){
 												<? if(!empty($board_info['extraFieldInfo']['require'][$languageKey][$columnKey])) { ?>
 													<? if($board_info['extraFieldInfo']['option'][$languageKey][$columnKey]['type'] == 'editor') { ?>
-														return !getSmartEditor("<?=$columnKey?>_<?=$languageKey?>");
+														return !getToastEditor("<?=$columnKey?>_<?=$languageKey?>");
 													<? }else if($board_info['extraFieldInfo']['option'][$languageKey][$columnKey]['type'] == "file") { ?>
 														if($("[name=<?=$columnKey?>_<?=$languageKey?>_fname]").val() == "" || !$("[name=<?=$columnKey?>_<?=$languageKey?>_fname]").val()) {
 															return true;
@@ -492,7 +445,7 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 
 												<? } else { ?>
                                                     <? if($board_info['extraFieldInfo']['option'][$languageKey][$columnKey]['type'] == 'editor') { ?>
-														return (getSmartEditor("<?=$columnKey?>_<?=$languageKey?>") == undefined);
+														return (getToastEditor("<?=$columnKey?>_<?=$languageKey?>") == undefined);
 													<? } ?>
                                                 <? } ?>
 
@@ -544,8 +497,6 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
 			}
 		});
 
-		// 2026-05-14 #5: content는 Toast UI 사용 — SmartEditor attach 안 함
-		// attachSmartEditor("content", "board");
 		uploadForm.init(document.frm);
 
 		$(document).on("click", "button.remove", function() {

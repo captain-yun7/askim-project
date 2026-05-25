@@ -1,6 +1,6 @@
 <!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
 <script type="text/javascript" src="{js}/js/common_board.js"></script>
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/lib/js/toast-editor.js" charset="utf-8"></script>
 <script>
 	var Common_Board = new common_board({
 		code : "{board_info['code']}",
@@ -20,7 +20,7 @@
 				password : {required : true, rangelength : [4, 20]},
 				<!--{ / }-->
 				<!--{ ? CI->uri->rsegments[1] != 'index_' && board_info['code'] != 'inquiry'}-->//메인에서 에디터 적용금지
-				content : {editorRequired : {depends : function(){return !getSmartEditor("contents")}}},
+				content : {editorRequired : {depends : function(){return !getToastEditor("contents")}}},
 				<!--{ / }-->
 				file : {},
 				nonMember : {required : {depends : function(){return <!--{ ? !defined('_IS_LOGIN')}-->true<!--{ : }-->false<!--{ / }-->}}},
@@ -32,7 +32,7 @@
 								depends : function(){
 									<!--{ ? !empty(board_info['extraFieldInfo']['require'][cfg_site['language']][.key_])}-->
 										<!--{? board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'editor' }-->
-											return !getSmartEditor("{=.key_}_{=cfg_site['language']}");
+											return !getToastEditor("{=.key_}_{=cfg_site['language']}");
 										<!--{ : board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'file' }-->
 											if(!$("[name={=.key_}_{=cfg_site['language']}_fname]").val()){
 												return true;
@@ -49,7 +49,7 @@
 										return false;
 									<!--{ : }-->
 										<!--{? board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'editor' }-->
-											getSmartEditor("{=.key_}_{=cfg_site['language']}");
+											getToastEditor("{=.key_}_{=cfg_site['language']}");
 										<!--{ / }-->
 										return false;
 									<!--{ / }-->
@@ -97,12 +97,12 @@
 		});
 
 		<!--{ ? CI->uri->rsegments[1] != 'index_' && board_info['code'] != 'inquiry'}-->//메인에서 에디터 적용금지
-		attachSmartEditor("contents", "board");
+		attachToastEditor("contents", "board");
 			<!--{ ? board_info['extraFl'] == 'y' && !empty(board_info['extraFieldInfo']['use'][cfg_site['language']])}-->
 				<!--{ @ board_info['extraFieldInfo']['use'][cfg_site['language']] }-->
 					<!--{ ? board_info['extraFieldInfo']['option'][cfg_site['language']][.key_]['type'] == 'editor' }-->
 						// 추가필드 에디터 적용
-						attachSmartEditor("{=.key_}_{=cfg_site['language']}", "board");
+						attachToastEditor("{=.key_}_{=cfg_site['language']}", "board");
 					<!--{ / }-->
 				<!--{ / }-->
 			<!--{ / }-->

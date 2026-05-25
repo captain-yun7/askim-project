@@ -477,16 +477,7 @@ class Goods extends ADMIN_Controller {
 				$get_data["max_file_uploads"] = ini_get("max_file_uploads");
 				$get_data["site_language"] = $site_language;
 				$get_data['ref'] = http_build_query($this->input->get(null, true));
-				// 2026-05-14: 에디터 선택. 기본은 Toast UI (#5 요구). 운영자가 SmartEditor 원하면 cookie/GET로 fallback.
-				$editor_choice = $this->input->get('editor', true);
-				if (!$editor_choice) $editor_choice = $this->input->cookie('preferred_editor', true);
-				if (!$editor_choice) $editor_choice = 'tui';  // 기본 Toast UI
-				$get_data['_editor_choice'] = $editor_choice;
-				$get_data['_use_tui'] = ($editor_choice === 'tui');
-				$view_name = ($editor_choice === 'tui')
-					? "admin/goods/goods_reg_tui"   // Toast UI 모드 (기본)
-					: "admin/goods/goods_reg";       // SmartEditor 모드 (옵션)
-				$this->set_view($view_name, $get_data);
+				$this->set_view("admin/goods/goods_reg_tui", $get_data);
 			}
 		} catch(Exception $e) {
 			msg($e->getMessage(), -1);

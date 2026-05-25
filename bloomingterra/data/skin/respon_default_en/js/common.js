@@ -189,27 +189,6 @@ function searchAddress(zip, addr, addr2){
 	}).open();
 }
 
-var oEditors = [];
-var oFolder;
-function attachSmartEditor(id, folder) {
-	oFolder = folder;
-	nhn.husky.EZCreator.createInIFrame({
-		oAppRef: oEditors,
-		elPlaceHolder: id,
-		sSkinURI: "/lib/se2.8.2/SmartEditor2Skin.php",
-		fCreator: "createSEditor2"
-	});
-};
-
-function getSmartEditor(id){
-	oEditors.getById[id].exec("UPDATE_CONTENTS_FIELD", []);
-	var value = oEditors.getById[id].getIR();
-
-	if(value == "<p><br></p>") {
-		value = "";
-	}
-	return value;
-}
 
 function selectCategory(category, level) { // 셀렉트 카테고리 셋팅
 	$("#category"+ level).html('<option value="">=='+ level +'차 카테고리==</option>');

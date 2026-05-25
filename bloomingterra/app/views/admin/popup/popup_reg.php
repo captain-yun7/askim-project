@@ -1,4 +1,3 @@
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script>
 	$(function() {
 		setLayoutByPopupForm();
@@ -14,7 +13,7 @@
                     }, 
                     rangelength : [2, 25]},
 				type : {required : true},
-				content : {editorRequired : {depends : function() {return !getSmartEditor("content")}}},
+				content : {editorRequired : {depends : function() {return !getToastEditor("content")}}},
 				open : {required : true},
 
 				recongnition_pc : {required : {depends : function(){return ($("[name=popupform]:checked").val() == "responsive" ? true : false);}}, number : true},
@@ -339,7 +338,7 @@
 						<div class="editor-box">
 							<textarea name="content" id="content" class="editor"><?=$popup_view["content"]?></textarea>
 						</div>
-						<script>attachSmartEditor("content", "popup");</script>
+						<script>attachToastEditor("content", "popup");</script>
 					</td>
 				</tr>
 				<? if($this->input->get("no", true)) : ?>

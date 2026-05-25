@@ -13,7 +13,7 @@
 		$("form[name='comment_frm']").validate({
 			rules : {
 				name : {required : true},
-				//content : {required : {depends : function(){return !getSmartEditor("comment");}}},
+				//content : {required : {depends : function(){return !getToastEditor("comment");}}},
 				content : {required : true},
 				file : {}
 			}, messages : {

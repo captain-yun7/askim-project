@@ -1,7 +1,7 @@
 <?php /* Template_ 2.2.8 2026/04/08 10:57:17 /gcsd33_bloomingterra/www/data/skin/respon_default_en/board/_form_board_write.html 000023114 */ ?>
 <!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
 <script type="text/javascript" src="<?php echo $TPL_VAR["js"]?>/js/common_board.js"></script>
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/lib/js/toast-editor.js" charset="utf-8"></script>
 <script>
 	var Common_Board = new common_board({
 		code : "<?php echo $TPL_VAR["board_info"]['code']?>",
@@ -21,7 +21,7 @@
 				password : {required : true, rangelength : [4, 20]},
 <?php }?>
 <?php if($TPL_VAR["CI"]->uri->rsegments[ 1]!='index_'&&$TPL_VAR["board_info"]['code']!='inquiry'){?>//메인에서 에디터 적용금지
-				content : {editorRequired : {depends : function(){return !getSmartEditor("contents")}}},
+				content : {editorRequired : {depends : function(){return !getToastEditor("contents")}}},
 <?php }?>
 				file : {},
 				nonMember : {required : {depends : function(){return <?php if(!defined('_IS_LOGIN')){?>true<?php }else{?>false<?php }?>}}},
@@ -33,7 +33,7 @@
 								depends : function(){
 <?php if(!empty($TPL_VAR["board_info"]['extraFieldInfo']['require'][$TPL_VAR["cfg_site"]['language']][$TPL_K1])){?>
 <?php if($TPL_VAR["board_info"]['extraFieldInfo']['option'][$TPL_VAR["cfg_site"]['language']][$TPL_K1]['type']=='editor'){?>
-											return !getSmartEditor("<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>");
+											return !getToastEditor("<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>");
 <?php }elseif($TPL_VAR["board_info"]['extraFieldInfo']['option'][$TPL_VAR["cfg_site"]['language']][$TPL_K1]['type']=='file'){?>
 											if(!$("[name=<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>_fname]").val()){
 												return true;
@@ -50,7 +50,7 @@
 										return false;
 <?php }else{?>
 <?php if($TPL_VAR["board_info"]['extraFieldInfo']['option'][$TPL_VAR["cfg_site"]['language']][$TPL_K1]['type']=='editor'){?>
-											getSmartEditor("<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>");
+											getToastEditor("<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>");
 <?php }?>
 										return false;
 <?php }?>
@@ -98,12 +98,12 @@
 		});
 
 <?php if($TPL_VAR["CI"]->uri->rsegments[ 1]!='index_'&&$TPL_VAR["board_info"]['code']!='inquiry'){?>//메인에서 에디터 적용금지
-		attachSmartEditor("contents", "board");
+		attachToastEditor("contents", "board");
 <?php if($TPL_VAR["board_info"]['extraFl']=='y'&&!empty($TPL_VAR["board_info"]['extraFieldInfo']['use'][$TPL_VAR["cfg_site"]['language']])){?>
 <?php if(is_array($TPL_R1=$TPL_VAR["board_info"]['extraFieldInfo']['use'][$TPL_VAR["cfg_site"]['language']])&&!empty($TPL_R1)){foreach($TPL_R1 as $TPL_K1=>$TPL_V1){?>
 <?php if($TPL_VAR["board_info"]['extraFieldInfo']['option'][$TPL_VAR["cfg_site"]['language']][$TPL_K1]['type']=='editor'){?>
 						// 추가필드 에디터 적용
-						attachSmartEditor("<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>", "board");
+						attachToastEditor("<?php echo $TPL_K1?>_<?php echo $TPL_VAR["cfg_site"]['language']?>", "board");
 <?php }?>
 <?php }}?>
 <?php }?>

@@ -1,5 +1,4 @@
 <script type="text/javascript" src="/lib/admin/js/admin_board.js"></script>
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script>
 	$('#leftmenu >ul > li:nth-of-type(1)').addClass('on').find('ul li:nth-of-type(1)').addClass('active');
 </script>
@@ -13,14 +12,14 @@
 		$("form[name='frm']").validate({
 			rules : {
 				answer_title : {required : true},
-				answer_content : {editorRequired : {depends : function(){return !getSmartEditor("content")}}},
+				answer_content : {editorRequired : {depends : function(){return !getToastEditor("content")}}},
 			}, messages : {
 				answer_title : {required : "답변제목을 입력해주세요."},
 				answer_content : {editorRequired : "답변내용을 입력해주세요."},
 			}
 		});
 
-		attachSmartEditor("content", "board");
+		attachToastEditor("content", "board");
 	});
 </script>
 <div id="contents">

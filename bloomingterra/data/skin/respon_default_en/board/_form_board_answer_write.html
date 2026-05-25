@@ -1,6 +1,6 @@
 <!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
 <script type="text/javascript" src="{js}/js/common_board.js"></script>
-<script type="text/javascript" src="/lib/smarteditor2-master/workspace/static/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/lib/js/toast-editor.js" charset="utf-8"></script>
 <script>
 	var Common_Board = new common_board({
 		code : "{board_info['code']}",
@@ -12,14 +12,14 @@
 		$("form[name='frm']").validate({
 			rules : {
 				answer_title : {required : true},
-				answer_content : {editorRequired : {depends : function(){return !getSmartEditor("contents")}}},
+				answer_content : {editorRequired : {depends : function(){return !getToastEditor("contents")}}},
 			}, messages : {
 				answer_title : {required : "Please enter the title of the answer."},
 				answer_content : {editorRequired : "Please enter your answer."},
 			}
 		});
 
-		attachSmartEditor("contents", "board");
+		attachToastEditor("contents", "board");
 	});
 </script>
 
