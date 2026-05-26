@@ -169,7 +169,7 @@
 							}
 							$('#paging_goods').html(addHtml);
 						} else {
-							addHtml = "<tr><td colspan='5'>상품이 없습니다.</td></tr>";
+							addHtml = "<tr><td colspan='5'>서비스 사례가 없습니다.</td></tr>";
 							$('#goods').html(addHtml);
 						}
 						break;
@@ -283,7 +283,7 @@
 			<?php endif?>
 			<?php if($main_notice_auth['goods']) : ?>
 				<dl class="main_box box03 fl">
-					<dt>신규 상품등록 현황<a href="/admin/goods/goods_list" class="more_go">더보기</a></dt>
+					<dt>신규 서비스 사례 등록 현황<a href="/admin/goods/goods_list" class="more_go">더보기</a></dt>
 					<dd>
 						<table cellpadding="0" cellspacing="0" border="0">
 							<colgroup>
@@ -295,8 +295,8 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th>상품번호</th>
-									<th>상품명</th>
+									<th>번호</th>
+									<th>사례명</th>
 									<th>등록일</th>
 									<th>수정일</th>
 									<th>보기</th>

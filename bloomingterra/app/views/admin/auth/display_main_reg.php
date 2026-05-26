@@ -8,7 +8,7 @@
 			}, messages : {
 				theme_name : {required : "진열명을 입력해주세요."},
 				theme_description : {required : "진열설명을 입력해주세요."},
-				skin_type : {required : "상품진열 스킨을 선택해주세요."}
+				skin_type : {required : "서비스 사례 진열 스킨을 선택해주세요."}
 			}
 		});
 
@@ -29,7 +29,7 @@
 					"target": ""
 				}).submit();
 			} else {
-				alert("메인 상품 진열에서 삭제할 상품을 선택해 주세요.");
+				alert("메인 서비스 사례 진열에서 삭제할 서비스 사례를 선택해 주세요.");
 				return false;
 			}
 		});
@@ -42,7 +42,7 @@
 					"target": ""
 				}).submit();
 			} else {
-				alert("추가할 상품을 선택해 주세요.");
+				alert("추가할 서비스 사례를 선택해 주세요.");
 				return false;
 			}
 		});
@@ -98,7 +98,7 @@
 	<input type="hidden" name="theme_no" value="<?=$this->input->get("no", true)?>">
 	<input type="hidden" name="orderby" id="orderBy" value="">
 		<div class="main_tit">
-		<h2>메인 상품진열 - <?=$mode == "register" ? "등록" : "수정"?></h2>
+		<h2>메인 서비스 사례 진열 - <?=$mode == "register" ? "등록" : "수정"?></h2>
 		<div class="btn_right btn_num2">
 			<button><a href="#" id="saveGoods" class="btn point">저장하기</a></button>
 			<button type="button" onclick="javascript:location.href='display_main_list'"><a href="display_main_list" class="btn gray">목록보기</a></button>
@@ -143,24 +143,24 @@
 		<?php if($display_main["no"]) : ?>
 			<div class="table_list main_goods_add">
 				<div class="main-display">
-					<h3>등록 상품 리스트</h3>
+					<h3>등록 서비스 사례 리스트</h3>
 					<div>
 						<table cellpadding="0" cellspacing="0" border="0" id="registered">
 							<colgroup>
 								<col width="10%" /><!-- No -->
 								<col width="12%"><!--썸네일-->
-								<col /><!-- 상품명 -->
+								<col /><!-- 사례명 -->
 							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col"><input type="checkbox" id="checkRegistered"></th>
-									<th scope="col" colspan="2">상품명</th>
+									<th scope="col" colspan="2">사례명</th>
 								</tr>
 							</thead>
 							<tbody<?=count($display_main_list) > 0 ? " id='mainGoods'" : ""?>>
 							<?php
 							if(count($display_main_list) < 1) :
-								echo "<tr><td colspan='3' class='nothing'>등록된 상품이 없습니다.</td></tr>";
+								echo "<tr><td colspan='3' class='nothing'>등록된 서비스 사례가 없습니다.</td></tr>";
 							else :
 								foreach($display_main_list as $key => $value) :
 							?>
@@ -187,7 +187,7 @@
 				</div>
 				<div class="goods-list">
 					<h3>
-						상품 선택
+						서비스 사례 선택
 						<select name="category" id="category">
 							<option value="">카테고리</option>
 							<?php
@@ -203,12 +203,12 @@
 							<colgroup>
 								<col width="10%" /><!-- No -->
 								<col width="12%"><!--썸네일-->
-								<col /><!-- 상품명 -->
+								<col /><!-- 사례명 -->
 							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col"><input type="checkbox" id="checkAllGoods"></th>
-									<th scope="col" colspan="2">상품명</th>
+									<th scope="col" colspan="2">사례명</th>
 								</tr>
 							</thead>
 							<tbody>

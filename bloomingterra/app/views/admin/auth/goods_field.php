@@ -135,7 +135,7 @@
 </script>
 <div id="contents">
 	<div class="main_tit">
-		<h2>상품필드셋팅<em>* 필수 항목은 사용 체크가 되어있어야 합니다.</em></h2>
+		<h2>서비스 사례 필드 세팅<em>* 필수 항목은 사용 체크가 되어있어야 합니다.</em></h2>
 		<div class="btn_right">
 			<a href="javascript://" onclick="field_save(document.frm);" class="btn point">저장</a>
 		</div>

@@ -274,7 +274,7 @@
 	}
 
 	function goods_delete(){
-		if(!confirm("해당 상품을 삭제하시겠습니까?")) {
+		if(!confirm("해당 서비스 사례를 삭제하시겠습니까?")) {
 			return false;
 		}
 		document.frm.action = "goods_delete";
@@ -340,7 +340,7 @@
 		</div>
 		<div class="table_write_info">* 체크는 필수입력사항입니다.</div>
 		<div id="divList">
-			<div class="sub_tit"><h3>상품노출 카테고리 설정</h3></div>
+			<div class="sub_tit"><h3>서비스 사례 노출 카테고리 설정</h3></div>
 			<div class="table_write">
 				<table width="100%" cellpadding="0" cellspacing="0" border="0">
 				<colgroup><col width="150px" /><col width="*" /></colgroup>
@@ -389,7 +389,7 @@
 					</tr>
 				</table>
 			</div>
-			<div class="sub_tit"><h3>상품노출 설정</h3></div>
+			<div class="sub_tit"><h3>서비스 사례 노출 설정</h3></div>
 			<div class="table_write">
 				<table width="100%" cellpadding="0" cellspacing="0" border="0">
 				<colgroup><col width="150px" /><col width="*" /></colgroup>

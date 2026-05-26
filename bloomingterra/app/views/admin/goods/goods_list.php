@@ -14,7 +14,7 @@
 				}).get().join("|");
 				window.open($(this).attr("href") + "?goods=" + goods, "set_category", "width=810, height=400, scrollbars=no");
 			} else {
-				alert("카테고리를 변경할 상품을 선택해 주세요.");
+				alert("카테고리를 변경할 서비스 사례를 선택해 주세요.");
 			}
 		});
 
@@ -26,7 +26,7 @@
 				}).get().join("|");
 				$(location).attr("href", "copy_goods?no=" + goods);
 			} else {
-				alert("복사할 상품을 선택해 주세요.");
+				alert("복사할 서비스 사례를 선택해 주세요.");
 			}
 		});
 	});
@@ -61,11 +61,11 @@
 
 	function goods_delete(){
 		if($(":checkbox[name='no[]']:checked").length < 1) {
-			alert("선택된 상품이 없습니다.");
+			alert("선택된 서비스 사례가 없습니다.");
 			return false;
 		}
 
-		if(!confirm("선택된 상품을 삭제하시겠습니까?")) {
+		if(!confirm("선택된 서비스 사례를 삭제하시겠습니까?")) {
 			return false;
 		}
 
@@ -115,9 +115,9 @@
 				<colgroup>
 					<col width="4%" /><!-- 체크박스 -->
 					<col width="5%" /><!-- No -->
-					<col width="7%" /><!-- 상품No -->
+					<col width="7%" /><!-- 번호 -->
 					<col width="10%"><!--썸네일-->
-					<col width="*"/><!-- 상품명 -->
+					<col width="*"/><!-- 사례명 -->
 					<col width="7%" /><!-- 노출유무 -->
 					<col width="7%" /><!-- 순서 -->
 					<col width="11%" /><!-- 관리 -->
@@ -127,7 +127,7 @@
 					<tr>
 						<th><input type="checkbox" name="all" id="all" value=0 onchange="checkToggle(this, 'no[]');"></th>
 						<th scope="col">No.</th>
-						<th scope="col">상품번호</th>
+						<th scope="col">번호</th>
 						<th scope="col"></th>
 						<th scope="col"><?=$goodsField["name"]["kor"]["name"]?></th>
 						<th scope="col" class=""><?=$goodsField["name"]["kor"]["yn_state"]?></th>
@@ -163,7 +163,7 @@
 					<? endforeach; ?>
 				<? else : ?>
 					<tr>
-						<td colspan="8">등록된 상품이 없습니다</td>
+						<td colspan="8">등록된 서비스 사례가 없습니다</td>
 					</tr>
 				<? endif; ?>
 				</tbody>
@@ -176,7 +176,7 @@
 	<div class="terms_privecy_box">
 		<dl>
 			<dt>- "카테고리 노출유무"는 어떤 기능인가요? </dt>
-			<dd>해당 상품이 담겨있는 카테고리 접속 시, 해당 상품 노출 유무를 설정하는 메뉴입니다. </dd>
+			<dd>해당 서비스 사례가 담겨있는 카테고리 접속 시, 해당 서비스 사례 노출 유무를 설정하는 메뉴입니다. </dd>
 		</dl>
 		<dl class="mt20">
 			<dt>- "카테고리 노출순서"는 어떤 기능인가요?</dt>
