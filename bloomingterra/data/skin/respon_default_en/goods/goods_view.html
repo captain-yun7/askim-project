@@ -50,34 +50,33 @@
 			</article>
 			<article class="con_area">
 				<!-- askim 1:1 패턴: light section(영상 hero + 본문) → dark section(슬라이드) → recent_posts dark section -->
-				<!-- 2026-05-25 C2: 본문(info)와 영상(ex4/5/7)이 모두 비어있으면 light section 자체 미렌더 → 빈 박스 안 그려짐 -->
-				<!--{ ? goods_view['goods_view']['info'] || (goods_view['goods_view']['ex4'] && goods_view['goods_view']['ex5'] && goods_view['goods_view']['ex7']) }-->
+				<?php
+					// 2026-05-26: 유튜브 영상 단일 URL → embed iframe (askim 1:1).
+					// extraFieldData에서 name='유튜브 링크'인 필드 값을 추출 후 video ID 파싱.
+					$__youtube_url = '';
+					if (!empty($TPL_VAR['extraFieldData']) && is_array($TPL_VAR['extraFieldData'])) {
+						foreach ($TPL_VAR['extraFieldData'] as $__f) {
+							if (isset($__f['name']) && $__f['name'] === '유튜브 링크') {
+								$__youtube_url = $__f['value'] ?? '';
+								break;
+							}
+						}
+					}
+					$__ytid = '';
+					if ($__youtube_url && preg_match('#(?:youtu\.be/|v=|embed/)([A-Za-z0-9_-]{11})#', $__youtube_url, $__ym)) {
+						$__ytid = $__ym[1];
+					}
+					$__info = isset($TPL_VAR['goods_view']['goods_view']['info']) ? $TPL_VAR['goods_view']['goods_view']['info'] : '';
+					// info가 비어있다고 보기 어려운 빈 본문(<p><br></p>) 케이스 정규화
+					$__info_clean = trim(strip_tags($__info));
+				?>
+				<?php if ($__info_clean !== '' || $__ytid): ?>
 				<section data-section-luminosity="light" class="pv-section pv-section-light">
-					<!-- 2026-05-14 피드백 #3: 영상을 최상단(hero)에. 영상 있는 글에 한해 표시. -->
-					<!--{ ? goods_view['goods_view']['ex4'] && goods_view['goods_view']['ex5'] && goods_view['goods_view']['ex7']}-->
+					<?php if ($__ytid): ?>
 						<div class="youtube">
-							<!--{ @ extraFieldData }-->
-								<!--{ ? .name == '유튜브 썸네일'}-->
-									<div class="youtube_thumb">{.value}</div>
-								<!--{ / }-->
-							<!--{ / }-->
-							<dl>
-								<dt>
-									<!--{ @ extraFieldData }-->
-										<!--{ ? .name == '유튜브 링크'}-->
-											<a href="{.value}" class="link" target="_blank"></a>
-										<!--{ / }-->
-									<!--{ / }-->
-									<img src="../data/skin/respon_default/images/sub/yotube_icon.svg" alt="유튜브">
-								</dt>
-								<!--{ @ extraFieldData }-->
-									<!--{ ? .name == '유튜브 텍스트'}-->
-										<dd>{.value}</dd>
-									<!--{ / }-->
-								<!--{ / }-->
-							</dl>
+							<iframe src="https://www.youtube.com/embed/<?=$__ytid?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 						</div>
-					<!--{ / }-->
+					<?php endif; ?>
 
 					<!-- 2026-05-14 피드백 #2: detail_img 별도 출력 제거. askim 패턴 — 운영자가 본문(info) 에디터에서 이미지+텍스트를 인라인으로 직접 작성. detail_img는 dn(숨김) 영역에만 보존(스킨 호환). -->
 					<!--{ ? goods_view['goods_view']['info'] }-->
@@ -86,7 +85,7 @@
 						</div>
 					<!--{ / }-->
 				</section>
-				<!--{ / }-->
+				<?php endif; ?>
 
 				<!-- 2026-05-25 M3: prodSwiper 제거 → askim 패턴 인라인 img 세로 나열 (dark section) -->
 				<!--{ ? extraFieldData }-->

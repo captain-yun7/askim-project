@@ -379,6 +379,16 @@ class Goods extends FRONT_Controller {
 			}
 			$this->template_->assign('auto_meta', $auto_meta);
 
+			// 2026-05-26: 유튜브 영상 단일 URL → embed iframe 자동 변환 (askim 1:1 패턴).
+			// 운영자가 ex5에 YouTube URL 한 줄 입력하면 light section 최상단에 player로 노출.
+			// 지원 URL: youtu.be/ID, youtube.com/watch?v=ID, youtube.com/embed/ID, m.youtube.com/watch?v=ID
+			$youtube_embed_url = '';
+			$ex5_raw = $goods_view['goods_view']['ex5'] ?? '';
+			if ($ex5_raw && preg_match('#(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/)|youtu\.be/)([A-Za-z0-9_-]{11})#', $ex5_raw, $ym)) {
+				$youtube_embed_url = 'https://www.youtube.com/embed/' . $ym[1];
+			}
+			$this->template_->assign('youtube_embed_url', $youtube_embed_url);
+
 			// previous, next
 			$button = [
 				'next' => 'nothing',
