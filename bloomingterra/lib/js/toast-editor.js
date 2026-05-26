@@ -124,13 +124,48 @@
 	}
 
 	function getToastEditor(id) {
+		var ta = document.getElementById(id);
 		var ed = window['__tuiEditor_' + id];
-		if (!ed) return '';
+		if (!ed) {
+			// lazy load 미완료 또는 인스턴스 없음 — textarea 옛 값 보존 반환
+			return ta ? (ta.value || '') : '';
+		}
 		var html = ed.getHTML();
 		if (html === '<p><br></p>') html = '';
+		// 호출 시점에 textarea 동기화 (jQuery .submit()이 submit 이벤트 미발생 → listener 의존 X)
+		if (ta) ta.value = html;
 		return html;
 	}
 
+	// submit 직전 모든 toast editor 인스턴스를 강제 동기화. jQuery .submit() / form.submit() 직전 호출.
+	function flushToastEditors() {
+		Object.keys(window).forEach(function(k){
+			if (k.indexOf('__tuiEditor_') !== 0) return;
+			var ed = window[k];
+			var id = k.replace('__tuiEditor_', '');
+			var ta = document.getElementById(id);
+			if (!ed || !ta) return;
+			var html = ed.getHTML();
+			if (html === '<p><br></p>') html = '';
+			ta.value = html;
+		});
+	}
+
+	// HTMLFormElement.prototype.submit() patch
+	// — native submit()은 submit 이벤트를 발생시키지 않으므로 form submit 이벤트 listener로는
+	//   textarea 동기화가 안 됨. prototype 레벨에서 직접 flush 호출.
+	// jQuery .submit()도 내부적으로 native submit() 호출하므로 이걸로 함께 커버.
+	if (typeof HTMLFormElement !== 'undefined' && HTMLFormElement.prototype && !HTMLFormElement.prototype.__tuiSubmitPatched) {
+		var origSubmit = HTMLFormElement.prototype.submit;
+		HTMLFormElement.prototype.submit = function(){
+			try { flushToastEditors(); } catch(e) { /* silent */ }
+			return origSubmit.apply(this, arguments);
+		};
+		HTMLFormElement.prototype.__tuiSubmitPatched = true;
+	}
+
 	global.attachToastEditor = attachToastEditor;
+	global.getToastEditor = getToastEditor;
+	global.flushToastEditors = flushToastEditors;
 	global.getToastEditor = getToastEditor;
 })(window);

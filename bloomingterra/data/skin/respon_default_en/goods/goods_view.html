@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var luminosity = section.dataset.sectionLuminosity;
     ScrollTrigger.create({
       trigger: section,
-      start: 'top center',
+      start: 'top top',  /* 2026-05-26: section이 viewport top에 닿는 시점 (마우스 스크롤 3번 정도). 이전 'top center'는 너무 일찍 반전. */
       end: 'bottom top',
       onUpdate: function(self){
         if(self.progress > 0){

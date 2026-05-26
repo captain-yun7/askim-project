@@ -337,7 +337,7 @@ class Goods extends FRONT_Controller {
 										$srcPath = "/upload/goods/".$columnKey."/".$goodsViewVal;
 										$width = (!empty($extraOption['width']) ? $extraOption['width'] : "");
 										$height = (!empty($extraOption['height']) ? $extraOption['height'] : "");
-										$extraFieldData[$columnKey]["value"] = sprintf("<img src='%s' onerror='this.src=\'../images/goods/noimg.gift\'' width='%s' height='%s'>", $srcPath, $width, $height);
+										$extraFieldData[$columnKey]["value"] = sprintf('<img src="%s" onerror="this.src=\'/data/skin/respon_default_en/images/common/noimg.gif\'" width="%s" height="%s">', $srcPath, $width, $height);
 									}else {
 										$downloadPath = "/fileRequest/download?file=".urlencode("/goods/".$columnKey."/".$goodsViewVal)."&save=".$goodsViewOriginFileName;
 										$extraFieldData[$columnKey]["value"] = sprintf("<div><a href = '%s' target='_blank' style='color:cornflowerblue;'>%s</a></div>", $downloadPath, $goodsViewOriginFileName);
