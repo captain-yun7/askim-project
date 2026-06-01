@@ -1,7 +1,7 @@
 <?php /* Template_ 2.2.8 2026/04/08 10:57:17 /gcsd33_bloomingterra/www/data/skin/respon_default_en/board/_form_board_write.html 000023114 */ ?>
 <!-- <script type="text/javascript" src="/lib/js/common_board.js"></script> -->
 <script type="text/javascript" src="<?php echo $TPL_VAR["js"]?>/js/common_board.js"></script>
-<script type="text/javascript" src="/lib/js/toast-editor.js" charset="utf-8"></script>
+<script type="text/javascript" src="/lib/js/rich-editor.js" charset="utf-8"></script>
 <script>
 	var Common_Board = new common_board({
 		code : "<?php echo $TPL_VAR["board_info"]['code']?>",

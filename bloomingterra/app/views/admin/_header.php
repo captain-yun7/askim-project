@@ -23,7 +23,7 @@
 <script src="/lib/js/tooltipster.bundle.min.js"></script>
 <script src="/lib/js/moment-with-locales.min.js"></script>
 <script src="/lib/js/common.js"></script>
-<script src="/lib/js/toast-editor.js"></script>
+<script src="/lib/js/rich-editor.js"></script>
 <script>
 	var CURRENT_DATE = "<?=CURRENT_DATE?>";
 	$(function() {

@@ -492,24 +492,30 @@ class Goods extends ADMIN_Controller {
 	public function editor_image_upload() {
 		header('Content-Type: application/json; charset=UTF-8');
 		try {
-			if (empty($_FILES['image']) || !is_uploaded_file($_FILES['image']['tmp_name'])) {
+			// Toast UI는 field명 'image', CKEditor SimpleUploadAdapter는 'upload' → 양쪽 지원
+			$f = null;
+			if (!empty($_FILES['image']) && is_uploaded_file($_FILES['image']['tmp_name'])) {
+				$f = $_FILES['image'];
+			} elseif (!empty($_FILES['upload']) && is_uploaded_file($_FILES['upload']['tmp_name'])) {
+				$f = $_FILES['upload'];
+			}
+			if ($f === null) {
 				http_response_code(400);
-				echo json_encode(['error' => 'no file uploaded']);
+				echo json_encode(['error' => ['message' => 'no file uploaded']]);
 				return;
 			}
-			$f = $_FILES['image'];
 			// 안전: 확장자 화이트리스트
 			$ext = strtolower(pathinfo($f['name'], PATHINFO_EXTENSION));
 			$allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 			if (!in_array($ext, $allowed)) {
 				http_response_code(400);
-				echo json_encode(['error' => 'invalid file type']);
+				echo json_encode(['error' => ['message' => 'invalid file type']]);
 				return;
 			}
 			// 안전: 사이즈 제한 10MB
 			if ($f['size'] > 10 * 1024 * 1024) {
 				http_response_code(400);
-				echo json_encode(['error' => 'file too large']);
+				echo json_encode(['error' => ['message' => 'file too large']]);
 				return;
 			}
 			$ym = date('Ym');
@@ -518,13 +524,13 @@ class Goods extends ADMIN_Controller {
 			$name = date('YmdHis') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
 			if (!move_uploaded_file($f['tmp_name'], $dir . $name)) {
 				http_response_code(500);
-				echo json_encode(['error' => 'move_uploaded_file failed']);
+				echo json_encode(['error' => ['message' => 'move_uploaded_file failed']]);
 				return;
 			}
 			echo json_encode(['url' => '/upload/editor/' . $ym . '/' . $name]);
 		} catch (Exception $e) {
 			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			echo json_encode(['error' => ['message' => $e->getMessage()]]);
 		}
 	}
 
