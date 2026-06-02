@@ -231,7 +231,8 @@ class Board extends ADMIN_Controller {
 							}
 							foreach($this->_site_language["set_language"] as $languageKey => $languageVal){
 								if($languageKey == $selectLanguage && !empty($this->_board["extraFieldInfo"]["use"][$languageKey]["ex".$idx])){
-									$this->form_validation->set_rules("ex".$idx."_".$selectLanguage . ((isset($this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"]) && $this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"] == "file") ? "_fname" : ""), $this->_board["extraFieldInfo"]["name"][$selectLanguage]["ex".$idx], "trim". ($this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"] != "editor" ? "|xss_clean" : "") . (isset($this->_board["extraFieldInfo"]["use"][$selectLanguage]["ex".$idx]) && isset($this->_board["extraFieldInfo"]["require"][$selectLanguage]["ex".$idx]) ? "|required" : ""));
+									/* 2026-06-02: 추가필드(썸네일 등) required 완화 — 운영자 저장 편의 (본문 content는 별도 required 유지) */
+									$this->form_validation->set_rules("ex".$idx."_".$selectLanguage . ((isset($this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"]) && $this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"] == "file") ? "_fname" : ""), $this->_board["extraFieldInfo"]["name"][$selectLanguage]["ex".$idx], "trim". ($this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"] != "editor" ? "|xss_clean" : ""));
 									if($this->_board["extraFieldInfo"]["option"][$selectLanguage]["ex".$idx]["type"] == "file"){
 										$_POST["ex".$idx."_".$selectLanguage] = $_POST["ex".$idx."_".$selectLanguage."_fname"];
 									}

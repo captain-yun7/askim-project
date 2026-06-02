@@ -282,7 +282,8 @@ class Goods extends ADMIN_Controller {
 					$this->form_validation->set_rules("no", $goodsField["name"][$site_language]["no"], "required|trim|xss_clean|is_natural_no_zero");
 				}
 
-				$this->form_validation->set_rules("category1", $goodsField["name"][$site_language]["category1"], "required|trim|xss_clean|exact_length[3]|is_natural");
+				/* 2026-06-02: 카테고리코드 required 완화 — 운영자 저장 편의 */
+				$this->form_validation->set_rules("category1", $goodsField["name"][$site_language]["category1"], "trim|xss_clean|exact_length[3]|is_natural");
 				$this->form_validation->set_rules("category2", $goodsField["name"][$site_language]["category2"], "trim|xss_clean|exact_length[6]");
 				$this->form_validation->set_rules("category3", $goodsField["name"][$site_language]["category3"], "trim|xss_clean|exact_length[9]");
 				$this->form_validation->set_rules("category4", $goodsField["name"][$site_language]["category4"], "trim|xss_clean|exact_length[12]");
@@ -300,18 +301,19 @@ class Goods extends ADMIN_Controller {
 				for($idx=1;$idx<=20;$idx++){
 					if($this->_site_language["multilingual"] && !empty($goodsField["multi"]["ex".$idx])){
 						foreach($this->_site_language["set_language"] as $languageKey => $languageVal){
-							$this->form_validation->set_rules("ex".$idx."_".$languageKey . ((isset($goodsField["option"][$languageKey]["ex".$idx]["type"]) && $goodsField["option"][$languageKey]["ex".$idx]["type"] == "file") ? "_fname" : ""), $goodsField["name"][$languageKey]["ex".$idx], "trim". ($goodsField["option"][$languageKey]["ex".$idx]["type"] != "editor" ? "|xss_clean" : "") . (isset($goodsField["use"][$languageKey]["ex".$idx]) && isset($goodsField["require"][$languageKey]["ex".$idx]) ? "|required" : ""));
+							$this->form_validation->set_rules("ex".$idx."_".$languageKey . ((isset($goodsField["option"][$languageKey]["ex".$idx]["type"]) && $goodsField["option"][$languageKey]["ex".$idx]["type"] == "file") ? "_fname" : ""), $goodsField["name"][$languageKey]["ex".$idx], "trim". ($goodsField["option"][$languageKey]["ex".$idx]["type"] != "editor" ? "|xss_clean" : ""));  /* 2026-06-02: 추가필드 required 완화 */
 							if($goodsField["option"][$languageKey]["ex".$idx]["type"] == "file"){
 								$_POST["ex".$idx."_".$languageKey] = $_POST["ex".$idx."_".$languageKey."_fname"];
 							}
 						}
 					}else{
-						$this->form_validation->set_rules("ex".$idx . (isset($goodsField["option"][$site_language]["ex".$idx]["type"]) && $goodsField["option"][$site_language]["ex".$idx]["type"] == "file" ? "_fname" : ""), $goodsField["name"][$site_language]["ex".$idx], "trim". ($goodsField["option"][$site_language]["ex".$idx]["type"] != "editor" ? "|xss_clean" : "") .(isset($goodsField["use"][$site_language]["ex".$idx]) && isset($goodsField["require"][$site_language]["ex".$idx]) ? "|required" : ""));
+						$this->form_validation->set_rules("ex".$idx . (isset($goodsField["option"][$site_language]["ex".$idx]["type"]) && $goodsField["option"][$site_language]["ex".$idx]["type"] == "file" ? "_fname" : ""), $goodsField["name"][$site_language]["ex".$idx], "trim". ($goodsField["option"][$site_language]["ex".$idx]["type"] != "editor" ? "|xss_clean" : ""));  /* 2026-06-02: 추가필드 required 완화 */
 					}
 				}
 
-				$this->form_validation->set_rules("img1_fname", $goodsField["name"][$site_language]["img1"], "trim|xss_clean". (isset($goodsField["use"][$site_language]["img1"]) && isset($goodsField["require"][$site_language]["img1"]) ? "|required" : ""));
-				$this->form_validation->set_rules("img2_fname", $goodsField["name"][$site_language]["img2"], "trim|xss_clean". (isset($goodsField["use"][$site_language]["img2"]) && isset($goodsField["require"][$site_language]["img2"]) ? "|required" : ""));
+				/* 2026-06-02: 대표이미지/썸네일 required 완화 — 운영자 저장 편의 */
+				$this->form_validation->set_rules("img1_fname", $goodsField["name"][$site_language]["img1"], "trim|xss_clean");
+				$this->form_validation->set_rules("img2_fname", $goodsField["name"][$site_language]["img2"], "trim|xss_clean");
 				$this->form_validation->set_rules("yn_state", $goodsField["name"][$site_language]["img2"], "required|trim|xss_clean");
 				$this->form_validation->set_rules("upload_path", $goodsField["name"][$site_language]["upload_path"], "trim|xss_clean". (isset($goodsField["use"][$site_language]["upload_fname"]) && isset($goodsField["require"][$site_language]["upload_fname"]) ? "|required" : ""));
 				$this->form_validation->set_rules("upload_fname_fname", $goodsField["name"][$site_language]["upload_fname"], "trim|xss_clean". (isset($goodsField["use"][$site_language]["upload_fname"]) && isset($goodsField["require"][$site_language]["upload_fname"]) ? "|required" : ""));
@@ -324,6 +326,11 @@ class Goods extends ADMIN_Controller {
 
 				if($this->form_validation->run()){
 					$set_data = $this->input->post();
+
+					// 2026-06-02: 빈 slug는 NULL로 (slug UNIQUE 제약 — 빈 문자열 중복 시 insert 실패하던 저장 버그)
+					if (isset($set_data['slug']) && trim($set_data['slug']) === '') {
+						$set_data['slug'] = null;
+					}
 
 					$set_data['upload_fname'] = $set_data['upload_fname_fname'];
 					$set_data['upload_oname'] = $set_data['upload_fname_oname'];
@@ -382,16 +389,21 @@ class Goods extends ADMIN_Controller {
                             }
                         }
 
-						// category
+						// category — 2026-06-02: 카테고리 미선택 시 빈 배열 foreach 에러 방지 (저장 실패 원인)
 						$categories = [];
-						foreach($post['category'] as $value) {
-							$categories[] = [
-								'language' => 'kor',
-								'goodsno' => $goodsno,
-								'category' => $value,
-							];
+						if (!empty($post['category']) && is_array($post['category'])) {
+							foreach($post['category'] as $value) {
+								if (!$value) continue;
+								$categories[] = [
+									'language' => 'kor',
+									'goodsno' => $goodsno,
+									'category' => $value,
+								];
+							}
 						}
-						$this->dm->insert('da_goods_category', $categories, false, true);
+						if (!empty($categories)) {
+							$this->dm->insert('da_goods_category', $categories, false, true);
+						}
 
 						if($mode == "register") {
 							msg("등록되었습니다.", "/admin/goods/goods_list");
