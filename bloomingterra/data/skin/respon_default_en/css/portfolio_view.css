@@ -88,12 +88,16 @@
 /* 2026-05-14 #1+#2: 콘텐츠가 짧은 글에도 스크롤 라이트→다크 반전 효과가 충분히 보이도록 min-height 보강 */
 .portfolio_view_in .con_area .pv-section-light{min-height: 60vh;}
 .portfolio_view_in .con_area .pv-section-dark{min-height: 50vh;}
-.portfolio_view_in .con_area section img{max-width:100% !important; width:100% !important; height: auto !important;}
+/* 2026-06-02: dark section 슬라이드 이미지만 풀폭 강제 */
+.portfolio_view_in .con_area .slide_img img{max-width:100% !important; width:100% !important; height: auto !important;}
+/* 본문 raw 이미지는 에디터에서 지정한 inline width 존중 (width 강제 제거) */
+.portfolio_view_in .con_area .cont img{max-width:100% !important; height: auto !important;}
 .portfolio_view_in .con_area section .viewImg{width: calc(50vw + 115px); margin: 20px 0;}
 .portfolio_view_in .con_area section iframe{max-width: 100% !important;}
 .portfolio_view_in .con_area .view_img{margin: 0 0 40px;}
 .portfolio_view_in .con_area .view_img img{display: block; width: 100%; height: auto;}
-.portfolio_view_in .con_area .cont{font-size: 19px; line-height: 170%; color: var(--pv-basic); letter-spacing: var(--pv-ls);}
+/* 2026-06-02: 에디터 본문과 자간/행간 정합 — 자간 강제 제거(에디터 normal), 행간 170→160% 완화 */
+.portfolio_view_in .con_area .cont{font-size: 19px; line-height: 160%; color: var(--pv-basic); letter-spacing: normal;}
 .portfolio_view_in .con_area .cont p{margin: 0 0 1em;}
 
 /* 2026-06-02: CKEditor 본문 이미지 — 에디터에서 작성한 리사이즈/정렬/캡션 그대로 프론트 렌더 */
