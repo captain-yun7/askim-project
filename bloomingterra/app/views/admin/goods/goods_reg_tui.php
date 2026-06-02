@@ -17,7 +17,7 @@
 				<? }else{ ?>
 					name  : {required : true, maxlength : 50},
 				<? } ?>
-				category1 : {required : true},
+				category1 : {required : false},  /* 2026-06-02: 카테고리코드 선택값으로 완화 (운영자 저장 편의) */
 				category2 : {required : false},
 				category3 : {required : false},
 				category4 : {required : false},
@@ -53,7 +53,7 @@
 				'detail_fname[]' : {editorRequired : {depends : function(){return <?if($goodsField["require"][$this->_site_language["default"]]["detail_img"]) : ?>!getColumnValue("detail_fname[]")<? else : ?>false<? endif; ?>}}},
 				yn_state : {required : true},
 				img1 : {editorRequired : {depends : function(){return <?if($goodsField["require"][$this->_site_language["default"]]["img1"]) : ?>!(getColumnValue("img1"))<? else : ?>false<? endif; ?>}}},
-				img2 : {editorRequired : {depends : function(){return <?if($goodsField["require"][$this->_site_language["default"]]["img2"]) : ?>!getColumnValue("img2")<? else : ?>false<? endif; ?>}}},
+				img2 : {editorRequired : {depends : function(){return false}}},  /* 2026-06-02: 썸네일 선택값으로 완화 (운영자 저장 편의) */
 				<? for($idx = 1; $idx<=20; $idx++){ ?>
 					<? if(!empty($goodsField["multi"]["ex".$idx]) && $this->_site_language["multilingual"]): ?>
 						<? foreach($this->_site_language["set_language"] as $key => $value): ?>
