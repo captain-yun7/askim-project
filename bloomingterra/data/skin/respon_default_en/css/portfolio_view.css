@@ -96,6 +96,21 @@
 .portfolio_view_in .con_area .cont{font-size: 19px; line-height: 170%; color: var(--pv-basic); letter-spacing: var(--pv-ls);}
 .portfolio_view_in .con_area .cont p{margin: 0 0 1em;}
 
+/* 2026-06-02: CKEditor 본문 이미지 — 에디터에서 작성한 리사이즈/정렬/캡션 그대로 프론트 렌더 */
+.portfolio_view_in .con_area .cont figure.image{display: table; clear: both; text-align: center; margin: 1em auto; max-width: 100%;}
+.portfolio_view_in .con_area .cont figure.image img{display: block; margin: 0 auto; max-width: 100% !important; width: 100% !important; height: auto !important;}
+.portfolio_view_in .con_area .cont figure.image_resized{max-width: 100%;}  /* width는 figure inline style(50%/75%) 존중 */
+.portfolio_view_in .con_area .cont figure.image > figcaption{display: block; font-size: 15px; color: var(--pv-light); text-align: center; padding: 8px 4px 0;}
+.portfolio_view_in .con_area .cont .image-style-align-left,
+.portfolio_view_in .con_area .cont .image-style-block-align-left{float: left; margin: 1em 1.5em 1em 0;}
+.portfolio_view_in .con_area .cont .image-style-align-right,
+.portfolio_view_in .con_area .cont .image-style-block-align-right{float: right; margin: 1em 0 1em 1.5em;}
+.portfolio_view_in .con_area .cont .image-style-align-center,
+.portfolio_view_in .con_area .cont .image-style-block-align-center{margin-left: auto; margin-right: auto;}
+.portfolio_view_in .con_area .cont .image-inline{display: inline-flex; max-width: 100%; vertical-align: middle;}
+.portfolio_view_in .con_area .cont .image-inline img{width: 100% !important;}
+.portfolio_view_in .con_area .cont::after{content: ''; display: block; clear: both;}  /* float 이미지 후 본문 흐름 정리 */
+
 /* 2026-05-25: prodSwiper 룰 100% 제거 (askim 패턴 = dark section에 인라인 img 세로 나열) */
 
 /* 2026-05-26: 유튜브 iframe 자동 변환 (askim 1:1). ex5 단일 URL → embed iframe. 16:9 반응형. */

@@ -224,6 +224,8 @@ document.addEventListener('DOMContentLoaded', function(){
     if(img.closest('.viewImg')) return;
     // no-zoom 옵트아웃 클래스 있으면 skip
     if(img.classList.contains('no-zoom')) return;
+    // 2026-06-02: CKEditor figure(리사이즈/정렬/캡션 이미지)는 wrap 제외 → figure width/정렬 보존
+    if(img.closest('figure')) return;
     var a = document.createElement('a');
     a.className = 'viewImg';
     a.href = img.src;

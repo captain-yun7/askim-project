@@ -264,6 +264,20 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 }
 .magazine_view .view_content .cont figure{margin:48px 0; max-width:100%;}
 .magazine_view .view_content .cont figure img{margin:0 auto;}
+
+/* 2026-06-02: CKEditor 본문 이미지 — 에디터 작성 리사이즈/정렬/캡션 그대로 렌더 */
+.magazine_view .view_content .cont figure.image{display:table; clear:both; text-align:center; margin:48px auto; max-width:100%;}
+.magazine_view .view_content .cont figure.image img{display:block; margin:0 auto; width:100% !important; max-width:100% !important; height:auto !important;}
+.magazine_view .view_content .cont figure.image_resized{max-width:100%;}  /* width는 figure inline style 존중 */
+.magazine_view .view_content .cont .image-style-align-left,
+.magazine_view .view_content .cont .image-style-block-align-left{float:left; margin:1em 1.5em 1em 0;}
+.magazine_view .view_content .cont .image-style-align-right,
+.magazine_view .view_content .cont .image-style-block-align-right{float:right; margin:1em 0 1em 1.5em;}
+.magazine_view .view_content .cont .image-style-align-center,
+.magazine_view .view_content .cont .image-style-block-align-center{margin-left:auto; margin-right:auto;}
+.magazine_view .view_content .cont .image-inline{display:inline-flex; max-width:100%; vertical-align:middle;}
+.magazine_view .view_content .cont .image-inline img{width:100% !important; margin:0 !important;}
+.magazine_view .view_content .cont::after{content:''; display:block; clear:both;}
 .magazine_view .view_content .cont figcaption{
     margin-top:14px;
     font-size:13px;
