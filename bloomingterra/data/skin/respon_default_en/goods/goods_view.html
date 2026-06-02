@@ -79,11 +79,17 @@
 					<?php endif; ?>
 
 					<!-- 2026-05-14 피드백 #2: detail_img 별도 출력 제거. askim 패턴 — 운영자가 본문(info) 에디터에서 이미지+텍스트를 인라인으로 직접 작성. detail_img는 dn(숨김) 영역에만 보존(스킨 호환). -->
-					<!--{ ? goods_view['goods_view']['info'] }-->
+					<?php if ($__info_clean !== ''): ?>
 						<div class="cont">
-							{=htmlspecialchars_decode(goods_view['goods_view']['info'])}
+							<?php
+								// 2026-06-02: 본문 모든 <img>에 referrerpolicy="no-referrer" 주입
+								// → 네이버 postfiles 등 외부 이미지 핫링크(referer) 차단 회피 (서버 렌더라 JS 타이밍 무관)
+								$__body = htmlspecialchars_decode($__info);
+								$__body = preg_replace('/<img\b/i', '<img referrerpolicy="no-referrer"', $__body);
+								echo $__body;
+							?>
 						</div>
-					<!--{ / }-->
+					<?php endif; ?>
 				</section>
 				<?php endif; ?>
 
@@ -220,6 +226,12 @@ document.addEventListener('DOMContentLoaded', function(){
   var imgs = document.querySelectorAll('.portfolio_view .con_area .cont img, .portfolio_view .con_area section[data-section-luminosity="dark"] img');
   imgs.forEach(function(img){
     if(!img.src) return;
+    // 2026-06-02: 외부 이미지(네이버 postfiles 등) 핫링크 차단 회피 — referer 제거 후 재로드
+    if(/^https?:\/\//.test(img.src) && img.src.indexOf(location.hostname) < 0){
+      img.referrerPolicy = 'no-referrer';
+      img.setAttribute('referrerpolicy', 'no-referrer');
+      var _s = img.src; img.src = ''; img.src = _s;
+    }
     // 이미 viewImg 안에 있으면 skip
     if(img.closest('.viewImg')) return;
     // no-zoom 옵트아웃 클래스 있으면 skip
