@@ -45,9 +45,23 @@
 		});
 	}
 
+	function injectEditorStyle(){
+		if (document.getElementById('rich-editor-style')) return;
+		var st = document.createElement('style');
+		st.id = 'rich-editor-style';
+		// 본문 편집 영역 높이 확보 (기본 한 줄짜리 → 넉넉하게) + 가독성
+		st.textContent =
+			'.ck-editor__editable_inline{min-height:520px !important;}' +
+			'.ck.ck-editor{max-width:100%;}' +
+			'.ck-editor__editable_inline{padding:16px 24px !important;}' +
+			'.ck-content{font-size:15px; line-height:1.7;}';
+		document.head.appendChild(st);
+	}
+
 	function loadAssets(){
 		if (assetsLoaded) return Promise.resolve();
 		if (assetsLoading) return assetsLoading;
+		injectEditorStyle();
 		// super-build는 CSS가 JS 번들에 포함 → 별도 CSS link 불필요
 		assetsLoading = injectScript(CKE_BASE + '/ckeditor.js')
 			.then(function(){ return injectScript(CKE_BASE + '/translations/ko.js'); })
@@ -59,6 +73,7 @@
 		return {
 			removePlugins: REMOVE_PLUGINS,
 			language: 'ko',
+			placeholder: '내용을 입력하세요',
 			toolbar: {
 				items: [
 					'undo', 'redo', '|',
