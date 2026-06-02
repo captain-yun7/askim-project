@@ -312,9 +312,9 @@ class Board extends ADMIN_Controller {
 						}
 
 						if($mode == "write") {
-							go("board_view?code=".$this->_board["code"]."&no=". $no, "parent");
+							msg("게시글이 등록되었습니다.", "board_list?code=".$this->_board["code"], "parent");
 						} else {
-							go("board_view?".$this->input->post("ref", true), "parent");
+							msg("게시글이 수정되었습니다.", "board_list?code=".$this->_board["code"], "parent");
 						}
 					} else {
 						msg("글을 작성하지 못 하였습니다.\n\n잠시후 다시 시도해주세요.");

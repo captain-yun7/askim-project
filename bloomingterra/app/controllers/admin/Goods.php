@@ -394,9 +394,9 @@ class Goods extends ADMIN_Controller {
 						$this->dm->insert('da_goods_category', $categories, false, true);
 
 						if($mode == "register") {
-							redirect("/admin/goods/goods_reg?no=". $result["no"]);
+							msg("등록되었습니다.", "/admin/goods/goods_list");
 						} else {
-							msg("수정되었습니다.", "goods_reg?no=". $set_data["no"]."&".$this->input->post("ref", true));
+							msg("수정되었습니다.", "/admin/goods/goods_list");
 						}
 					} else {
 						$error = $this->db->error();

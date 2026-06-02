@@ -54,7 +54,16 @@
 			'.ck-editor__editable_inline{min-height:520px !important;}' +
 			'.ck.ck-editor{max-width:100%;}' +
 			'.ck-editor__editable_inline{padding:16px 24px !important;}' +
-			'.ck-content{font-size:15px; line-height:1.7;}';
+			'.ck-content{font-size:15px; line-height:1.7;}' +
+			/* 임시저장 바 */
+			'.rich-draftbar{display:flex; align-items:center; gap:8px; padding:7px 10px; background:#f7f8fa; border:1px solid #e1e4e8; border-bottom:0; border-radius:4px 4px 0 0; font-size:13px;}' +
+			'.rich-draft-btn{padding:5px 12px; font-size:12px; line-height:1; border:1px solid #c4c9d0; background:#fff; border-radius:3px; cursor:pointer; color:#333;}' +
+			'.rich-draft-btn:hover{background:#eef0f3;}' +
+			'.rich-draft-save{border-color:#0A2C51; color:#0A2C51; font-weight:600;}' +
+			'.rich-draft-status{margin-left:auto; color:#8a9099; font-size:12px;}' +
+			/* 토스트 */
+			'.rich-toast{position:fixed; left:50%; bottom:40px; transform:translateX(-50%) translateY(20px); background:#222; color:#fff; padding:12px 22px; border-radius:6px; font-size:14px; z-index:99999; opacity:0; transition:all .3s ease; pointer-events:none; box-shadow:0 4px 16px rgba(0,0,0,.25);}' +
+			'.rich-toast.show{opacity:1; transform:translateX(-50%) translateY(0);}';
 		document.head.appendChild(st);
 	}
 
@@ -128,6 +137,72 @@
 		};
 	}
 
+	// ===== 임시저장(localStorage) =====
+	function draftKey(id){
+		return 'rich_draft:' + location.pathname + location.search + ':' + id;
+	}
+	function hhmm(){
+		var d = new Date();
+		return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2);
+	}
+	function setDraftStatus(id, text){
+		var el = document.getElementById('draftstatus_' + id);
+		if (el) el.textContent = text;
+	}
+	function richToast(message){
+		var t = document.createElement('div');
+		t.className = 'rich-toast';
+		t.textContent = message;
+		document.body.appendChild(t);
+		setTimeout(function(){ t.classList.add('show'); }, 10);
+		setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 300); }, 1800);
+	}
+	function injectDraftBar(ta, id, editor){
+		if (document.getElementById('draftbar_' + id)) return;
+		var bar = document.createElement('div');
+		bar.id = 'draftbar_' + id;
+		bar.className = 'rich-draftbar';
+		bar.innerHTML =
+			'<button type="button" class="rich-draft-btn rich-draft-save">임시저장</button>' +
+			'<button type="button" class="rich-draft-btn rich-draft-restore">불러오기</button>' +
+			'<span class="rich-draft-status" id="draftstatus_' + id + '"></span>';
+		var cke = ta.nextElementSibling; // CKEditor가 생성한 .ck-editor
+		var anchor = (cke && cke.classList && cke.classList.contains('ck')) ? cke : ta;
+		anchor.parentNode.insertBefore(bar, anchor);
+		bar.querySelector('.rich-draft-save').addEventListener('click', function(){
+			try { localStorage.setItem(draftKey(id), editor.getData()); } catch(e){}
+			setDraftStatus(id, '임시저장 완료 · ' + hhmm());
+			richToast('임시저장되었습니다');
+		});
+		bar.querySelector('.rich-draft-restore').addEventListener('click', function(){
+			var d = localStorage.getItem(draftKey(id));
+			if (!d) { richToast('임시저장된 내용이 없습니다'); return; }
+			if (confirm('임시저장된 내용을 불러올까요? 현재 작성 중인 내용은 대체됩니다.')) {
+				editor.setData(d);
+				richToast('임시저장 내용을 불러왔습니다');
+			}
+		});
+	}
+	function restoreDraftPrompt(editor, id){
+		var d = localStorage.getItem(draftKey(id));
+		if (!d || !d.replace(/<[^>]*>|&nbsp;|\s/g, '')) return;  // 빈 draft skip
+		var cur = editor.getData();
+		var curEmpty = !cur.replace(/<[^>]*>|&nbsp;|\s/g, '');
+		// 신규 작성(현재 본문 비어있음) + draft 존재 → 복원 제안
+		if (curEmpty && d !== cur) {
+			if (confirm('이전에 임시저장된 내용이 있습니다. 불러오시겠습니까?')) {
+				editor.setData(d);
+			}
+		}
+	}
+	function clearAllDrafts(){
+		Object.keys(global).forEach(function(k){
+			if (k.indexOf('__richEditor_') !== 0) return;
+			var id = k.replace('__richEditor_', '');
+			try { localStorage.removeItem(draftKey(id)); } catch(e){}
+		});
+	}
+
 	function attachRichEditor(id, optsOrFolder){
 		var opts = (typeof optsOrFolder === 'string') ? { folder: optsOrFolder } : (optsOrFolder || {});
 		var uploadUrl = opts.uploadUrl || UPLOAD_ENDPOINTS[opts.folder] || UPLOAD_ENDPOINTS.goods;
@@ -142,12 +217,21 @@
 			}
 			return global.CKEDITOR.ClassicEditor.create(ta, editorConfig(uploadUrl)).then(function(editor){
 				global['__richEditor_' + id] = editor;
-				// 매 변경마다 textarea 동기화 (jQuery .submit()/native form.submit() 이벤트 미발생 대비)
+				var draftTimer;
+				// 매 변경마다 textarea 동기화 + 디바운스 localStorage 자동 임시저장
 				editor.model.document.on('change:data', function(){
 					ta.value = editor.getData();
+					clearTimeout(draftTimer);
+					draftTimer = setTimeout(function(){
+						try { localStorage.setItem(draftKey(id), editor.getData()); } catch(e){}
+						setDraftStatus(id, '자동 임시저장됨 · ' + hhmm());
+					}, 1500);
 				});
 				// 초기값 1회 반영
 				ta.value = editor.getData();
+				// 임시저장 바 + 신규 작성 시 복원 제안
+				injectDraftBar(ta, id, editor);
+				restoreDraftPrompt(editor, id);
 			});
 		}).catch(function(e){
 			console.error('[rich-editor] init failed:', e && e.message);
@@ -179,6 +263,7 @@
 		var origSubmit = HTMLFormElement.prototype.submit;
 		HTMLFormElement.prototype.submit = function(){
 			try { flushRichEditors(); } catch(e) { /* silent */ }
+			try { clearAllDrafts(); } catch(e) { /* silent */ }  // 정상 제출 시 임시저장 비움
 			return origSubmit.apply(this, arguments);
 		};
 		HTMLFormElement.prototype.__richSubmitPatched = true;
