@@ -97,18 +97,20 @@
 .portfolio_view_in .con_area .view_img{margin: 0 0 40px;}
 .portfolio_view_in .con_area .view_img img{display: block; width: 100%; height: auto;}
 /* 2026-06-02: 에디터 본문과 자간/행간 정합 — 자간 강제 제거(에디터 normal), 행간 170→160% 완화 */
-.portfolio_view_in .con_area .cont{font-size: 19px; line-height: 160%; color: var(--pv-basic); letter-spacing: normal;}
-.portfolio_view_in .con_area .cont p{margin: 0 0 1em;}
+/* 2026-06-04: askim idx=34 1:1 — 본문 하단 70px 여백(askim con_area section pb 70px과 동일) */
+.portfolio_view_in .con_area .cont{font-size: 19px; line-height: 160%; color: var(--pv-basic); letter-spacing: normal; padding-bottom: 70px;}
+/* 2026-06-04: askim idx=34 1:1 — p margin 0 (단락 간격은 line-height + 빈 단락으로만, askim과 동일) */
+.portfolio_view_in .con_area .cont p{margin: 0;}
 
 /* 2026-06-02: CKEditor 본문 이미지 — 에디터에서 작성한 리사이즈/정렬/캡션 그대로 프론트 렌더 */
-.portfolio_view_in .con_area .cont figure.image{display: table; clear: both; text-align: center; margin: 1em auto; max-width: 100%;}
+.portfolio_view_in .con_area .cont figure.image{display: table; clear: both; text-align: center; margin: 20px auto; max-width: 100%;}
 .portfolio_view_in .con_area .cont figure.image img{display: block; margin: 0 auto; max-width: 100% !important; width: 100% !important; height: auto !important;}
 .portfolio_view_in .con_area .cont figure.image_resized{max-width: 100%;}  /* width는 figure inline style(50%/75%) 존중 */
 .portfolio_view_in .con_area .cont figure.image > figcaption{display: block; font-size: 15px; color: var(--pv-light); text-align: center; padding: 8px 4px 0;}
 .portfolio_view_in .con_area .cont .image-style-align-left,
-.portfolio_view_in .con_area .cont .image-style-block-align-left{float: left; margin: 1em 1.5em 1em 0;}
+.portfolio_view_in .con_area .cont .image-style-block-align-left{float: left; margin: 20px 1.5em 20px 0;}
 .portfolio_view_in .con_area .cont .image-style-align-right,
-.portfolio_view_in .con_area .cont .image-style-block-align-right{float: right; margin: 1em 0 1em 1.5em;}
+.portfolio_view_in .con_area .cont .image-style-block-align-right{float: right; margin: 20px 0 20px 1.5em;}
 .portfolio_view_in .con_area .cont .image-style-align-center,
 .portfolio_view_in .con_area .cont .image-style-block-align-center{margin-left: auto; margin-right: auto;}
 .portfolio_view_in .con_area .cont .image-inline{display: inline-flex; max-width: 100%; vertical-align: middle;}

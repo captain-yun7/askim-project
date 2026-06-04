@@ -88,6 +88,8 @@
 								$__body = preg_replace('/font-family\s*:[^;]*;?/i', '', $__body);
 								// 본문 모든 <img>에 referrerpolicy="no-referrer" 주입 (네이버 등 외부 이미지 핫링크 차단 회피)
 								$__body = preg_replace('/<img\b/i', '<img referrerpolicy="no-referrer"', $__body);
+								// 2026-06-04: askim 1:1 — 빈 단락(빈/&nbsp;/제로폭공백)을 <p><br></p>로 정규화 (빈 줄 높이 32px 일치)
+								$__body = preg_replace('#<p[^>]*>(?:\s|&nbsp;|\x{200B}|<span[^>]*>(?:\s|&nbsp;|\x{200B})*</span>|<br\s*/?>)*</p>#iu', '<p><br></p>', $__body);
 								echo $__body;
 							?>
 						</div>
