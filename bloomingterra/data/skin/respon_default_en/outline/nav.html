@@ -140,19 +140,22 @@ $(function() {
 <!--{ ? CI->uri->rsegments[1] != "index_" }-->
 <script>
 $(document)	.ready(function(){
-	// header on
-	if ( $(this).scrollTop() > 1 ) {
-		$('#header').addClass('on');
-	} else {
-		$('#header').removeClass('on');
-	}
-	$(window).scroll(function(){
-		if ( $(this).scrollTop() > 1 ) {
+	// 2026-06-04: goods 상세(.portfolio_view)는 askim처럼 — 맨 위에서만 헤더 보임, 스크롤하면 숨김
+	var _isPv = $('.portfolio_view').length > 0;
+	function _headerScroll(){
+		var st = $(window).scrollTop();
+		if ( st > 1 ) {
 			$('#header').addClass('on');
 		} else {
 			$('#header').removeClass('on');
 		}
-	});
+		if (_isPv) {
+			if (st > 1) $('#header').addClass('scroll-hide');
+			else $('#header').removeClass('scroll-hide');
+		}
+	}
+	_headerScroll();
+	$(window).scroll(_headerScroll);
 });
 </script>
 <!--{:}-->

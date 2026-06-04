@@ -286,3 +286,7 @@ body.section-dark .marquee-pagination .swiper-pagination-current{color: var(--pv
    가로채 sticky가 깨지던 문제. goods 상세(.portfolio_view 포함 페이지) 한정으로 overflow 해제. */
 body:has(.portfolio_view) #wrap.goods_goods_view{overflow: visible !important;}
 body:has(.portfolio_view){overflow: visible !important;}
+
+/* 2026-06-04: goods 상세 헤더 — askim 1:1. 맨 위에서만 보이고 스크롤하면 위로 숨김 (#header는 fixed) */
+#header{transition: transform .35s ease;}
+#header.scroll-hide{transform: translateY(-100%) !important;}
