@@ -51,7 +51,8 @@
    ============================================================ */
 
 .portfolio_view{padding: 240px 0; box-sizing: border-box;} /* askim .compad 1:1 */
-.portfolio_view_in{display: flex; max-width: 1530px; margin: 0 auto; padding: 0 30px; align-items: flex-start; min-height: 70vh;}
+/* 2026-06-04: askim 1:1 — padding 0(좌우 여백 askim 동일) + align-items stretch(txt_area를 con_area 높이로 늘려 좌측 sticky 작동) */
+.portfolio_view_in{display: flex; max-width: 1530px; margin: 0 auto; padding: 0; align-items: stretch; min-height: 70vh;}
 .portfolio_view_in article{box-sizing:border-box;}
 
 .portfolio_view_in .txt_area{width: calc(50% - 115px); display: flex; justify-content: flex-end; align-items: flex-start;}
@@ -278,3 +279,9 @@ body.section-dark .marquee-pagination .swiper-pagination-current{color: var(--pv
 	.portfolio_view .marquee-pagination{top: -37px !important; transform: translateX(-25px); line-height: 30px;} /* D3: askim 680BP 1:1 (-37) */
 	.portfolio_view .viewImg::after{width: 50px; height: 50px; line-height: 50px; font-size: 20px; margin-left: -25px; margin-top: -25px;}
 }
+
+/* 2026-06-04: 좌측 sticky 작동 복구 — askim 1:1.
+   블루밍 body(overflow:hidden auto) + article#wrap(overflow:hidden)이 .in의 sticky 스크롤 컨테이너를
+   가로채 sticky가 깨지던 문제. goods 상세(.portfolio_view 포함 페이지) 한정으로 overflow 해제. */
+body:has(.portfolio_view) #wrap.goods_goods_view{overflow: visible !important;}
+body:has(.portfolio_view){overflow: visible !important;}
