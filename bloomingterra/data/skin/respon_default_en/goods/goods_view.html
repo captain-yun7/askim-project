@@ -224,6 +224,24 @@
 </div>
 <script src="{ js }/js/view.js"></script>
 
+<!-- 2026-06-04: 좌측 정보 영역 — 본문 짧으면 y축 중앙, 길면 상단(sticky 자연스럽게) 자동 분기 -->
+<script>
+(function(){
+  function adjustTxtAlign(){
+    var ta=document.querySelector('.portfolio_view_in .txt_area');
+    var con=document.querySelector('.portfolio_view_in .con_area');
+    if(!ta||!con) return;
+    // 본문 light 섹션(영상+본문) 실제 높이로 판정 — 짧으면 y축 중앙, 길면 상단(sticky)
+    var light=con.querySelector('.pv-section-light');
+    var lh=light?light.offsetHeight:0;
+    ta.style.alignItems = (lh < window.innerHeight) ? 'center' : 'flex-start';
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', adjustTxtAlign);
+  else adjustTxtAlign();
+  window.addEventListener('resize', adjustTxtAlign);
+})();
+</script>
+
 <!-- 2026-05-25 C5: 본문/dark section 인라인 <img>를 .viewImg(a) 로 자동 wrap → askim 호버 돋보기 효과 작동 -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
