@@ -242,9 +242,29 @@
 })();
 </script>
 
-<!-- 2026-05-25 C5: 본문/dark section 인라인 <img>를 .viewImg(a) 로 자동 wrap → askim 호버 돋보기 효과 작동 -->
+<!-- 2026-05-25 C5: 본문 이미지 호버 돋보기 + 클릭 시 라이트박스 팝업 (askim viewImg 1:1) -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
+  // 2026-06-04: 클릭 시 페이지 내 라이트박스 팝업 (새 탭 navigation은 네이버 등 외부 이미지 403 → 팝업은 referrerpolicy 유지로 정상 표시)
+  function openLightbox(src){
+    var ov = document.createElement('div');
+    ov.className = 'pv-lightbox';
+    var im = document.createElement('img');
+    im.referrerPolicy = 'no-referrer';
+    im.setAttribute('referrerpolicy', 'no-referrer');
+    im.src = src;
+    var close = document.createElement('button');
+    close.className = 'pv-lightbox-close';
+    close.innerHTML = '&times;';
+    ov.appendChild(im); ov.appendChild(close);
+    function remove(){ ov.classList.remove('show'); document.body.style.overflow=''; setTimeout(function(){ if(ov.parentNode) ov.remove(); }, 250); }
+    ov.addEventListener('click', remove);
+    document.addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ remove(); document.removeEventListener('keydown', esc); } });
+    document.body.appendChild(ov);
+    document.body.style.overflow='hidden';
+    requestAnimationFrame(function(){ ov.classList.add('show'); });
+  }
+
   var imgs = document.querySelectorAll('.portfolio_view .con_area .cont img, .portfolio_view .con_area section[data-section-luminosity="dark"] img');
   imgs.forEach(function(img){
     if(!img.src) return;
@@ -254,29 +274,22 @@ document.addEventListener('DOMContentLoaded', function(){
       img.setAttribute('referrerpolicy', 'no-referrer');
       var _s = img.src; img.src = ''; img.src = _s;
     }
-    // 이미 viewImg 안에 있으면 skip
     if(img.closest('.viewImg')) return;
-    // no-zoom 옵트아웃 클래스 있으면 skip
     if(img.classList.contains('no-zoom')) return;
-    // 2026-06-02: CKEditor figure(리사이즈/정렬/캡션 이미지)는 wrap 제외(width 보존)하되,
-    //   2026-06-04: figure 자체에 클릭 시 별도 창(askim viewImg와 동일 동작) — 호버 효과는 CSS
+    // CKEditor figure: wrap 제외(width 보존) + 클릭 시 라이트박스
     var fig = img.closest('figure');
     if(fig){
       if(!fig.__zoomBound){
         fig.__zoomBound = true;
-        fig.addEventListener('click', function(){ window.open(img.src, '_blank', 'noopener'); });
+        fig.addEventListener('click', function(){ openLightbox(img.src); });
       }
       return;
     }
+    // 일반 인라인 이미지: viewImg <a> wrap + 클릭 시 라이트박스
     var a = document.createElement('a');
     a.className = 'viewImg';
-    a.href = img.src;
-    a.setAttribute('target', '_blank');
-    a.setAttribute('rel', 'noopener');
-    a.onclick = function(e){
-      e.preventDefault();
-      window.open(img.src, '_blank', 'noopener');
-    };
+    a.href = 'javascript:void(0)';
+    a.onclick = function(e){ e.preventDefault(); openLightbox(img.src); };
     img.parentNode.insertBefore(a, img);
     a.appendChild(img);
   });
