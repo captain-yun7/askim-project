@@ -71,6 +71,7 @@
 	display: inline-flex; align-items: center; justify-content: center;
 	height: 60px; padding: 0 20px;
 	border: 1px solid var(--pv-main);
+	border-radius: 60px;  /* 2026-06-04: askim 1:1 — pill 버튼 (radius=height) */
 	background: var(--pv-main); color: var(--pv-white);
 	font-size: 16px; font-weight: 600;
 	text-decoration: none;
@@ -105,7 +106,12 @@
 .portfolio_view_in .con_area .cont p{margin: 0;}
 
 /* 2026-06-02: CKEditor 본문 이미지 — 에디터에서 작성한 리사이즈/정렬/캡션 그대로 프론트 렌더 */
-.portfolio_view_in .con_area .cont figure.image{display: table; clear: both; text-align: center; margin: 20px auto; max-width: 100%;}
+.portfolio_view_in .con_area .cont figure.image{display: table; clear: both; text-align: center; margin: 20px auto; max-width: 100%; position: relative; cursor: zoom-in;}
+/* 2026-06-04: figure 이미지 호버 효과 (askim viewImg 1:1 — 검은 오버레이 + 돋보기) + 클릭 시 별도 창(JS) */
+.portfolio_view_in .con_area .cont figure.image::before{content:''; display:block; position:absolute; left:0; top:0; width:100%; height:100%; background:var(--pv-black); opacity:0; transition:all .3s; z-index:5; pointer-events:none;}
+.portfolio_view_in .con_area .cont figure.image:hover::before{opacity:0.7; transition:all .4s ease;}
+.portfolio_view_in .con_area .cont figure.image::after{content:'\e8b6'; display:block; width:120px; height:120px; line-height:120px; text-align:center; background:var(--pv-white); border-radius:50%; font-size:44px; color:var(--pv-black); font-family:var(--pv-icon); margin-left:-60px; margin-top:-60px; opacity:0; transition:all .3s; position:absolute; left:50%; top:50%; z-index:7; pointer-events:none;}
+.portfolio_view_in .con_area .cont figure.image:hover::after{opacity:1; transition:all .4s ease;}
 .portfolio_view_in .con_area .cont figure.image img{display: block; margin: 0 auto; max-width: 100% !important; width: 100% !important; height: auto !important;}
 .portfolio_view_in .con_area .cont figure.image_resized{max-width: 100%;}  /* width는 figure inline style(50%/75%) 존중 */
 .portfolio_view_in .con_area .cont figure.image > figcaption{display: block; font-size: 15px; color: var(--pv-light); text-align: center; padding: 8px 4px 0;}

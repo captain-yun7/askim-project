@@ -258,8 +258,16 @@ document.addEventListener('DOMContentLoaded', function(){
     if(img.closest('.viewImg')) return;
     // no-zoom 옵트아웃 클래스 있으면 skip
     if(img.classList.contains('no-zoom')) return;
-    // 2026-06-02: CKEditor figure(리사이즈/정렬/캡션 이미지)는 wrap 제외 → figure width/정렬 보존
-    if(img.closest('figure')) return;
+    // 2026-06-02: CKEditor figure(리사이즈/정렬/캡션 이미지)는 wrap 제외(width 보존)하되,
+    //   2026-06-04: figure 자체에 클릭 시 별도 창(askim viewImg와 동일 동작) — 호버 효과는 CSS
+    var fig = img.closest('figure');
+    if(fig){
+      if(!fig.__zoomBound){
+        fig.__zoomBound = true;
+        fig.addEventListener('click', function(){ window.open(img.src, '_blank', 'noopener'); });
+      }
+      return;
+    }
     var a = document.createElement('a');
     a.className = 'viewImg';
     a.href = img.src;
