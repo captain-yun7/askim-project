@@ -296,3 +296,11 @@ body:has(.portfolio_view){overflow: visible !important;}
 /* 2026-06-04: goods 상세 헤더 — askim 1:1. 맨 위에서만 보이고 스크롤하면 위로 숨김 (#header는 fixed) */
 #header{transition: transform .35s ease;}
 #header.scroll-hide{transform: translateY(-100%) !important;}
+
+/* 2026-06-04: 본문 이미지 라이트박스 팝업 (figure / .viewImg 클릭 → 전체화면 오버레이) */
+.pv-lightbox{position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:99999; display:flex; align-items:center; justify-content:center; cursor:zoom-out; opacity:0; transition:opacity .25s ease; padding:40px;}
+.pv-lightbox.show{opacity:1;}
+.pv-lightbox img{max-width:95%; max-height:95%; object-fit:contain; box-shadow:0 8px 40px rgba(0,0,0,.5); transform:scale(.96); transition:transform .25s ease;}
+.pv-lightbox.show img{transform:scale(1);}
+.pv-lightbox-close{position:fixed; top:24px; right:32px; width:48px; height:48px; background:none; border:0; color:#fff; font-size:40px; line-height:1; cursor:pointer; opacity:.8; transition:opacity .2s;}
+.pv-lightbox-close:hover{opacity:1;}
