@@ -142,6 +142,13 @@ $(function() {
 $(document)	.ready(function(){
 	// 2026-06-04: goods 상세(.portfolio_view)는 askim처럼 — 맨 위에서만 헤더 보임, 스크롤하면 숨김
 	var _isPv = $('.portfolio_view').length > 0;
+	// 2026-06-04: 스크롤 복원(새로고침 시 이전 위치) 차단 → 로딩 직후 맨 위 + 헤더 표시
+	if (_isPv) {
+		if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+		var _toTop = function(){ window.scrollTo(0, 0); $('#header').removeClass('scroll-hide'); };
+		_toTop();
+		$(window).on('load', function(){ _toTop(); setTimeout(_toTop, 60); });
+	}
 	function _headerScroll(){
 		var st = $(window).scrollTop();
 		if ( st > 1 ) {
