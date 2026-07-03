@@ -17,6 +17,7 @@ class Goods extends FRONT_Controller {
 			$this->load->library("pagination");
 
 			$cate = $this->input->get("cate", true);
+			if (!$cate) $cate = "005"; // 2026-06-04: 기본 카테고리 USA
 			$display_type = $this->input->get("display_type", true);
 
 			$per_page = $this->input->get("per_page", true);
