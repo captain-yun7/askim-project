@@ -1,19 +1,17 @@
 @charset "utf-8";
-/* 2026-05-14 피드백 #7: 매거진 제목용 명조 — Noto Serif KR */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap');
-
 /*
  * magazine_view.css
  * 적용 범위: code=gallery (Insight) 상세 페이지만.
  * 모든 rule은 .magazine_view (sub_content) scope 한정 — 다른 게시판 무영향.
- * 디자인 ref: ohbrown.co.kr 웹진 (2026-04-30 라이브 측정).
+ * 디자인 ref: ohbrown.co.kr 인사이트 상세 (2026-06-09 라이브 측정).
  *
  * 톤:
- *  - 다크 배경 #0F0F0F
- *  - Pretendard 본문, GmarketSans/Pretendard 타이틀
+ *  - 다크 배경 #111
+ *  - Pretendard 본문/타이틀 (명조 제거)
  *  - 컨테이너 1170px / 좌우 50px padding
  *  - 본문 18px/32 line-height, color #B8B8B8
- *  - 타이틀 40~64px, color #fff
+ *  - 타이틀 40px Pretendard 700, hero 위는 #fff
+ *  - accent teal #16A69E, 링크 파랑 #5B7BFB
  */
 
 /* === 페이지 배경 (sub_content 자체를 다크로) === */
@@ -24,20 +22,28 @@ body:has(.magazine_view) #wrap,
 body:has(.magazine_view) article#wrap,
 body:has(.magazine_view) #contents_wrap,
 body:has(.magazine_view) #contents_box,
-body:has(.magazine_view) #content{background:#0F0F0F !important;}
+body:has(.magazine_view) #content{background:#111 !important;}
+
+/* 2026-06-09: Insight 헤더는 sticky/fixed가 아니라 페이지 맨 위에 '정적 배치' →
+   스크롤 내리면 헤더도 같이 위로 올라가 사라짐 (ohbrown 톤). Insight 페이지에서만. */
+body:has(.magazine_view) #header{
+    position:absolute !important;
+    top:0; left:0; width:100%;
+}
 
 .magazine_view{
-    background:#0F0F0F;
+    background:#111;
     color:#B8B8B8;
     font-family:'Pretendard','Noto Sans KR',sans-serif;
     letter-spacing:-0.3px;
     --mv-container:1170px;
     --mv-padding:50px;
-    --mv-bg:#0F0F0F;
+    --mv-bg:#111;
     --mv-text:#B8B8B8;
-    --mv-text-strong:#ffffff;
+    --mv-text-strong:#fff;
     --mv-text-mute:#737373;
     --mv-accent:#16A69E;
+    --mv-link:#5B7BFB;
     --mv-border:rgba(255,255,255,0.12);
 }
 .magazine_view *{box-sizing:border-box;}
@@ -48,36 +54,50 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 /* === 1. Hero 영역 (view_visual override) === */
 /* 기존: position:relative; height:1030px; background:black; subject absolute center
  * 신규: 풀스크린 hero 이미지 + 좌하단 타이틀 + 작은 라벨 */
-.magazine_view .view_visual{
+/* 2026-06-09: ohbrown 히어로 스크롤 효과 —
+   ① 풀화면(100vh) 배경 이미지가 화면에 '고정(fixed)'
+   ② 하단으로 갈수록 어두워지는 그라데이션 (#111로 자연 연결)
+   ③ 스크롤 내리면 타이틀/본문(다크)이 고정 이미지 '위로 올라옴' */
+.magazine_view .view_visual.has_thumb{
     position:relative;
-    width:100%;
-    max-width:var(--mv-container);   /* ohbrown 톤: 풀블리드 X, 컨테이너 안 inset */
-    margin:40px auto 0;
-    height:auto;
-    min-height:560px;
-    background:#000;
-    overflow:hidden;
+    width:100%; max-width:none;
+    margin:0; padding:0;
+    height:100vh; min-height:560px;
+    background:transparent;
+    overflow:visible;
     font-size:initial;
-    padding:0;
 }
-.magazine_view .view_visual:before{
-    /* 기존 어두운 오버레이 유지 — 텍스트 가독성 */
-    position:absolute; content:'';
-    inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, rgba(15,15,15,1) 100%);
-    z-index:2;
+.magazine_view .view_visual.has_thumb:before{display:none;}   /* 옛 인셋 오버레이 비활성 */
+
+/* hero 이미지 — viewport 고정 (스크롤해도 그대로, 본문이 위로 덮으며 올라옴) */
+.magazine_view .view_visual.has_thumb .view_thumb{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100vh;
+    z-index:0;
+    transform:none; transition:none;
+}
+.magazine_view .view_visual.has_thumb .view_thumb img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+}
+/* 하단으로 갈수록 어두워지는 그라데이션 */
+.magazine_view .view_visual.has_thumb .view_thumb::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg,
+        rgba(17,17,17,0) 26%,
+        rgba(17,17,17,0.45) 58%,
+        rgba(17,17,17,0.88) 84%,
+        #111 100%);
+    pointer-events:none;
 }
 
-/* hero 썸네일을 풀블리드 배경으로 */
-.magazine_view .view_visual .view_thumb{
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    transform:none;
-    transition:none;
-    z-index:1;
+/* 그 외(구버전 호환) 기본 view_visual */
+.magazine_view .view_visual{
+    position:relative; width:100%;
+    font-size:initial; padding:0;
 }
-.magazine_view .view_visual .view_thumb.on{width:100%; height:100%;}
 .magazine_view .view_visual .view_thumb img{
     width:100%; height:100%;
     object-fit:cover;
@@ -92,13 +112,13 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     width:calc(100% - 60px);
     max-width:var(--mv-container);
     text-align:left;
-    /* 2026-05-14 피드백 #7: 매거진 제목 명조 톤 */
-    font-family:'Noto Serif KR','Pretendard',serif;
+    /* 2026-06-08: ohbrown 톤 — Pretendard 산세리프 볼드, 흰색 (이미지 위) */
+    font-family:'Pretendard','Noto Sans KR',sans-serif;
     font-size:40px;
     font-weight:700;
     line-height:1.35;
     letter-spacing:-0.5px;
-    color:var(--mv-text-strong);
+    color:#fff;
     z-index:5;
 }
 
@@ -154,19 +174,74 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 .magazine_view .view_visual .share_btn:hover{background:rgba(255,255,255,0.1); border-color:#fff;}
 .magazine_view .view_visual .share_btn img{width:18px; height:18px; filter:brightness(0) invert(1); opacity:0.85;}
 
-/* hero 없을 때 (썸네일 없음) — 헤더만 보이도록 */
+/* hero 없을 때 (썸네일 없음) */
+.magazine_view .view_visual.no_thumb,
 .magazine_view .view_visual:not(:has(.view_thumb)){
-    min-height:340px;
-    background:#0F0F0F;
+    min-height:auto;
+    background:#111;
+    margin-bottom:0;
+    padding:60px 0 0;
 }
+.magazine_view .view_visual.no_thumb:before,
 .magazine_view .view_visual:not(:has(.view_thumb)):before{display:none;}
-.magazine_view .view_visual:not(:has(.view_thumb)) .subject{color:var(--mv-text-strong);}
+.magazine_view .view_visual.no_thumb .subject,
+.magazine_view .view_visual:not(:has(.view_thumb)) .subject{
+    position:static; transform:none;
+    bottom:auto; left:auto; width:100%;
+    padding:0 var(--mv-padding);
+    color:var(--mv-text-strong);
+}
+.magazine_view .view_visual.no_thumb .info_wrap,
+.magazine_view .view_visual:not(:has(.view_thumb)) .info_wrap{
+    position:static; transform:none;
+    bottom:auto; left:auto; width:100%;
+    padding:16px var(--mv-padding) 0;
+}
+.magazine_view .view_visual.no_thumb .info dt,
+.magazine_view .view_visual.no_thumb .info dd,
+.magazine_view .view_visual:not(:has(.view_thumb)) .info dt,
+.magazine_view .view_visual:not(:has(.view_thumb)) .info dd{color:var(--mv-text-mute);}
+.magazine_view .view_visual.no_thumb .info dt + dd::before,
+.magazine_view .view_visual:not(:has(.view_thumb)) .info dt + dd::before{background:rgba(255,255,255,0.24);}
+.magazine_view .view_visual.no_thumb .share_btn,
+.magazine_view .view_visual:not(:has(.view_thumb)) .share_btn{display:none;}
 
 /* === 2. 본문 영역 (view_content override) === */
+/* position:relative + z-index:1 + 불투명 #111 → 스크롤 시 고정 hero 이미지를 위로 덮으며 올라옴 */
 .magazine_view .view_content{
+    position:relative;
+    z-index:1;
     background:var(--mv-bg);
     padding:100px 0 80px;
 }
+/* 본문 상단 경계를 부드럽게 — 고정 이미지가 #111로 자연 페이드 (딱딱한 경계 제거) */
+.magazine_view .view_visual.has_thumb ~ .view_content::before,
+.magazine_view .sub_board:has(.view_visual.has_thumb) .view_content::before{
+    content:''; position:absolute; left:0; right:0; top:-300px; height:300px;
+    background:linear-gradient(180deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0.6) 55%, rgba(17,17,17,0.92) 82%, #111 100%);
+    pointer-events:none; z-index:-1;
+}
+
+/* 2026-06-09: 스크롤 휘도 — 본문 배경 다크(맨위) → 흰색(1/2) → 다크(맨아래).
+   배경색은 JS가 스크롤마다 인라인으로 직접 보간. 흰색 구간(mv-onlight)에서 텍스트 다크 반전. */
+.magazine_view .view_content .cont,
+.magazine_view .view_content .cont *{transition:color .3s linear;}
+.magazine_view.mv-onlight .view_content .cont,
+.magazine_view.mv-onlight .view_content .cont *{color:#333 !important;}
+.magazine_view.mv-onlight .view_content .cont h1,
+.magazine_view.mv-onlight .view_content .cont h2,
+.magazine_view.mv-onlight .view_content .cont h3,
+.magazine_view.mv-onlight .view_content .cont h4,
+.magazine_view.mv-onlight .view_content .cont strong,
+.magazine_view.mv-onlight .view_content .cont b{color:#111 !important;}
+.magazine_view.mv-onlight .view_content .cont a{color:#5B7BFB !important;}
+.magazine_view.mv-onlight .view_content .cont figcaption{color:#888 !important;}
+.magazine_view.mv-onlight .view_content .cont table th,
+.magazine_view.mv-onlight .view_content .cont table td:first-child{background:#f1f1f1 !important;}
+.magazine_view.mv-onlight .view_content .cont blockquote{color:#111 !important;}
+/* 하단 다크 섹션들도 고정 이미지 위로 (z-index 통일) */
+.magazine_view .view_button,
+.magazine_view .mv_outro{position:relative; z-index:1;}
 .magazine_view .view_content .w_custom{
     width:100%;
     max-width:calc(var(--mv-container) + var(--mv-padding) * 2);
@@ -181,7 +256,7 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     font-family:'Pretendard','Noto Sans KR',sans-serif;
     font-size:18px;
     font-weight:500;
-    line-height:32px;     /* 32/18 = 1.78, ohbrown 정확 일치 */
+    line-height:32px;     /* target insight detail */
     letter-spacing:-0.3px;
     word-break:keep-all;
 }
@@ -206,8 +281,29 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 }
 /* 단락 사이 명시적 간격이 필요하면 빈 <p>가 line break로 동작 (대부분 에디터에서 빈 p 추가) */
 .magazine_view .view_content .cont p:empty,
-.magazine_view .view_content .cont div:empty{margin:0; min-height:0.6em;}
+.magazine_view .view_content .cont div:empty{margin:0 !important; min-height:0 !important; height:0 !important; padding:0 !important;}
 .magazine_view .view_content .cont br + br{display:none;}
+
+/* === 구글 독스(Google Docs) 붙여넣기 콘텐츠 정규화 (no=75 등) ===
+   GDocs는 이미지를 <span style="overflow:hidden;width:602px;height:..">로 감싸 작게(602px) 좌측 고정하고,
+   단락에 line-height:2.4 / margin-top:23pt / padding 을 박아 본문이 좌측에 쏠리고 과하게 벌어짐. → 풀폭·정상 간격으로 복원. */
+.magazine_view .view_content .cont span[style*="overflow:hidden"]{
+    display:block !important;
+    width:100% !important; max-width:100% !important; height:auto !important;
+    overflow:visible !important;
+    margin:40px auto !important;
+}
+.magazine_view .view_content .cont span[style*="overflow:hidden"] img{
+    width:100% !important; height:auto !important; max-width:100% !important;
+    border-radius:6px; display:block;
+}
+/* GDocs 단락 과한 line-height/margin/padding 정규화 (인라인 style 덮어쓰기) */
+.magazine_view .view_content .cont p[style]{
+    line-height:32px !important;
+    margin:0 0 16px !important;
+    padding:0 !important;
+}
+.magazine_view .view_content .cont p[style] span{line-height:32px !important;}
 
 /* 본문 헤딩 (에디터가 h1~h4를 넣을 수 있음) */
 .magazine_view .view_content .cont h1,
@@ -221,53 +317,52 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     font-weight:700;
     letter-spacing:-0.5px;
     line-height:1.4;
-    margin:80px 0 24px;
+    margin:60px 0 20px;
 }
-.magazine_view .view_content .cont h1{font-size:36px;}
-.magazine_view .view_content .cont h2{font-size:30px;}
-.magazine_view .view_content .cont h3{font-size:24px; margin-top:60px;}
-.magazine_view .view_content .cont h4{font-size:20px; margin-top:48px;}
+.magazine_view .view_content .cont h1{font-size:32px; line-height:1.3;}
+.magazine_view .view_content .cont h2{font-size:27px; line-height:32px;}  /* ohbrown 섹션 제목 27/32 */
+.magazine_view .view_content .cont h3{font-size:22px; margin-top:48px;}
+.magazine_view .view_content .cont h4{font-size:20px; margin-top:40px;}
 
 /* 본문 강조 / 링크 */
 .magazine_view .view_content .cont strong,
 .magazine_view .view_content .cont b{color:var(--mv-text-strong) !important; font-weight:700;}
 .magazine_view .view_content .cont em,
 .magazine_view .view_content .cont i{font-style:italic;}
+/* 본문 링크 — ohbrown 파랑, 밑줄 없음 */
 .magazine_view .view_content .cont a{
-    color:var(--mv-accent) !important;
-    text-decoration:underline;
-    text-underline-offset:3px;
-    text-decoration-thickness:1px;
+    color:var(--mv-link) !important;
+    text-decoration:none;
     transition:opacity 0.2s;
 }
-.magazine_view .view_content .cont a:hover{opacity:0.7;}
+.magazine_view .view_content .cont a:hover{text-decoration:underline; text-underline-offset:3px;}
 
-/* 인용 */
+/* 인용 — teal accent */
 .magazine_view .view_content .cont blockquote{
     border-left:3px solid var(--mv-accent);
     padding:8px 0 8px 24px;
-    margin:48px 0;
-    font-size:20px;
+    margin:40px 0;
+    font-size:18px;
     line-height:1.7;
     color:var(--mv-text-strong) !important;
     font-style:normal;
 }
 
-/* 이미지 — full-bleed 컨테이너 폭 */
+/* 이미지 — 컨테이너 폭 꽉 차게, ohbrown radius 6px */
 .magazine_view .view_content .cont img{
     display:block;
     width:auto;
     max-width:100% !important;
     height:auto !important;
-    margin:48px auto;
-    border-radius:2px;
+    margin:40px auto;
+    border-radius:6px;
 }
-.magazine_view .view_content .cont figure{margin:48px 0; max-width:100%;}
-.magazine_view .view_content .cont figure img{margin:0 auto;}
+.magazine_view .view_content .cont figure{margin:40px 0; max-width:100%;}
+.magazine_view .view_content .cont figure img{margin:0 auto; border-radius:6px;}
 
 /* 2026-06-02: CKEditor 본문 이미지 — 에디터 작성 리사이즈/정렬/캡션 그대로 렌더 */
-.magazine_view .view_content .cont figure.image{display:table; clear:both; text-align:center; margin:48px auto; max-width:100%;}
-.magazine_view .view_content .cont figure.image img{display:block; margin:0 auto; width:100% !important; max-width:100% !important; height:auto !important;}
+.magazine_view .view_content .cont figure.image{display:table; clear:both; text-align:center; margin:40px auto; max-width:100%;}
+.magazine_view .view_content .cont figure.image img{display:block; margin:0 auto; width:100% !important; max-width:100% !important; height:auto !important; border-radius:6px;}
 .magazine_view .view_content .cont figure.image_resized{max-width:100%;}  /* width는 figure inline style 존중 */
 .magazine_view .view_content .cont .image-style-align-left,
 .magazine_view .view_content .cont .image-style-block-align-left{float:left; margin:1em 1.5em 1em 0;}
@@ -285,6 +380,87 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     text-align:center;
     line-height:1.6;
     letter-spacing:-0.2px;
+}
+
+/* === 2-1. Insight 본문 스크롤 배경 전환 ===
+   ohbrown 상세처럼 한 게시글 안에서 dark -> light -> dark 흐름을 만든다.
+   board_view 템플릿의 짧은 스크립트가 에디터 노드를 섹션 밴드로 감싼 뒤 적용된다. */
+.magazine_view .view_content .cont.mv_story_ready{
+    width:100vw;
+    max-width:none;
+    margin-left:calc(50% - 50vw);
+}
+.magazine_view .view_content .cont.mv_story_ready,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_inner,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_inner *{
+    background-color:transparent !important;
+}
+.magazine_view .mv_story_section{
+    position:relative;
+    width:100%;
+    padding:96px 0;
+    transition:background 0.45s ease, color 0.45s ease;
+}
+.magazine_view .mv_story_section:first-child{padding-top:0;}
+.magazine_view .mv_story_section + .mv_story_section{margin-top:0;}
+.magazine_view .mv_story_inner{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:calc(var(--mv-container) + var(--mv-padding) * 2);
+    margin:0 auto;
+    padding:0 var(--mv-padding);
+}
+.magazine_view .view_content .cont.mv_story_ready > .mv_story_dark{
+    background:#111 !important;
+    color:#B8B8B8;
+}
+.magazine_view .view_content .cont.mv_story_ready > .mv_story_light{
+    background:#f8f8f8 !important;
+    color:#222;
+}
+.magazine_view .mv_story_light::before,
+.magazine_view .mv_story_dark + .mv_story_light::before,
+.magazine_view .mv_story_light + .mv_story_dark::before{
+    content:'';
+    position:absolute;
+    left:0;
+    right:0;
+    top:-1px;
+    height:180px;
+    pointer-events:none;
+}
+.magazine_view .mv_story_dark + .mv_story_light::before{
+    background:linear-gradient(180deg, #111 0%, #f8f8f8 100%);
+}
+.magazine_view .mv_story_light + .mv_story_dark::before{
+    background:linear-gradient(180deg, #f8f8f8 0%, #111 100%);
+}
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light p,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light div,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light li,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light span{
+    color:#222 !important;
+}
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h1,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h2,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h3,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h4,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h5,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h6,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light strong,
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light b{
+    color:#111 !important;
+}
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light h2{
+    border-top-color:rgba(0,0,0,0.14);
+}
+.magazine_view .view_content .cont.mv_story_ready .mv_story_light img{
+    box-shadow:0 18px 54px rgba(0,0,0,0.08);
+}
+.magazine_view .view_content .cont.mv_story_ready .mv_story_dark img{
+    box-shadow:0 18px 54px rgba(0,0,0,0.28);
 }
 
 /* 리스트 */
@@ -316,7 +492,7 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
 .magazine_view .view_content .view_video video{
     width:100%;
     aspect-ratio:16/9;
-    border-radius:2px;
+    border-radius:6px;
 }
 
 /* === 3. 태그 리스트 === */
@@ -333,24 +509,26 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     padding:0 14px;
     border-radius:30px;
     background:rgba(255,255,255,0.06);
-    color:rgba(255,255,255,0.7) !important;
+    border:1px solid var(--mv-border);
+    color:rgba(255,255,255,0.72) !important;
     font-size:13px;
     font-weight:500;
     letter-spacing:-0.2px;
     line-height:1;
-    transition:background 0.2s, color 0.2s;
+    transition:background 0.2s, color 0.2s, border-color 0.2s;
     text-decoration:none;
 }
 .magazine_view .view_content .tag_list > li > a:hover{
     background:var(--mv-accent);
+    border-color:var(--mv-accent);
     color:#fff !important;
 }
 
 /* === 4. PREV/NEXT/LIST 네비 === */
 .magazine_view .view_button{
-    background:#0A0A0A;
+    background:#111;
     border-top:1px solid var(--mv-border);
-    padding:60px 0;
+    padding:50px 0 80px;
 }
 .magazine_view .view_button .w_custom{
     display:flex; align-items:center; justify-content:space-between;
@@ -372,8 +550,8 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     border-radius:999px;
     transition: color .25s, border-color .25s, background .25s, transform .25s;
 }
-.magazine_view .view_button .page_btn:hover{color:#0F0F0F; background:#fff; border-color:#fff;}
-.magazine_view .view_button .page_btn.disabled{opacity:0.35; pointer-events:none;}
+.magazine_view .view_button .page_btn:hover{color:#111; background:#fff; border-color:#fff;}
+.magazine_view .view_button .page_btn.disabled{opacity:0.3; pointer-events:none;}
 .magazine_view .view_button .page_btn .lbl{
     font-size:14px;
     font-weight:600;
@@ -400,20 +578,134 @@ body:has(.magazine_view) #content{background:#0F0F0F !important;}
     top:auto; left:auto; transform:none;
     display:inline-flex; align-items:center; justify-content:center;
     width:48px; height:48px;
-    border:1px solid rgba(255,255,255,0.4);
+    border:1px solid rgba(255,255,255,0.3);
     border-radius:50%;
     transition:background 0.2s, border-color 0.2s;
 }
-.magazine_view .view_button .list_btn:hover{background:rgba(255,255,255,0.08); border-color:#fff;}
+.magazine_view .view_button .list_btn:hover{background:#fff; border-color:#fff;}
+.magazine_view .view_button .list_btn:hover span{background:#111;}
 .magazine_view .view_button .list_btn span{
     position:absolute;
-    width:18px; height:1px;
+    width:18px; height:1.5px;
     background:#fff;
     top:50%; left:50%;
     transform:translate(-50%, -50%);
+    transition:background 0.2s;
 }
 .magazine_view .view_button .list_btn span:nth-child(1){margin-top:-5px;}
 .magazine_view .view_button .list_btn span:nth-child(3){margin-top:5px;}
+
+/* === 4-1. 히어로 eyebrow 라벨 (ohbrown 'OFFICIAL PARTNERSHIP…' 톤) === */
+/* 제목+eyebrow를 .hero_head 한 박스로 묶어 좌하단 bottom-anchor (제목 위에 eyebrow) */
+.magazine_view .view_visual .hero_head{
+    position:absolute; left:50%; bottom:96px;
+    transform:translateX(-50%);
+    width:calc(100% - 60px); max-width:var(--mv-container);
+    text-align:left; z-index:5;
+}
+.magazine_view .view_visual .hero_head .subject{
+    position:static !important; left:auto !important; bottom:auto !important;
+    transform:none !important; width:100% !important; max-width:none !important;
+    margin:0;
+}
+.magazine_view .view_visual .hero_eyebrow{
+    margin:0 0 14px; padding:0;
+    font-family:'Montserrat','Pretendard',sans-serif;
+    font-size:13px; font-weight:600; letter-spacing:0.14em;
+    text-transform:uppercase; color:rgba(255,255,255,0.85);
+}
+.magazine_view .view_visual.no_thumb .hero_head,
+.magazine_view .view_visual:not(:has(.view_thumb)) .hero_head{
+    position:static; transform:none; width:auto;
+    padding:0 var(--mv-padding);
+}
+.magazine_view .view_visual.no_thumb .hero_eyebrow,
+.magazine_view .view_visual:not(:has(.view_thumb)) .hero_eyebrow{color:var(--mv-accent);}
+
+/* === 4-2. 본문 섹션 제목 구분선 + 표(ohbrown 상세정보 표) === */
+.magazine_view .view_content .cont h2{
+    padding-top:40px; border-top:1px solid var(--mv-border);
+}
+.magazine_view .view_content .cont table{
+    width:100%; border-collapse:collapse; margin:40px 0;
+    font-size:15px; line-height:1.6;
+}
+.magazine_view .view_content .cont table th,
+.magazine_view .view_content .cont table td{
+    border:1px solid var(--mv-border);
+    padding:14px 18px; text-align:left; vertical-align:top;
+    color:var(--mv-text) !important;
+}
+.magazine_view .view_content .cont table th,
+.magazine_view .view_content .cont table td:first-child{
+    background:rgba(255,255,255,0.06) !important; color:var(--mv-text-strong) !important;
+    font-weight:600; white-space:nowrap;
+}
+.magazine_view .view_content .cont table tr:hover td{background:rgba(255,255,255,0.04);}
+
+/* === 4-3. 하단 다크 아웃트로 (prev/next + 관련글 + CTA) — ohbrown 톤 === */
+/* prev/next 네비를 다크 아웃트로의 시작으로 통합 */
+.magazine_view .view_button{background:#111 !important; border-top:none !important; padding:50px 0 !important;}
+.magazine_view .view_button .page_btn{color:#fff; border-color:rgba(255,255,255,0.25);}
+.magazine_view .view_button .page_btn:hover{color:#111; background:#fff; border-color:#fff;}
+.magazine_view .view_button .list_btn{border-color:rgba(255,255,255,0.3);}
+.magazine_view .view_button .list_btn span{background:#fff;}
+.magazine_view .view_button .list_btn:hover{background:#fff; border-color:#fff;}
+.magazine_view .view_button .list_btn:hover span{background:#111;}
+
+.magazine_view .mv_outro{background:#111; color:#fff;}
+.magazine_view .mv_outro .w_custom{
+    width:100%; max-width:calc(var(--mv-container) + var(--mv-padding) * 2);
+    margin:0 auto; padding:0 var(--mv-padding);
+}
+.magazine_view .mv_related{padding:20px 0 80px;}
+.magazine_view .mv_related_tit{
+    font-family:'Pretendard',sans-serif; font-size:18px; font-weight:500;
+    color:rgba(255,255,255,0.85); letter-spacing:-0.3px; margin:0 0 28px;
+}
+.magazine_view .mv_related_grid{display:grid; grid-template-columns:1fr 1fr; gap:30px;}
+.magazine_view .mv_related_card{display:block; text-decoration:none; color:#fff;}
+.magazine_view .mv_related_thumb{
+    position:relative; width:100%; aspect-ratio:16/9; overflow:hidden;
+    border-radius:6px; background:#222;
+}
+.magazine_view .mv_related_thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s;}
+.magazine_view .mv_related_card:hover .mv_related_thumb img{transform:scale(1.04);}
+.magazine_view .mv_related_thumb .noimg{display:block; width:100%; height:100%; background:linear-gradient(135deg,#2a2a2a,#1a1a1a);}
+.magazine_view .mv_related_meta{padding:18px 2px 0;}
+.magazine_view .mv_related_meta h4{
+    font-family:'Pretendard',sans-serif; font-size:18px; font-weight:600;
+    color:#fff; letter-spacing:-0.3px; line-height:1.45; margin:0 0 8px;
+}
+.magazine_view .mv_related_meta p{
+    font-family:'Montserrat','Pretendard',sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:0.1em; color:var(--mv-accent); margin:0;
+}
+.magazine_view .mv_cta{
+    border-top:1px solid rgba(255,255,255,0.1);
+    padding:90px 0 100px; text-align:center;
+}
+.magazine_view .mv_cta_tit{
+    font-family:'Montserrat','Pretendard',sans-serif; font-size:48px; font-weight:700;
+    color:#fff; letter-spacing:-0.5px; margin:0 0 14px; line-height:1.1;
+}
+.magazine_view .mv_cta_sub{
+    font-family:'Pretendard',sans-serif; font-size:16px; color:rgba(255,255,255,0.7);
+    margin:0 0 32px; text-decoration:underline; text-underline-offset:4px;
+}
+.magazine_view .mv_cta_btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:18px 40px; border-radius:999px;
+    background:var(--mv-accent); color:#fff; text-decoration:none;
+    font-family:'Montserrat','Pretendard',sans-serif; font-size:14px; font-weight:700;
+    letter-spacing:0.06em; transition:transform .25s, background .25s;
+}
+.magazine_view .mv_cta_btn:hover{background:#138f88; transform:translateY(-2px);}
+@media (max-width:680px){
+    .magazine_view .mv_related_grid{grid-template-columns:1fr; gap:24px;}
+    .magazine_view .mv_cta_tit{font-size:32px;}
+    .magazine_view .view_visual .hero_eyebrow{font-size:11px; margin-bottom:10px;}
+}
 
 /* === 5. 댓글 / 첨부 등 sub_board 잔여 영역 무력화 (gallery는 미사용) === */
 .magazine_view .bbs_view{display:none;}
@@ -673,10 +965,10 @@ body.section-dark:has(.magazine_view .portfolio_view){background:#0F0F0F !import
     .magazine_view .view_content{padding:80px 0 60px;}
     .magazine_view .view_content .cont{font-size:17px; line-height:30px;}
     .magazine_view .view_content .cont p,
-    .magazine_view .view_content .cont div{font-size:17px !important; line-height:30px !important; margin:0 0 16px;}
-    .magazine_view .view_content .cont h1{font-size:32px;}
-    .magazine_view .view_content .cont h2{font-size:26px;}
-    .magazine_view .view_content .cont h3{font-size:22px;}
+    .magazine_view .view_content .cont div{font-size:17px !important; line-height:30px !important; margin:0 0 0 !important;}
+    .magazine_view .view_content .cont h1{font-size:30px;}
+    .magazine_view .view_content .cont h2{font-size:25px;}
+    .magazine_view .view_content .cont h3{font-size:21px;}
 }
 @media screen and (max-width:1023px){
     .magazine_view{--mv-padding:30px;}
@@ -708,7 +1000,7 @@ body.section-dark:has(.magazine_view .portfolio_view){background:#0F0F0F !import
     .magazine_view .view_content{padding:50px 0 40px;}
     .magazine_view .view_content .cont{font-size:16px; line-height:28px;}
     .magazine_view .view_content .cont p,
-    .magazine_view .view_content .cont div{font-size:16px !important; line-height:28px !important; margin:0 0 14px;}
+    .magazine_view .view_content .cont div{font-size:16px !important; line-height:28px !important; margin:0 0 0 !important;}
     .magazine_view .view_content .cont h1{font-size:24px; margin-top:48px;}
     .magazine_view .view_content .cont h2{font-size:21px; margin-top:48px;}
     .magazine_view .view_content .cont h3{font-size:18px; margin-top:40px;}
@@ -723,6 +1015,4 @@ body.section-dark:has(.magazine_view .portfolio_view){background:#0F0F0F !import
     .magazine_view .view_button .page_btn dl dd{font-size:12px;}
     .magazine_view .view_button .list_btn{width:42px; height:42px;}
     .magazine_view .view_button .list_btn span{width:14px;}
-    .magazine_view .view_button .list_btn span:nth-child(1){margin-top:-4px;}
-    .magazine_view .view_button .list_btn span:nth-child(3){margin-top:4px;}
 }

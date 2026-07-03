@@ -289,6 +289,30 @@ class Board extends FRONT_Controller {
 						];
 					}
 				}
+				// 2026-06-09: 관리자가 related 미지정 시 최근 gallery 글로 폴백 (ohbrown처럼 하단 섹션 항상 노출)
+				if(count($related_posts) < 2) {
+					$have = array_map(function($p){ return (int)$p['no']; }, $related_posts);
+					$have[] = (int)$no;
+					$recent = $this->dm->get('da_board_gallery', [], [], [], [], ['no' => 'DESC'], [8, 0]);
+					if(is_array($recent)) {
+						foreach($recent as $row) {
+							if(count($related_posts) >= 2) break;
+							$rno = (int)($row['no'] ?? 0);
+							if($rno <= 0 || in_array($rno, $have, true)) continue;
+							$have[] = $rno;
+							$thumb = '';
+							if(!empty($row['thumbnail_image']) && file_exists($this->input->server('DOCUMENT_ROOT').'/upload/board/gallery/'.$row['thumbnail_image'])) {
+								$thumb = '/upload/board/gallery/'.$row['thumbnail_image'];
+							}
+							$related_posts[] = [
+								'no' => $row['no'],
+								'title' => $row['title'],
+								'regdt' => $row['regdt'],
+								'thumb' => $thumb,
+							];
+						}
+					}
+				}
 				$this->template_->assign('related_posts', $related_posts);
 			}
 

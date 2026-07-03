@@ -54,6 +54,23 @@
 		<!--{ / }-->
 	</div>
 </aside><!-- #aside 상단영역 -->
+<script>
+// 2026-06-04: SERVICE 메뉴 기본 카테고리 Korea(001) → USA(005). 메뉴 URL은 DB(cfg_menu) 동적이라 코드에 직접 없음 → JS 치환.
+(function(){
+	function fixServiceLink(){
+		var as = document.querySelectorAll('#header a, #aside a');
+		for (var i=0; i<as.length; i++){
+			var a = as[i];
+			var h = a.getAttribute('href') || '';
+			if (/SERVICE/i.test((a.textContent||'').trim()) && h.indexOf('goods_list') > -1 && h.indexOf('cate=001') > -1){
+				a.setAttribute('href', h.replace('cate=001','cate=005'));
+			}
+		}
+	}
+	if (document.readyState !== 'loading') fixServiceLink();
+	else document.addEventListener('DOMContentLoaded', fixServiceLink);
+})();
+</script>
 <!--{ ? CI->uri->rsegments[1] == "index_" }-->
 <script>
 $(function() {
@@ -142,6 +159,9 @@ $(function() {
 $(document)	.ready(function(){
 	// 2026-06-04: goods 상세(.portfolio_view)는 askim처럼 — 맨 위에서만 헤더 보임, 스크롤하면 숨김
 	var _isPv = $('.portfolio_view').length > 0;
+	// 2026-06-09: Insight 상세(.magazine_view) — 다크 본문 + 고정 hero 이미지 위라 헤더를 '항상 투명(흰 글씨)'으로.
+	//   스크롤해도 흰 배경 'on'을 붙이지 않음(나머지 페이지는 기존 그대로).
+	var _isInsight = $('.magazine_view').length > 0;
 	// 2026-06-04: 스크롤 복원(새로고침 시 이전 위치) 차단 → 로딩 직후 맨 위 + 헤더 표시
 	if (_isPv) {
 		if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -152,6 +172,11 @@ $(document)	.ready(function(){
 	}
 	function _headerScroll(){
 		var st = $(window).scrollTop();
+		if (_isInsight) {
+			// Insight: 항상 투명 + 흰 글씨 (흰 배경 'on' 미적용)
+			$('#header').removeClass('on scroll-hide');
+			return;
+		}
 		if (_isPv) {
 			// goods 상세: 항상 on(흰 헤더, askim 톤) 유지 + 스크롤 시 scroll-hide로 숨김
 			$('#header').addClass('on');

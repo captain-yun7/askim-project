@@ -231,10 +231,12 @@
     var ta=document.querySelector('.portfolio_view_in .txt_area');
     var con=document.querySelector('.portfolio_view_in .con_area');
     if(!ta||!con) return;
-    // 본문 light 섹션(영상+본문) 실제 높이로 판정 — 짧으면 y축 중앙, 길면 상단(sticky)
-    var light=con.querySelector('.pv-section-light');
-    var lh=light?light.offsetHeight:0;
-    ta.style.alignItems = (lh < window.innerHeight) ? 'center' : 'flex-start';
+    // 2026-06-05: 좌측 컬럼은 우측(con_area) 전체 높이만큼 stretch됨.
+    //   기존엔 light 섹션 높이만 보고 center로 판정 → light는 짧고 dark(이미지)가 긴 글에서
+    //   좌측 내용이 '긴 컬럼의 세로 중앙'으로 밀려 상단이 통째로 비어 보임(버그).
+    //   → 컬럼 '전체 높이'가 한 화면에 들어올 때만 center, 아니면 상단(sticky) 고정.
+    var colH = con.offsetHeight;
+    ta.style.alignItems = (colH <= window.innerHeight) ? 'center' : 'flex-start';
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', adjustTxtAlign);
   else adjustTxtAlign();
@@ -296,58 +298,55 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
-<!-- GSAP + ScrollTrigger (askim과 동일한 스크롤 luminosity 효과) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- 2026-06-08: 스크롤 luminosity 반전 — '고정 길이 임계점에서 즉시 100% 반전 + CSS 트랜지션'.
+     요구사항: (1) 스크롤 약 4번(고정 길이 FLIP_AT)에서 반전. 글 길이가 달라도 동일 고정 지점.
+              (2) 스크럽(서서히)이 아니라 임계점에 닿는 순간 class 토글로 100% 반전, 단 전환은
+                  CSS transition을 거쳐 부드럽게.
+     자식 색상(텍스트/버튼/배경)도 함께 트랜지션되도록 아래 <style>에서 transition 지정. -->
+<style>
+/* 반전 효과를 트랜지션으로 — body 배경 + 자식 색/배경/보더 1s */
+body{ transition: background-color 1s ease !important; }
+.portfolio_view_in .txt_area .date,
+.portfolio_view_in .txt_area .fs65,
+.portfolio_view_in .txt_area .info dl dt,
+.portfolio_view_in .txt_area .info dl dd,
+.portfolio_view_in .txt_area .btn_area a,
+.portfolio_view_in .con_area,
+.portfolio_view_in .con_area .cont,
+.recent_posts .fs50,
+.marquee-item .desc h4,
+.marquee-item .desc p{ transition: color 1s ease, background-color 1s ease, border-color 1s ease; }
+</style>
 <script>
-// 2026-06-04: 스크롤 luminosity 반전 재구현.
-//   기존: section마다 ScrollTrigger.onUpdate(progress)로 body class 토글 → 인접 section의
-//         onUpdate가 한 프레임 내 비결정적 순서로 서로 덮어써 반전이 불규칙(깜빡임/누락).
-//   개선: body class를 '단일 소스 오브 트루스'로 결정. 스크롤 기준선(viewport 중앙)이 지나간
-//         마지막 section의 luminosity를 매 스크롤마다 결정적으로 계산해 1회만 반영.
 document.addEventListener('DOMContentLoaded', function(){
-  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  gsap.registerPlugin(ScrollTrigger);
+  // light 섹션이 없는 '이미지전용 글'도 반전되도록 luminosity 섹션이 하나라도 있으면 동작(빈 글만 제외).
+  if(!document.querySelector('section[data-section-luminosity]')) return;
 
-  var sections = Array.prototype.slice.call(
-    document.querySelectorAll('section[data-section-luminosity]')
-  );
-  if(!sections.length) return;
+  var darkOn = false;
+  var ticking = false;
 
-  var current = '';
-  var setBodyClass = function(luminosity){
-    if(luminosity === current) return;          // 동일하면 no-op (transition 재시작/깜빡임 방지)
-    current = luminosity;
-    document.body.classList.remove('section-light', 'section-dark');
-    document.body.classList.add('section-' + luminosity);
-  };
-
-  // 기준선(viewport 중앙)을 top이 지나간 '마지막' section의 luminosity를 결정적으로 선택.
-  //   - 기준선보다 위에서 시작한 section 중 가장 아래(=현재 점유) 것을 채택.
-  //   - 아직 어떤 section도 기준선에 도달 안 했으면 첫 section.
-  var resolve = function(){
-    var line = window.innerHeight * 0.5;
-    var chosen = sections[0];
-    for(var i = 0; i < sections.length; i++){
-      var top = sections[i].getBoundingClientRect().top;
-      if(top <= line){
-        chosen = sections[i];
-      } else {
-        break;  // 정렬된 DOM 순서 → 첫 미도달 section에서 중단
-      }
+  // 2026-06-09: 임계점 = 전체 스크롤 길이의 '절반(50%)' 지점. 글 길이가 달라도 항상 페이지 한가운데에서 반전.
+  function compute(){
+    ticking = false;
+    var doc = document.documentElement;
+    var VH = window.innerHeight;
+    var y = window.pageYOffset || doc.scrollTop || 0;
+    var maxScroll = doc.scrollHeight - VH;
+    var flipAt = maxScroll * 0.5;   // 전체 스크롤 가능 범위의 절반
+    // 임계점에서 즉시 100% 토글(스크럽 X). 히스테리시스 ±60px로 경계 떨림 방지. CSS가 1s 트랜지션.
+    var wantDark = y >= (darkOn ? flipAt - 60 : flipAt);
+    if(wantDark !== darkOn){
+      darkOn = wantDark;
+      document.body.classList.toggle('section-dark', darkOn);
+      document.body.classList.toggle('section-light', !darkOn);
     }
-    setBodyClass(chosen.dataset.sectionLuminosity || 'light');
-  };
-
-  // 단일 ScrollTrigger가 전체 스크롤 진행을 onUpdate로 받아 resolve() 1회 호출 (충돌 없음).
-  ScrollTrigger.create({
-    trigger: document.body,
-    start: 'top top',
-    end: 'bottom bottom',
-    onUpdate: resolve,
-    onRefresh: resolve
-  });
-  resolve();  // 초기 1회
+  }
+  function onScroll(){
+    if(!ticking){ ticking = true; requestAnimationFrame(compute); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  compute();  // 초기 1회
 });
 </script>
 {#footer}
