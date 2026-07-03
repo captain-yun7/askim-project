@@ -208,6 +208,19 @@ if($row_bcnt != 0){
 
 	<h1 class="blind">Askim company</h1>
 
+	<style>
+	/* 드라이브쓰루 버튼 — common.css @import 캐시로 스타일 누락되던 문제 방지용 인라인(HTML은 no-cache라 항상 최신).
+	   Brochure와 동일 동작: 메인(어두운 히어로)=흰 글씨→스크롤 시 검정 / 서브페이지(흰 헤더)=항상 검정 */
+	.header .header_in .newsletter_btn a{display:inline-block; width:135px; height:40px; line-height:38px; box-sizing:border-box; border-radius:40px; text-align:center; font-size:14px; font-family:var(--eng); font-weight:600; border:1px solid var(--border); letter-spacing:var(--letter-spacing-none); color:var(--black); transition:all .4s ease;}
+	.header .header_in .newsletter_btn a::before{content:'\e158'; display:inline-block; margin:-2px 4px 0 0; vertical-align:middle; width:20px; height:20px; line-height:20px; font-size:18px; font-family:var(--icon); font-weight:400;}
+	.header .header_in .newsletter_btn a:hover{background:var(--main)!important; border-color:var(--main)!important; color:#fff!important;}
+<?php if($code_page == 'main'){ ?>
+	/* 메인: 상단 어두운 히어로 위 = 흰 글씨, 스크롤(.fixed) 시 검정 */
+	.header .header_in .newsletter_btn a{border-color:rgba(255,255,255,.4); color:#fff;}
+	.header.fixed .header_in .newsletter_btn a{border-color:var(--border); color:#000;}
+<?php } ?>
+	</style>
+
 	<header class="header">
 		<div class="header_in basic_in">
 			<div class="logo"><a href="/"><span class="blind">Askim company</span></a></div>
