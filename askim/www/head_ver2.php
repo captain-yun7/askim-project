@@ -92,7 +92,8 @@ echo tw_function("get_seo", $seo_param);
 </script>
 <!-- aos 효과 제이쿼리 -->
 <script type="text/javascript" src="/comm/js/aos.js"></script>
-<link rel="stylesheet" type="text/css" href="/comm/css/aos.css" /> 
+<link rel="stylesheet" type="text/css" href="/comm/css/aos.css" />
+<link rel="stylesheet" type="text/css" href="/comm/css/common.css?v=<?php echo time(); ?>" />
 
 <!-- jarallax 제이쿼리 -->
 <script type="text/javascript" src="/comm/js/jarallax.min.js"></script>
@@ -208,6 +209,7 @@ if($row_bcnt != 0){
 					<dd class="sns03"><a href="https://www.youtube.com/channel/UCM72MD-6k_uvBMKyXAcvlgQ" target="_blank" title="새 창 열림"><span class="blind">유튜브</span></a></dd>
 				</dl>
 				<div class="brochure_btn"><a href="/twcenter/bbs/down.php?code=download&idx=1&no=1">Brochure</a></div>
+				<div class="newsletter_btn"><a href="https://askimcompany.stibee.com/" target="_blank" title="새 창 열림">드라이브쓰루</a></div>
 				<ul class="head_btn">
 					<li class="showMask search_btn"><a href="javascript:;"><span class="blind">search</span><?php include $_SERVER['DOCUMENT_ROOT']."/img/search.svg";?></a></li>
 					<li class="menu_btn"><a href="javascript:;" class="menuBtn"><span class="blind">menu</span><?php include $_SERVER['DOCUMENT_ROOT']."/img/menu.svg";?></a></li>

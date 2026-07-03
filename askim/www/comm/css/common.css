@@ -113,6 +113,10 @@ span, b, strong, br {line-height:inherit; font-family:inherit;}
 .header .header_in .brochure_btn a{display: inline-block; width: 135px; height: 40px; line-height: 38px; box-sizing:border-box; border-radius:40px; text-align:center; font-size:14px; font-family:var(--eng); font-weight:600; border:1px solid rgba(255,255,255,.4); letter-spacing:var(--letter-spacing-none); color:var(--white); transition:all .4s ease;}
 .header .header_in .brochure_btn a:hover{background:var(--main) !important; border-color:var(--main) !important; color:var(--white) !important;}
 .header .header_in .brochure_btn a::before{content:'\f090'; display: inline-block; margin: -2px 3px 0 0; vertical-align: middle; width:20px; height:20px; line-height:20px; font-size:20px; font-family:var(--icon); font-weight: 400;}
+.header .header_in .newsletter_btn{}
+.header .header_in .newsletter_btn a{display: inline-block; width: 135px; height: 40px; line-height: 38px; box-sizing:border-box; border-radius:40px; text-align:center; font-size:14px; font-family:var(--eng); font-weight:600; border:1px solid rgba(255,255,255,.4); letter-spacing:var(--letter-spacing-none); color:var(--white); transition:all .4s ease;}
+.header .header_in .newsletter_btn a:hover{background:var(--main) !important; border-color:var(--main) !important; color:var(--white) !important;}
+.header .header_in .newsletter_btn a::before{content:'\e158'; display: inline-block; margin: -2px 4px 0 0; vertical-align: middle; width:20px; height:20px; line-height:20px; font-size:18px; font-family:var(--icon); font-weight: 400;}
 .header .header_in .head_btn{display: flex; align-items:center; gap:20px;}
 .header .header_in .head_btn li.menu_btn{display: none;}
 .header .header_in .head_btn li a{display: block; width: 26px; height: 26px;}
@@ -132,6 +136,7 @@ span, b, strong, br {line-height:inherit; font-family:inherit;}
 .header.fixed .header_in .sns_list dd.sns02 a{background:url('/img/sns_instagram.png') no-repeat center/contain;}
 .header.fixed .header_in .sns_list dd.sns03 a{background:url('/img/sns_youtube.png') no-repeat center/contain;}
 .header.fixed .header_in .brochure_btn a{border-color:var(--border); color:var(--black);}
+.header.fixed .header_in .newsletter_btn a{border-color:var(--border); color:var(--black);}
 .header.fixed .header_in .head_btn li a path{fill:var(--black);}
 .header.fixed .header_in .head_btn li a rect{fill:var(--black);}
 .header.fixed .gnb ul li > a{color:var(--black);}
@@ -352,6 +357,9 @@ select {background-position:right 10px center; background-size:8px auto;}
 .header .header_in .brochure_btn{order:1; width: 100%; display: flex; justify-content: flex-end;}
 .header .header_in .brochure_btn a{width: 85px; height: 26px; line-height: 26px; font-size:12px; border-radius:0; border:0; border-bottom: 1px solid rgba(255,255,255,.4);}
 .header .header_in .brochure_btn a::before{margin: -2px 3px 0 0; width:16px; height:16px; line-height:16px; font-size:16px;}
+.header .header_in .newsletter_btn{order:1; width: 100%; display: flex; justify-content: flex-end;}
+.header .header_in .newsletter_btn a{width: auto; height: 26px; line-height: 26px; font-size:12px; border-radius:0; border:0; border-bottom: 1px solid rgba(255,255,255,.4);}
+.header .header_in .newsletter_btn a::before{margin: -2px 3px 0 0; width:16px; height:16px; line-height:16px; font-size:16px;}
 .header .header_in .head_btn{gap:18px; order:3;}
 .header .header_in .head_btn li a{width: 22px; height: 22px;}
 
