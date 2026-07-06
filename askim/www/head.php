@@ -208,30 +208,17 @@ if($row_bcnt != 0){
 
 	<h1 class="blind">Askim company</h1>
 
-	<style>
-	/* 드라이브쓰루 버튼 — common.css @import 캐시로 스타일 누락되던 문제 방지용 인라인(HTML은 no-cache라 항상 최신).
-	   Brochure와 동일 동작: 메인(어두운 히어로)=흰 글씨→스크롤 시 검정 / 서브페이지(흰 헤더)=항상 검정 */
-	.header .header_in .newsletter_btn a{display:inline-block; width:135px; height:40px; line-height:38px; box-sizing:border-box; border-radius:40px; text-align:center; font-size:14px; font-family:var(--eng); font-weight:600; border:1px solid var(--border); letter-spacing:var(--letter-spacing-none); color:var(--black); transition:all .4s ease;}
-	.header .header_in .newsletter_btn a::before{content:'\e158'; display:inline-block; margin:-2px 4px 0 0; vertical-align:middle; width:20px; height:20px; line-height:20px; font-size:18px; font-family:var(--icon); font-weight:400;}
-	.header .header_in .newsletter_btn a:hover{background:var(--main)!important; border-color:var(--main)!important; color:#fff!important;}
-<?php if($code_page == 'main'){ ?>
-	/* 메인: 상단 어두운 히어로 위 = 흰 글씨, 스크롤(.fixed) 시 검정 */
-	.header .header_in .newsletter_btn a{border-color:rgba(255,255,255,.4); color:#fff;}
-	.header.fixed .header_in .newsletter_btn a{border-color:var(--border); color:#000;}
-<?php } ?>
-	</style>
-
 	<header class="header">
 		<div class="header_in basic_in">
 			<div class="logo"><a href="/"><span class="blind">Askim company</span></a></div>
 			<div class="top_util">
 				<dl class="sns_list">
+					<dd class="sns04"><a href="https://askimcompany.stibee.com/" target="_blank" title="새 창 열림"><span class="blind">드라이브쓰루 뉴스레터</span></a></dd>
 					<dd class="sns01"><a href="https://blog.naver.com/askimcompany" target="_blank" title="새 창 열림"><span class="blind">네이버 블로그</span></a></dd>
 					<dd class="sns02"><a href="https://www.instagram.com/paulseee/" target="_blank" title="새 창 열림"><span class="blind">인스타그램</span></a></dd>
 					<dd class="sns03"><a href="https://www.youtube.com/channel/UCM72MD-6k_uvBMKyXAcvlgQ" target="_blank" title="새 창 열림"><span class="blind">유튜브</span></a></dd>
 				</dl>
 				<div class="brochure_btn"><a href="/twcenter/bbs/down.php?code=download&idx=1&no=1">Brochure</a></div>
-				<div class="newsletter_btn"><a href="https://askimcompany.stibee.com/" target="_blank" title="새 창 열림">드라이브쓰루</a></div>
 				<ul class="head_btn">
 					<li class="showMask search_btn"><a href="javascript:;"><span class="blind">search</span><?php include $_SERVER['DOCUMENT_ROOT']."/img/search.svg";?></a></li>
 					<li class="menu_btn"><a href="javascript:;" class="menuBtn"><span class="blind">menu</span><?php include $_SERVER['DOCUMENT_ROOT']."/img/menu.svg";?></a></li>

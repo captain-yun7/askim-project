@@ -204,12 +204,12 @@ if($row_bcnt != 0){
 			<div class="logo"><a href="/"><span class="blind">Askim company</span></a></div>
 			<div class="top_util">
 				<dl class="sns_list">
+					<dd class="sns04"><a href="https://askimcompany.stibee.com/" target="_blank" title="새 창 열림"><span class="blind">드라이브쓰루 뉴스레터</span></a></dd>
 					<dd class="sns01"><a href="https://blog.naver.com/askimcompany" target="_blank" title="새 창 열림"><span class="blind">네이버 블로그</span></a></dd>
 					<dd class="sns02"><a href="https://www.instagram.com/paulseee/" target="_blank" title="새 창 열림"><span class="blind">인스타그램</span></a></dd>
 					<dd class="sns03"><a href="https://www.youtube.com/channel/UCM72MD-6k_uvBMKyXAcvlgQ" target="_blank" title="새 창 열림"><span class="blind">유튜브</span></a></dd>
 				</dl>
 				<div class="brochure_btn"><a href="/twcenter/bbs/down.php?code=download&idx=1&no=1">Brochure</a></div>
-				<div class="newsletter_btn"><a href="https://askimcompany.stibee.com/" target="_blank" title="새 창 열림">드라이브쓰루</a></div>
 				<ul class="head_btn">
 					<li class="showMask search_btn"><a href="javascript:;"><span class="blind">search</span><?php include $_SERVER['DOCUMENT_ROOT']."/img/search.svg";?></a></li>
 					<li class="menu_btn"><a href="javascript:;" class="menuBtn"><span class="blind">menu</span><?php include $_SERVER['DOCUMENT_ROOT']."/img/menu.svg";?></a></li>
