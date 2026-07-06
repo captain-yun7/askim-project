@@ -106,7 +106,7 @@ span, b, strong, br {line-height:inherit; font-family:inherit;}
 .header .header_in .sns_list dd.sns01 a{width: 39px; height: 24px; background:url('/img/sns_blog_w.png') no-repeat center/contain;}
 .header .header_in .sns_list dd.sns02 a{width: 24px; height: 24px; background:url('/img/sns_instagram_w.png') no-repeat center/contain;}
 .header .header_in .sns_list dd.sns03 a{width: 25px; height: 24px; background:url('/img/sns_youtube_w.png') no-repeat center/contain;}
-.header .header_in .sns_list dd.sns04 a{width: 24px; height: 24px; background:url('/img/sns_dt.png') no-repeat center/contain;}
+.header .header_in .sns_list dd.sns04 a{width: 24px; height: 24px; background:url('/img/sns_dt_w.png') no-repeat center/contain;}
 .header .header_in .sns_list dd.sns01 a:hover{background:url('/img/sns_blog.png') no-repeat center/contain;}
 .header .header_in .sns_list dd.sns02 a:hover{background:url('/img/sns_instagram.png') no-repeat center/contain;}
 .header .header_in .sns_list dd.sns03 a:hover{background:url('/img/sns_youtube.png') no-repeat center/contain;}
@@ -132,6 +132,7 @@ span, b, strong, br {line-height:inherit; font-family:inherit;}
 .header.fixed .header_in .sns_list dd.sns01 a{background:url('/img/sns_blog.png') no-repeat center/contain;}
 .header.fixed .header_in .sns_list dd.sns02 a{background:url('/img/sns_instagram.png') no-repeat center/contain;}
 .header.fixed .header_in .sns_list dd.sns03 a{background:url('/img/sns_youtube.png') no-repeat center/contain;}
+.header.fixed .header_in .sns_list dd.sns04 a{background:url('/img/sns_dt.png') no-repeat center/contain;}
 .header.fixed .header_in .brochure_btn a{border-color:var(--border); color:var(--black);}
 .header.fixed .header_in .head_btn li a path{fill:var(--black);}
 .header.fixed .header_in .head_btn li a rect{fill:var(--black);}
