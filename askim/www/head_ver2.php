@@ -204,7 +204,7 @@ if($row_bcnt != 0){
 			<div class="logo"><a href="/"><span class="blind">Askim company</span></a></div>
 			<div class="top_util">
 				<dl class="sns_list">
-					<dd class="sns04"><a href="https://askimcompany.stibee.com/" target="_blank" title="새 창 열림"><span class="blind">드라이브쓰루 뉴스레터</span></a></dd>
+					<dd class="sns04"><a href="https://askim.stibee.com/" target="_blank" title="새 창 열림"><span class="blind">드라이브쓰루 뉴스레터</span></a></dd>
 					<dd class="sns01"><a href="https://blog.naver.com/askimcompany" target="_blank" title="새 창 열림"><span class="blind">네이버 블로그</span></a></dd>
 					<dd class="sns02"><a href="https://www.instagram.com/paulseee/" target="_blank" title="새 창 열림"><span class="blind">인스타그램</span></a></dd>
 					<dd class="sns03"><a href="https://www.youtube.com/channel/UCM72MD-6k_uvBMKyXAcvlgQ" target="_blank" title="새 창 열림"><span class="blind">유튜브</span></a></dd>
