@@ -32,37 +32,43 @@ $mbinfo = sql_fetch($sql_mb);
 		<a href="#about" class="scroll_down mouse_wheel"><span class="blind">scroll down</span><i></i><?php include $_SERVER['DOCUMENT_ROOT']."/img/scr_icon.svg";?></a>
 	</section>
 	
-	<section id="about" class="compad ani">
+<?php
+	// 드라이브쓰루 인사이트 — insight 게시판 최신 1건 자동 노출
+	// 운영자 입력: 본문 맨 위 'youtube: <URL>' / 'more: <URL>' 두 줄(선택) → 아래에서 추출·숨김
+	$dt_row = sql_fetch("select idx,subject,content,from_unixtime(wdate,'%Y.%m.%d') as wdate from wiz_bbs where code='insight' and notice!='Y' order by prino desc, idx desc limit 1");
+	$dt_youtube = $dt_more = $dt_body = ''; $dt_thumb = '/img/drivethru_thumb.png';
+	if(!empty($dt_row['idx'])){
+		$raw = $dt_row['content'];
+		if(preg_match('/^\s*youtube\s*:\s*(\S+)/im', $raw, $mm)) $dt_youtube = trim($mm[1]);
+		if(preg_match('/^\s*more\s*:\s*(\S+)/im', $raw, $mm))    $dt_more    = trim($mm[1]);
+		$dt_body = trim(preg_replace('/^\s*(youtube|more)\s*:\s*\S+\s*$/im', '', $raw));
+		if($dt_youtube && preg_match('~(?:youtu\.be/|v=|embed/|shorts/)([A-Za-z0-9_-]{11})~', $dt_youtube, $vm))
+			$dt_thumb = "https://img.youtube.com/vi/".$vm[1]."/hqdefault.jpg";
+		if($dt_more == '') $dt_more = "https://askim.stibee.com/";
+		$dt_play = $dt_youtube ?: $dt_more;
+	}
+?>
+	<section id="about" class="drivethru compad">
 		<div class="basic_in">
-			<div class="title_area">
-				<h3 class="fs65" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">옥외광고, <br/>아직도 이렇게 생각하시나요?</h3>
+			<div class="dt_hero" data-aos="fade-up" data-aos-duration="600">
+				<a href="<?php echo htmlspecialchars($dt_more ?: 'https://askim.stibee.com/'); ?>" target="_blank" title="새 창 열림">
+					<img src="/img/drivethru_hero.png" alt="드라이브쓰루" />
+				</a>
 			</div>
-			<ul class="about_list">
-				<li data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
-					<div class="icon_wrap">
-						<span class="icon">
-							<img src="/img/about_icon01.svg" alt="유동인구 많은 곳이면 무조건 좋은 거 아닌가?">
-						</span>
-					</div>
-					<p class="fs21">유동인구 많은 곳이면 <br/>무조건 좋은 거 아닌가?</p>
-				</li>
-				<li data-aos="fade-up" data-aos-duration="600" data-aos-delay="500">
-					<div class="icon_wrap">
-						<span class="icon">
-							<img src="/img/about_icon02.svg" alt="버스, 지하철 광고가 전부 아니야? 다 똑같은 매체인데 뭐가 달라? ">
-						</span>
-					</div>
-					<p class="fs21">버스, 지하철 광고가 <br/>전부 아니야? <br class="brFixed"/>다 똑같은 매체인데 뭐가 달라?</p>
-				</li>
-				<li data-aos="fade-up" data-aos-duration="600" data-aos-delay="700">
-					<div class="icon_wrap">
-						<span class="icon">
-							<img src="/img/about_icon03.svg" alt="우리 예산으로 이런 광고까지 할 수 있을까? ">
-						</span>
-					</div>
-					<p class="fs21">우리 예산으로 <br/>이런 광고까지 할 수 있을까?</p>
-				</li>
-			</ul>
+			<p class="dt_sub" data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">바쁜 마케터를 위한 인사이트, <b>드라이브쓰루</b></p>
+			<?php if(!empty($dt_row['idx'])){ ?>
+			<div class="dt_card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
+				<a class="dt_thumb" href="<?php echo htmlspecialchars($dt_play); ?>" target="_blank" title="새 창 열림">
+					<img src="<?php echo htmlspecialchars($dt_thumb); ?>" alt="<?php echo htmlspecialchars($dt_row['subject']); ?>" />
+					<span class="dt_play" aria-hidden="true"></span>
+				</a>
+				<div class="dt_body">
+					<h3 class="dt_title"><?php echo htmlspecialchars($dt_row['subject']); ?></h3>
+					<div class="dt_text"><?php echo $dt_body; ?></div>
+					<a class="dt_more" href="<?php echo htmlspecialchars($dt_more); ?>" target="_blank" title="새 창 열림">이어보기 <span>▶</span></a>
+				</div>
+			</div>
+			<?php } ?>
 		</div>
 	</section>
 	
