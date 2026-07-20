@@ -50,11 +50,6 @@ $mbinfo = sql_fetch($sql_mb);
 ?>
 	<section id="about" class="drivethru compad">
 		<div class="basic_in">
-			<div class="dt_hero" data-aos="fade-up" data-aos-duration="600">
-				<a href="<?php echo htmlspecialchars($dt_more ?: 'https://askim.stibee.com/'); ?>" target="_blank" title="새 창 열림">
-					<img src="/img/drivethru_hero.png" alt="드라이브쓰루" />
-				</a>
-			</div>
 			<p class="dt_sub" data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">바쁜 마케터를 위한 인사이트, <b>드라이브쓰루</b></p>
 			<?php if(!empty($dt_row['idx'])){ ?>
 			<div class="dt_card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
