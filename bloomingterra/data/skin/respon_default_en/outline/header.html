@@ -173,22 +173,8 @@
 <!--{ ? CI->uri->rsegments[1] == "index_" }-->
 <script>
 	$(document).ready(function(){
-		$('body').css('overflow', 'hidden');
-		$(".main_intro").addClass('on'); 
-
-		setTimeout(function() {
-		   $(".main_intro").addClass('effect'); 
-		}, 1500);
-
-		setTimeout(function() {
-			$(".main_intro").addClass('fold');
-			$('body').css('overflow', '');
-			
-        }, 5600);
-		
-		setTimeout(function() {
-			$('.sec01 .lay01').addClass('on');
-		}, 6200);
+		// [Stage1] 인트로 프리로더 즉시 제거 — 진입 즉시 히어로 자동 슬라이드 노출, 스크롤 잠금 없음
+		$(".main_intro").addClass('fold');
 	});
 
 </script>

@@ -10,12 +10,110 @@
 	#smooth-wrapper:before{width:100%;height:100vh;content:"";background:url('./images/skin/section_01_bg.jpg')no-repeat center;background-size:cover;position: fixed;top:0;left:0;z-index:0;}
 }
 </style>
+<link rel="stylesheet" href="{ js }/css/swiper-bundle.min.css">
+<script src="{ js }/js/swiper-bundle.min.js"></script>
 <script src="{ js }/js/gsap.min.js"></script>
 <script src="{ js }/js/ScrollTrigger.min.js"></script>
 <script src="{ js }/js/ScrollSmoother.min.js"></script>
 <script src="{ js }/js/ScrollToPlugin.min.js"></script>
 <script src="{ js }/js/SplitText.min.js"></script>
 <script src="{ js }/js/custom.js"></script>
+<script>
+// 메인 히어로 자체 크로스페이드 슬라이더 (무한 자동전환 + 켄번즈 + 도트)
+document.addEventListener('DOMContentLoaded', function(){
+	var hero = document.querySelector('.main_hero');
+	if(!hero) return;
+	var slides = hero.querySelectorAll('.hs_slide');
+	var dotsWrap = hero.querySelector('.hero_dots');
+	if(!slides.length) return;
+	var cur = 0, n = slides.length, timer;
+	for(var i=0;i<n;i++){
+		var d = document.createElement('button');
+		d.className = 'hs_dot'; d.type='button'; d.setAttribute('aria-label','slide '+(i+1));
+		(function(idx){ d.addEventListener('click', function(){ go(idx); restart(); }); })(i);
+		dotsWrap.appendChild(d);
+	}
+	var dots = dotsWrap.querySelectorAll('.hs_dot');
+	function go(i){
+		slides[cur].classList.remove('on'); dots[cur].classList.remove('on');
+		cur = (i + n) % n;
+		slides[cur].classList.add('on'); dots[cur].classList.add('on');
+	}
+	function restart(){ clearInterval(timer); timer = setInterval(function(){ go(cur+1); }, 2500); }
+	slides[0].classList.add('on'); dots[0].classList.add('on');
+	restart();
+});
+</script>
+
+<style>
+/* ===== 메인 히어로: 자체 크로스페이드 슬라이더 ===== */
+.main_intro{display:none !important;} /* 인트로 프리로더 제거 — 진입 즉시 히어로 */
+.main_hero .btn_scroll{display:none !important;} /* SCROLL 버튼 제거 */
+.main_hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;z-index:2;}
+.main_hero .hero_slider{position:absolute;inset:0;overflow:hidden;}
+.main_hero .hs_slide{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transform:scale(1.04);transition:opacity 1.5s ease;will-change:opacity,transform;z-index:1;}
+.main_hero .hs_slide.on{opacity:1;z-index:2;animation:heroZoom 6.5s ease-out forwards;}
+@keyframes heroZoom{from{transform:scale(1.04)}to{transform:scale(1.14)}}
+.main_hero .hero_slider::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,.12) 66%,rgba(0,0,0,.55) 100%);}
+.main_hero .hero_dots{position:absolute;left:0;right:0;bottom:36px;z-index:5;display:flex;gap:11px;justify-content:center;align-items:center;}
+.main_hero .hs_dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;transition:all .3s ease;}
+.main_hero .hs_dot:hover{background:rgba(255,255,255,.75);}
+.main_hero .hs_dot.on{background:#fff;transform:scale(1.35);}
+@media only screen and (max-width:860px){
+	.main_hero .hero_dots{bottom:24px;gap:9px;}
+	.main_hero .hs_dot{width:8px;height:8px;}
+}
+
+/* ===== [Stage2] 메인 하단 정적 재구성 (스크롤 재킹 제거) ===== */
+#smooth-wrapper:before{display:none !important;}
+#smooth-content{position:relative;z-index:1;}
+.main_content{background:#050a12;}
+.ms{position:relative;z-index:1;background:#050a12;color:#fff;padding:130px 0;box-sizing:border-box;}
+.ms .ms_in{max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;}
+.ms_stats .ms_stat_row{display:flex;gap:70px;justify-content:center;flex-wrap:wrap;margin-bottom:90px;}
+.ms_stats .ms_stat{flex:1 1 380px;max-width:460px;text-align:center;}
+.ms_stats .ms_label{display:block;color:#42B0FB;letter-spacing:.14em;font-size:16px;font-weight:600;}
+.ms_stats .ms_num{display:block;font-size:100px;font-weight:700;line-height:1;margin:16px 0 22px;color:#fff;}
+.ms_stats .ms_num span{color:#42B0FB;}
+.ms_stats .ms_num sup{font-size:.42em;color:#42B0FB;vertical-align:top;margin-left:6px;}
+.ms_stats .ms_stat p{color:#aab6c6;font-size:16px;line-height:1.75;}
+.ms_stats .ms_logos{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;max-width:920px;margin:0 auto;}
+.ms_stats .ms_logos .logo{background:#fff;border-radius:16px;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;padding:22px;box-sizing:border-box;}
+.ms_stats .ms_logos .logo img{max-width:100%;max-height:100%;object-fit:contain;}
+.ms_feature{text-align:center;background:#070d18 url('./images/skin/section_01_bg.jpg') center/cover;}
+.ms_feature.ms_alt{background:#050a12;}
+.ms_feature .ms_in{max-width:840px;}
+.ms_feature .ms_eyebrow{display:block;color:#42B0FB;letter-spacing:.24em;font-size:15px;font-weight:600;}
+.ms_feature h3{font-size:46px;font-weight:700;line-height:1.25;margin:20px 0 26px;color:#fff;letter-spacing:-.01em;}
+.ms_feature p{font-size:18px;line-height:1.85;color:#c7d2e0;}
+@media only screen and (max-width:860px){
+	.ms{padding:76px 0;}
+	.ms .ms_in{padding:0 22px;}
+	.ms_stats .ms_stat_row{gap:44px;margin-bottom:56px;}
+	.ms_stats .ms_num{font-size:66px;}
+	.ms_stats .ms_logos{grid-template-columns:repeat(3,1fr);gap:12px;}
+	.ms_feature h3{font-size:30px;}
+	.ms_feature p{font-size:16px;}
+}
+/* sec06 SERVICE 정적 정리 */
+.sec06{background:#050a12 !important;height:auto !important;overflow:visible !important;display:block !important;padding:130px 0 !important;}
+.sec06 .sec06_bg{display:none !important;}
+.sec06 .lasy{padding-left:0 !important;max-width:1200px;margin:0 auto;padding:0 40px;box-sizing:border-box;}
+.sec06 .lasy.ver_m{display:none !important;}
+.sec06 .lasy .title{text-align:center;margin-bottom:56px;}
+.sec06 .lasy .title h3{font-size:46px !important;color:#fff !important;margin:0 !important;}
+.sec06 .lasy .title p{font-size:18px !important;color:#aab6c6 !important;margin-top:16px !important;font-weight:400 !important;}
+.sec06 .ibx{display:grid !important;grid-template-columns:repeat(3,1fr) !important;gap:24px !important;margin:0 !important;padding:0 !important;align-items:stretch !important;}
+.sec06 .ibx li{margin:0 !important;}
+.sec06 .ibx li .thumb{width:100% !important;height:0 !important;padding-bottom:64% !important;border-radius:14px;}
+@media only screen and (max-width:860px){
+	.sec06{padding:76px 0 !important;}
+	.sec06 .lasy{padding:0 22px !important;}
+	.sec06 .lasy .title h3{font-size:30px !important;}
+	.sec06 .ibx{grid-template-columns:1fr !important;}
+}
+
+</style>
 
 <script type="text/javascript">
 	var confData = JSON.parse('{=json_encode(main_image_slide.pc[lang])}');
@@ -120,388 +218,70 @@
 <div id="smooth-wrapper">
     <div id="smooth-content">
 		<div class="main_content">
-			<div class="section_intro"></div>
-			<!-- 메인비주얼 -->
-			<div class="sec01 ver_pc">
-				<div class="layout lay01">
-					<!-- <div class="img">
-						<img src="./images/skin/obj_globe.png" alt="globe">
-					</div> -->
-					<div class="sec01_iframe">
-						<iframe src="https://player.vimeo.com/video/924512237?autoplay=1&loop=1&autopause=0&muted=1&controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="bloomingterra"></iframe>
-					</div>
-					<div class="word">
-						<p>BEYOND</p>
-						<p>SPACE</p>
-					</div>
-					<div class="word">
-						<p>ACHIEVE</p>
-						<p>SUCCESS</p>
-					</div>
+			<!-- 메인 히어로: 진입 즉시 자동 슬라이드 -->
+			<div class="sec01 main_hero">
+				<div class="hero_slider">
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_01.jpg')"></div>
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_02.jpg')"></div>
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_03.jpg')"></div>
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_04.jpg')"></div>
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_05.jpg')"></div>
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_06.jpg')"></div>
+					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_07.jpg')"></div>
 				</div>
-				<div class="layout lay02">
-					<!-- <div class="img">
-						<img src="./images/skin/obj_globe.png" alt="globe">
-					</div> -->
-					<div class="word">
-						<p>ACHIEVE</p>
-						<p>SUCCESS</p>
-					</div>
-				</div>
-				<div class="layout lay03" id="mainAbout">
-					<div class="sec01_iframe">
-						<iframe src="https://player.vimeo.com/video/924512237?autoplay=1&loop=1&autopause=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="bloomingterra"></iframe>
-					</div>
-					<div class="word">
-						<p>ACHIEVE</p>
-						<p>SUCCESS</p>
-					</div>
-					<div class="wo2">Step into the spotlight with the most impactful OOH media network</div>
-					<dl class="wo3">
-						<dt>
-							<div>
-								<div class="in">WE CREATE TREND<div class="typ"></div></div>
-							</div>
-							<div>
-								<div class="in">WITH CREATIVE SPACE<div class="typ"></div></div>
-							</div>
-						</dt>
-						<dd>
-							<div>
-								Step into the spotlight with the most impactful OOH media network
-							</div>
-						</dd>
-					</dl>
-				</div>
-				<div class="btn_scroll">
-					<span class="scroll">SCROLL</span>
-				</div>
-			</div>
-			<div class="sec01 ver_m">
-				<div class="layout lay01">
-					<div class="layout_flex">
-						<div class="sec01_iframe">
-							<iframe src="https://player.vimeo.com/video/924512237?autoplay=1&loop=1&autopause=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="bloomingterra"></iframe>
-						</div>
-						<div class="word">
-							<p>BEYOND</p>
-							<p>SPACE</p>
-						</div>
-						<!-- <div class="img">
-							<img src="./images/skin/obj_globe.png" alt="globe">
-						</div> -->
-					</div>
-				</div>
-				<div class="layout lay02">
-					<div class="layout_flex">
-						<div class="word">
-							<p>ACHIEVE</p>
-							<p>SUCCESS</p>
-						</div>
-						<!-- <div class="img">
-							<img src="./images/skin/obj_globe.png" alt="globe">
-						</div> -->
-					</div>
-				</div>
-				<div class="layout lay03">
-					<div class="layout_flex">
-						<dl class="wo3">
-							<dt>
-								<div>
-									<div class="in">WE CREATE TREND<div class="typ"></div></div>
-								</div>
-								<div>
-									<div class="in">WITH CREATIVE SPACE<div class="typ"></div></div>
-								</div>
-							</dt>
-							<dd>
-								<div>
-									우리는 공간을 통해 트렌드를 만듭니다.
-								</div>
-							</dd>
-						</dl>
-						<!-- <div class="img">
-							<img src="./images/skin/obj_globe.png" alt="globe">
-						</div> -->
-					</div>
-				</div>
-				<div class="btn_scroll">
-					<span class="scroll">SCROLL</span>
-				</div>
+				<div class="hero_dots"></div>
 			</div>
 			<!--section1-->
-			<div class="sec02" id="sec02">
-				<div class="pin">
-					<div class="cir">
-						<div class="line">
-							<div class="bar"></div>
-							<div class="li01 lib"></div>
-							<div class="li02 lib"></div>
+			<!-- [정적 재구성] 캠페인/파트너 -->
+			<section class="ms ms_stats" id="sec02">
+				<div class="ms_in">
+					<div class="ms_stat_row">
+						<div class="ms_stat">
+							<span class="ms_label">HOT SPOT CAMPAIGNS</span>
+							<strong class="ms_num"><span>100</span><sup>+</sup></strong>
+							<p>We constantly read the fast changing market trend and conduct campaigns in TOP TRENDY markets in Global such as Los Angeles, Hollywood, Las Vegas, New York.</p>
+						</div>
+						<div class="ms_stat">
+							<span class="ms_label">GLOBAL BRAND PARTNERS</span>
+							<strong class="ms_num"><span>50</span><sup>+</sup></strong>
+							<p>We have collaborated with more than 50 global brands, delivering impactful campaigns across the world.</p>
 						</div>
 					</div>
-					<ul class="layout">
-						<li class="l1">
-							<div class="tbx">
-								<div class="cir-fi cir">
-									<div class="line">
-										<div class="li01 lib"></div>
-										<div class="li02 lib"></div>
-									</div>
-								</div>
-								<h3 class="h3">HOT SPOT CAMPAIGNS</h3>
-								<h4 class="h4" data-count="100"><span>0</span><sup>+</sup></h4>
-								<p class="p">We constantly read the fast changing <br>market trend and conduct campaigns <br>in TOP TRENDY markets in Global such as <br>Los Angeles, hollywood, Las Vegas, New York.</p>
-							</div>
-							<div class="back">
-								<div class="img_box">
-									<img class="bu01" src="./images/skin/campaign_bg.png" alt="">
-									<img class="bu02" src="./images/skin/campaign01.png" alt="">
-									<img class="bu03" src="./images/skin/campaign02.png" alt="">
-									<img class="bu04" src="./images/skin/campaign03.png" alt="">
-									<img class="bu05" src="./images/skin/campaign04.png" alt="">
-									<img class="bu06" src="./images/skin/campaign05.png" alt="">
-								</div>
-								<div class="obj">
-									<img class="obj01" src="./images/skin/camp_obj01.png" alt="">
-									<img class="obj02" src="./images/skin/camp_obj02.png" alt="">
-								</div>
-								<div class="circle">
-									<div class="bu_circle" id="circle01">
-										<span>Korea</span>
-										<div class="cir-fi cir">
-											<div class="line">
-												<div class="li01 lib"></div>
-												<div class="li02 lib"></div>
-											</div>	
-										</div>
-									</div>
-									<div class="bu_circle" id="circle02">
-										<span>hollywood</span>
-										<div class="cir-fi cir">
-											<div class="line">
-												<div class="li01 lib"></div>
-												<div class="li02 lib"></div>
-											</div>
-										</div>
-									</div>
-									<div class="bu_circle" id="circle03">
-										<span>Los Angeles</span>
-										<div class="cir-fi cir">
-											<div class="line">
-												<div class="li01 lib"></div>
-												<div class="li02 lib"></div>
-											</div>
-										</div>
-									</div>
-									<div class="bu_circle" id="circle04">
-										<span>Las Vegas</span>
-										<div class="cir-fi cir">
-											<div class="line">
-												<div class="li01 lib"></div>
-												<div class="li02 lib"></div>
-											</div>
-										</div>
-									</div>
-									<div class="bu_circle" id="circle05">
-										<span>New York</span>
-										<div class="cir-fi cir">
-											<div class="line">
-												<div class="li01 lib"></div>
-												<div class="li02 lib"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="l2">
-							<div class="block">
-								<div class="lob">
-									<div class="item">
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner01_01.png" alt="디올"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_02.png" alt="포르쉐"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_03.png" alt="구글"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_04.png" alt="카르티에"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_05.png" alt="나이키"></div></div>
-										</div>
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner01_01.png" alt="디올"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_02.png" alt="포르쉐"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_03.png" alt="구글"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_04.png" alt="카르티에"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_05.png" alt="나이키"></div></div>
-										</div>
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner01_01.png" alt="디올"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_02.png" alt="포르쉐"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_03.png" alt="구글"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_04.png" alt="카르티에"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner01_05.png" alt="나이키"></div></div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner02_01.png" alt="버버리"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_02.png" alt="벤츠"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_03.png" alt="보테가"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_04.png" alt="넷플릭스"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_05.png" alt="무신사"></div></div>
-										</div>
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner02_01.png" alt="버버리"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_02.png" alt="벤츠"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_03.png" alt="보테가"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_04.png" alt="넷플릭스"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_05.png" alt="무신사"></div></div>
-										</div>
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner02_01.png" alt="버버리"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_02.png" alt="벤츠"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_03.png" alt="보테가"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_04.png" alt="넷플릭스"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner02_05.png" alt="무신사"></div></div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner03_01.png" alt="삼성"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_02.png" alt="예거"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_03.png" alt="올리브영"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_04.png" alt="키엘"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_05.png" alt="프라다"></div></div>
-										</div>
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner03_01.png" alt="삼성"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_02.png" alt="예거"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_03.png" alt="올리브영"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_04.png" alt="키엘"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_05.png" alt="프라다"></div></div>
-										</div>
-										<div class="los">
-											<div class="logo"><div><img src="./images/skin/partner03_01.png" alt="삼성"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_02.png" alt="예거"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_03.png" alt="올리브영"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_04.png" alt="키엘"></div></div>
-											<div class="logo"><div><img src="./images/skin/partner03_05.png" alt="프라다"></div></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="tbx">
-								<div class="cir-fi cir">
-									<div class="line">
-										<div class="li01 lib"></div>
-										<div class="li02 lib"></div>
-									</div>
-								</div>
-								<h3 class="h3">GLOBAL BRAND PARTNERS</h3>
-								<h4 class="h4" data-count="50"><span>0</span><sup>+</sup></h4>
-								<p class="p">We have collaborated with <br>more than 50 global brands, <br>from famous domestic brands to global <br>luxury brands all around the world.</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<!--section2-->
-			<div class="sec_scr_wrap">
-				<div class="sec03" id="sec03">
-					<div class="pin">
-						<div class="intro">
-							<div class="cir">
-								<div class="line">
-									<div class="li01 lib"></div>
-									<div class="li02 lib"></div>
-								</div>
-							</div>
-							<div class="half_line">
-								<div class="bar"></div>
-								<div class="circle"></div>
-							</div>
-							<div class="txt_box">
-								<div class="sub_txt">
-									<p class="sec03_sp">EXPERIENCE</p>
-								</div>
-								<div class="sub_txt">
-									<p class="sec03_camp">VALUE</p>
-								</div>
-							</div>
-						</div>
-						
+					<div class="ms_logos">
+					<div class="logo"><img src="./images/skin/partner01_01.png" alt="Dior"></div>
+					<div class="logo"><img src="./images/skin/partner01_02.png" alt="Porsche"></div>
+					<div class="logo"><img src="./images/skin/partner01_03.png" alt="Google"></div>
+					<div class="logo"><img src="./images/skin/partner01_04.png" alt="Cartier"></div>
+					<div class="logo"><img src="./images/skin/partner01_05.png" alt="Nike"></div>
+					<div class="logo"><img src="./images/skin/partner02_01.png" alt="Burberry"></div>
+					<div class="logo"><img src="./images/skin/partner02_02.png" alt="Mercedes-Benz"></div>
+					<div class="logo"><img src="./images/skin/partner02_03.png" alt="Bottega Veneta"></div>
+					<div class="logo"><img src="./images/skin/partner02_04.png" alt="Netflix"></div>
+					<div class="logo"><img src="./images/skin/partner02_05.png" alt="Musinsa"></div>
+					<div class="logo"><img src="./images/skin/partner03_01.png" alt="Samsung"></div>
+					<div class="logo"><img src="./images/skin/partner03_02.png" alt="Jaeger-LeCoultre"></div>
+					<div class="logo"><img src="./images/skin/partner03_03.png" alt="Olive Young"></div>
+					<div class="logo"><img src="./images/skin/partner03_04.png" alt="Kiehl's"></div>
+					<div class="logo"><img src="./images/skin/partner03_05.png" alt="Prada"></div>
 					</div>
 				</div>
-				<!--section3-->
-				<div class="sec04 horizon_wrap" id="sec04">
-					<div class="title">
-						<div class="sub_txt">
-							<svg class="loading" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-							   width="850px" height="110px" viewBox="0 0 574.558 120" enable-background="new 0 0 574.558 120" xml:space="preserve">
-							  <defs>
-								<pattern id="water" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
-								  <path fill="#42B0FB" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
-								</pattern>
-								
-								<text id="text" transform="matrix(1 0 0 1 -8.0684 116.7852)" font-size="160" font-family="Kanit" font-weight="bold" x="50%" text-anchor="middle">EXPERIENCE</text>
-								
-								<mask id="text_mask">
-								  <use x="0" y="0" xlink:href="#text" opacity="1" fill="#42B0FB"/>
-								</mask>
-							  </defs>
-							  <use x="0" y="0" xlink:href="#text" fill="transparent" stroke="#42B0FB" stroke-width="2"/>
-							  <rect class="water-fill" mask="url(#text_mask)" fill="url(#water)" x="-200" y="-10" width="2000" height="120"/>
-							</svg>
-						</div>
-					</div>
-					<div class="horizon">
-						<div class="layer">
-							<div class="des">
-								<span>EXPERIENCE</span>
-								<h3><strong>Deliver Unique Experience</strong></h3>
-								<p>Bloomingterra is an outdoor advertising company specialized <br>in ambient advertising that utilizes various spaces and structures. <br>We bring a brand's message into the daily lives of people, <br>creating a unique experience.</p>
-							</div>
-						</div>
-						<div class="layer">
-							{#experience_display}
-						</div>
-					</div>
+			</section>
+			<!-- [정적 재구성] EXPERIENCE -->
+			<section class="ms ms_feature" id="sec04">
+				<div class="ms_in">
+					<span class="ms_eyebrow">EXPERIENCE</span>
+					<h3>Deliver Unique Experience</h3>
+					<p>Bloomingterra is an outdoor advertising company specialized in ambient advertising that utilizes various spaces and structures. We bring a brand's message into the daily lives of people, creating a unique experience.</p>
 				</div>
-				<!--section4-->	
-				<div class="sec05 horizon_wrap" id="sec05">
-					<div class="title">
-						<div class="sub_txt">
-							<svg class="loading" version="1.1"  x="0px" y="0px"
-							   width="750px" height="110px" viewBox="0 0 574.558 120" enable-background="new 0 0 574.558 120" xml:space="preserve">
-							  <defs>
-								<pattern id="water2" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
-								  <path fill="#42B0FB" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
-								</pattern>
-								
-								<text id="text2" transform="matrix(1 0 0 1 -8.0684 116.7852)" font-size="160" font-family="Kanit" font-weight="bold" x="50%" text-anchor="middle">VALUE</text>
-								
-								<mask id="text_mask2">
-								  <use x="0" y="0" xlink:href="#text2" opacity="1" fill="#42B0FB"/>
-								</mask>
-							  </defs>
-							  <use x="0" y="0" xlink:href="#text2" fill="transparent" stroke="#42B0FB" stroke-width="2"/>
-							  <rect class="water-fill" mask="url(#text_mask2)" fill="url(#water2)" x="-400" y="-10" width="1600" height="120"/>
-							</svg>
-						</div>
-					</div>
-					<div class="horizon">
-						<div class="layer">
-							<div class="des">
-								<span>VALUE</span>
-								<h3><strong>Create Value through Success</strong></h3>
-								<p>Bloomingterra focuses on value-centered business. <br>We bring life and value to overlooked spaces and buildings <br>by delivering a brand's message through engaging content.</p>
-							</div>
-						</div>
-						<div class="layer">
-							{#value_display}
-						</div>
-					</div>
+			</section>
+			<!-- [정적 재구성] VALUE -->
+			<section class="ms ms_feature ms_alt" id="sec05">
+				<div class="ms_in">
+					<span class="ms_eyebrow">VALUE</span>
+					<h3>Create Value through Success</h3>
+					<p>Bloomingterra focuses on value-centered business. We bring life and value to overlooked spaces and buildings by delivering a brand's message through engaging content.</p>
 				</div>
-				<!--section5-->	
-			</div>
+			</section>
 			<div class="sec06" id="sec06">
 				<div class="sec06_bg"></div>
 				<div class="lasy ver_pc">
