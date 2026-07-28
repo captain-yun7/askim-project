@@ -19,29 +19,76 @@
 <script src="{ js }/js/SplitText.min.js"></script>
 <script src="{ js }/js/custom.js"></script>
 <script>
-// 메인 히어로 자체 크로스페이드 슬라이더 (무한 자동전환 + 켄번즈 + 도트)
+// 메인 히어로: 관리자 '메인 슬라이드 설정'(main_image_slide) 연동 — 사진/영상 자동 슬라이더
 document.addEventListener('DOMContentLoaded', function(){
-	var hero = document.querySelector('.main_hero');
-	if(!hero) return;
-	var slides = hero.querySelectorAll('.hs_slide');
-	var dotsWrap = hero.querySelector('.hero_dots');
-	if(!slides.length) return;
-	var cur = 0, n = slides.length, timer;
-	for(var i=0;i<n;i++){
-		var d = document.createElement('button');
-		d.className = 'hs_dot'; d.type='button'; d.setAttribute('aria-label','slide '+(i+1));
-		(function(idx){ d.addEventListener('click', function(){ go(idx); restart(); }); })(i);
-		dotsWrap.appendChild(d);
+	var hero = document.querySelector('.main_hero'); if(!hero) return;
+	var sliderEl = hero.querySelector('.hero_slider'), dotsWrap = hero.querySelector('.hero_dots');
+	var LANG = '{=lang}' || 'kor';
+	var BASE = '/upload/main/imageSlide/' + LANG + '/responsive/pc/';
+	// 관리자 등록 슬라이드
+	var list = [];
+	try {
+		var pc = (window.confData && confData.files && confData.files.responsive && confData.files.responsive.pc) || [];
+		for (var k=0;k<pc.length;k++){ if(pc[k] && pc[k].fname){ list.push({ src: BASE + pc[k].fname, fname: pc[k].fname, link: pc[k].link || '' }); } }
+	} catch(e){}
+	// 폴백: 기본 캠페인 이미지 7장
+	if (!list.length){
+		for (var i=1;i<=7;i++){ var f=('0'+i).slice(-2); list.push({ src:'/data/skin/respon_default_en/images/skin/main_hero_'+f+'.jpg', fname:f+'.jpg', link:'' }); }
 	}
-	var dots = dotsWrap.querySelectorAll('.hs_dot');
+	var DUR = 2500; try { var t = confData.responsive.pc.time; if(t) DUR = Math.max(1500, parseFloat(t)*1000); } catch(e){}
+	var isVid = function(f){ return /\.(mp4|mpeg4|m4v|webm|mov|ogg)$/i.test(f); };
+	var fallback = function(){ var fb=[]; for (var i=1;i<=7;i++){ var f=('0'+i).slice(-2); fb.push({ src:'/data/skin/respon_default_en/images/skin/main_hero_'+f+'.jpg', fname:f+'.jpg', link:'' }); } return fb; };
+	// 이미지 슬라이드는 실제 로드되는 것만 사용(깨진 관리자 레코드 방지), 영상은 그대로
+	var checks = list.map(function(it){ return new Promise(function(res){
+		if (isVid(it.fname)){ res(it); return; }
+		var im = new Image(); im.onload=function(){ res(it); }; im.onerror=function(){ res(null); }; im.src = it.src;
+	}); });
+	Promise.all(checks).then(function(r){
+		var valid = r.filter(Boolean);
+		if (!valid.length) valid = fallback();
+		build(valid);
+	});
+
+	function build(list){
+	// 슬라이드 DOM 생성
+	list.forEach(function(it, idx){
+		var el;
+		if (isVid(it.fname)){
+			el = document.createElement('video');
+			el.src = it.src; el.muted = true; el.playsInline = true; el.setAttribute('playsinline',''); el.setAttribute('muted',''); el.preload='auto';
+		} else {
+			el = document.createElement('div'); el.style.backgroundImage = "url('" + it.src + "')";
+		}
+		el.className = 'hs_slide'; sliderEl.appendChild(el);
+		var d = document.createElement('button'); d.type='button'; d.className='hs_dot'; d.setAttribute('aria-label','slide '+(idx+1));
+		d.addEventListener('click', function(){ go(idx); });
+		dotsWrap.appendChild(d);
+	});
+	var slides = sliderEl.querySelectorAll('.hs_slide'), dots = dotsWrap.querySelectorAll('.hs_dot');
+	var cur = 0, n = slides.length, timer = null;
+	function clearT(){ if(timer){ clearTimeout(timer); timer=null; } }
+	function schedule(){
+		clearT();
+		var el = slides[cur];
+		if (el.tagName === 'VIDEO'){
+			try { el.currentTime = 0; var pr = el.play(); if(pr && pr.catch) pr.catch(function(){}); } catch(e){}
+			el.onended = function(){ go(cur+1); };
+			timer = setTimeout(function(){ if(!el.duration || isNaN(el.duration) || el.paused) go(cur+1); }, 20000); // 안전장치
+		} else {
+			timer = setTimeout(function(){ go(cur+1); }, DUR);
+		}
+	}
 	function go(i){
+		if (n<2 && slides[cur] && slides[cur].tagName!=='VIDEO') return;
+		var prev = slides[cur];
+		if (prev.tagName === 'VIDEO'){ try { prev.pause(); } catch(e){} prev.onended = null; }
 		slides[cur].classList.remove('on'); dots[cur].classList.remove('on');
 		cur = (i + n) % n;
 		slides[cur].classList.add('on'); dots[cur].classList.add('on');
+		schedule();
 	}
-	function restart(){ clearInterval(timer); timer = setInterval(function(){ go(cur+1); }, 2500); }
-	slides[0].classList.add('on'); dots[0].classList.add('on');
-	restart();
+	if (n){ slides[0].classList.add('on'); dots[0].classList.add('on'); schedule(); }
+	} // build
 });
 </script>
 
@@ -52,7 +99,9 @@ document.addEventListener('DOMContentLoaded', function(){
 .main_hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;z-index:2;}
 .main_hero .hero_slider{position:absolute;inset:0;overflow:hidden;}
 .main_hero .hs_slide{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transform:scale(1.04);transition:opacity 1.5s ease;will-change:opacity,transform;z-index:1;}
-.main_hero .hs_slide.on{opacity:1;z-index:2;animation:heroZoom 6.5s ease-out forwards;}
+.main_hero video.hs_slide{width:100%;height:100%;object-fit:cover;background:#000;transform:none;}
+.main_hero .hs_slide.on{opacity:1;z-index:2;}
+.main_hero div.hs_slide.on{animation:heroZoom 6.5s ease-out forwards;} /* 켄번즈는 이미지 슬라이드에만 */
 @keyframes heroZoom{from{transform:scale(1.04)}to{transform:scale(1.14)}}
 .main_hero .hero_slider::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,.12) 66%,rgba(0,0,0,.55) 100%);}
 .main_hero .hero_dots{position:absolute;left:0;right:0;bottom:36px;z-index:5;display:flex;gap:11px;justify-content:center;align-items:center;}
@@ -220,15 +269,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		<div class="main_content">
 			<!-- 메인 히어로: 진입 즉시 자동 슬라이드 -->
 			<div class="sec01 main_hero">
-				<div class="hero_slider">
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_01.jpg')"></div>
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_02.jpg')"></div>
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_03.jpg')"></div>
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_04.jpg')"></div>
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_05.jpg')"></div>
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_06.jpg')"></div>
-					<div class="hs_slide" style="background-image:url('./images/skin/main_hero_07.jpg')"></div>
-				</div>
+				<div class="hero_slider"><!-- 슬라이드는 관리자 '메인 슬라이드 설정' 연동으로 JS 생성 --></div>
 				<div class="hero_dots"></div>
 			</div>
 			<!--section1-->

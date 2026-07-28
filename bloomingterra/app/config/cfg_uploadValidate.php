@@ -13,7 +13,7 @@ $config = array(
 		// 확장자 배열
 		'extension' => array(
 			'all' => array('doc', 'docx', 'hwp', 'txt', 'pdf', 'xls', 'xlsx', 'ppt', 'pptx', 'zip', '7z', 'jpeg', 'jpg', 'png', 'bmp', 'gif', 'mp4', 'mpeg4'),
-			'image'		=> array('jpeg','jpg','png','bmp','gif'),
+			'image'		=> array('jpeg','jpg','png','bmp','gif','mp4','mpeg4','webm','m4v'),
 			'document' 	=> array('doc','docx','hwp','txt','pdf','xls','xlsx','cell','ppt','pptx','show','rtf','zip','7z'),
 			'sitemap'	=> array('xml'),
 			'favicon'		=> array('ico'),
