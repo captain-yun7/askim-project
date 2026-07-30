@@ -151,7 +151,7 @@
 		div += '	<input type="hidden" name="oname_file' + formName + '[' + key + ']" value="' + image.oname + '" />';
 		div += '	<input type="hidden" name="fname_file' + formName + '[' + key + ']" value="' + image.fname + '" />';
 		div += '	<input type="hidden" name="type_file' + formName + '[' + key + ']" value="image" />';
-		div += '	<input type="hidden" name="size_file' + formName + '[' + key + ']" value="10" />';
+		div += '	<input type="hidden" name="size_file' + formName + '[' + key + ']" value="100" />';
 		div += '	<input type="hidden" name="folder_file' + formName + '[' + key + ']" value="" />';
 		div += '	<span name="filezone_file' + formName + '[' + key + ']">';
 		if(image.fname){
