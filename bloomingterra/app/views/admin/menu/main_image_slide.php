@@ -187,7 +187,11 @@
 				if(fname){
 					var link = $(this).find("input[name^='link']").val();
 					var uploadUrl = getUploadUrl(form);
-					li.push('<li><a href="' + link + '"><img src="' + uploadUrl + '/' + fname + '" width="100%" height="731.98px"/></a></li>');
+					if(/\.(mp4|mpeg4|m4v|webm|mov)$/i.test(fname)){
+							li.push('<li><a href="' + link + '"><video src="' + uploadUrl + '/' + fname + '" muted autoplay loop playsinline style="width:100%;height:731.98px;object-fit:cover;"></video></a></li>');
+						}else{
+							li.push('<li><a href="' + link + '"><img src="' + uploadUrl + '/' + fname + '" width="100%" height="731.98px"/></a></li>');
+						}
 				}
 			});
 
@@ -451,6 +455,7 @@
 		</div>
 	</div>
 	<div class="table_write_info">* 동일 형식, 타입의 슬라이 컷에 등록되는 이미지는 각각 "가로x세로" 비율 및 크기가 같아야 합니다.</div>
+	<div class="table_write_info" style="color:#2b6cb0;">* 사진(jpg/png) 또는 <b>영상(mp4)</b>을 올릴 수 있습니다. "파일 선택"에서 mp4 파일을 고르면 됩니다. (영상은 메인에서 무음 자동재생 → 1회 재생 후 다음 슬라이드로 넘어갑니다)</div>
 	<div class="table_write_info">* 편집시, 아래 미리보기를 통해 효과 및 지속시간을 확인 후 저장하시기 바랍니다.</div>
 	<?=form_open("", array("name" => "frm", "id" => "frm"));?>
 		<input type="hidden" name="reg" value="register" />
