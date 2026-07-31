@@ -116,6 +116,13 @@
 			$(".file_div").html(null);
 		}
 
+		// 데이터가 없어도 각 슬라이드 타입에 빈 '파일 선택' 행 1개 보장
+		// (PC 등에 저장된 파일이 없을 때 업로드 자리가 사라지던 문제 방지)
+		['pc','tablet','mobile'].forEach(function(t){
+			if($('.file_div.'+t+' .file-div').length === 0){ addImage(false, t); }
+		});
+		if($('.file_div.fixed .file-div').length === 0){ addImage(); }
+
 		// 설정테이블 세팅
 		$(".table_write.option").hide();
 		$(".table_write.option."+form).show();
