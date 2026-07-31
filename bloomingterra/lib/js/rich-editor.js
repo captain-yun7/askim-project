@@ -12,7 +12,7 @@
  *   var html = getRichEditor("info");            // submit 직전 자동 sync 되므로 보통 불필요
  */
 (function(global){
-	var CKE_BASE = 'https://cdn.ckeditor.com/ckeditor5/40.0.0/super-build';
+	var CKE_BASE = '/lib/ckeditor5/40.0.0/super-build'; // 자체 호스팅 (CDN 차단/지연 시 에디터 미로드 → 게재 불가 방지). 원본 CDN: https://cdn.ckeditor.com/ckeditor5/40.0.0/super-build
 	// folder(컨텍스트) → 이미지 업로드 endpoint. 어드민은 ADMIN_Controller 인증 자동.
 	var UPLOAD_ENDPOINTS = {
 		'goods':  '/admin/goods/editor_image_upload',
