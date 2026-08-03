@@ -24,13 +24,24 @@ document.addEventListener('DOMContentLoaded', function(){
 	var hero = document.querySelector('.main_hero'); if(!hero) return;
 	var sliderEl = hero.querySelector('.hero_slider'), dotsWrap = hero.querySelector('.hero_dots');
 	var LANG = '{=lang}' || 'kor';
-	var BASE = '/upload/main/imageSlide/' + LANG + '/responsive/pc/';
-	// 관리자 등록 슬라이드
-	var list = [];
-	try {
-		var pc = (window.confData && confData.files && confData.files.responsive && confData.files.responsive.pc) || [];
-		for (var k=0;k<pc.length;k++){ if(pc[k] && pc[k].fname){ list.push({ src: BASE + pc[k].fname, fname: pc[k].fname, link: pc[k].link || '' }); } }
-	} catch(e){}
+	// 뷰포트에 따라 PC/태블릿/모바일 슬라이드 선택 (기기별 최적화 영상/이미지)
+	var vw = window.innerWidth || document.documentElement.clientWidth || 1024;
+	var device = vw >= 1024 ? 'pc' : (vw >= 640 ? 'tablet' : 'mobile');
+	var BASES = {
+		pc:     '/upload/main/imageSlide/'       + LANG + '/responsive/pc/',
+		tablet: '/upload/main/imageSlideMobile/' + LANG + '/responsive/tablet/',
+		mobile: '/upload/main/imageSlideMobile/' + LANG + '/responsive/mobile/'
+	};
+	var pickSlides = function(dev){
+		try {
+			var arr = (window.confData && confData.files && confData.files.responsive && confData.files.responsive[dev]) || [];
+			var out = [];
+			for (var k=0;k<arr.length;k++){ if(arr[k] && arr[k].fname){ out.push({ src: BASES[dev] + arr[k].fname, fname: arr[k].fname, link: arr[k].link || '' }); } }
+			return out;
+		} catch(e){ return []; }
+	};
+	var list = pickSlides(device);
+	if (!list.length && device !== 'pc') list = pickSlides('pc'); // 해당 기기 슬라이드 없으면 PC용으로
 	// 폴백: 기본 캠페인 이미지 7장
 	if (!list.length){
 		for (var i=1;i<=7;i++){ var f=('0'+i).slice(-2); list.push({ src:'/data/skin/respon_default_en/images/skin/main_hero_'+f+'.jpg', fname:f+'.jpg', link:'' }); }
