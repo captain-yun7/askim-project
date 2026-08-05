@@ -39,6 +39,12 @@
 #visual .visual_bg .roll .v_bg{position: absolute; left:0; top:0; width: 100%; height: 100%; background-repeat:no-repeat; background-position:center; background-size:cover; -ms-transform: scale(1.1,1.1); -o-transform: scale(1.1,1.1); -moz-transform: scale(1.1,1.1); -webkit-transform: scale(1.1,1.1); transform: scale(1.1,1.1); -webkit-transition:transform 3000ms  ease-in-out; -moz-transition:transform 3000ms ease-in-out; -o-transition:transform 3000ms ease-in-out; -ms-transition:transform 3000ms ease-in-out; transition:transform 3000ms ease-in-out;}
 #visual .visual_bg .roll.action .v_bg{transform: scale(1); -ms-transform: scale(1); -webkit-transform: scale(1);}
 #visual .visual_bg .roll .v_bg::after{content:''; display: block; width: 100%; height: 100%; opacity: 0.5; background: #000; position: absolute; left:0; top:0; z-index: 9991;}
+/* 히어로 풀스크린 영상 레이어 (사진 슬라이더 위, 텍스트 아래 / 음영 유지) */
+#visual .visual_video{position:absolute; left:0; top:0; width:100%; height:100%; z-index:9992; overflow:hidden; background:#000;}
+#visual .visual_video video{position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; object-position:center;}
+#visual .visual_video::after{content:''; display:block; width:100%; height:100%; background:#000; opacity:0.5; position:absolute; left:0; top:0; z-index:1;}
+/* 영상 재생 시 슬라이더 컨트롤(재생/도트) 숨김 */
+#visual .visual_video ~ .controler{display:none !important;}
 #visual .scroll_down{position: absolute; bottom: 50px; right: 50%; margin-right: -765px; z-index: 9999;}
 
 

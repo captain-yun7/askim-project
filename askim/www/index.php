@@ -21,6 +21,29 @@ $mbinfo = sql_fetch($sql_mb);
 				include $_SERVER['DOCUMENT_ROOT']."/twcenter/module/banner_skin.php"; // 디자인 스킨 적용
 			?>
 		</div>
+		<?php
+			// 히어로 풀스크린 영상: 파일 있으면 영상(음영), 없으면 위 사진 슬라이드.
+			// 교체: /img/visual/hero_{pc,tablet,mobile}.mp4 (없는 기기는 pc본으로 자동)
+			$hero_vdir = $_SERVER['DOCUMENT_ROOT']."/img/visual/";
+			if(@is_file($hero_vdir."hero_pc.mp4")){
+				$hv_pc = "/img/visual/hero_pc.mp4";
+				$hv_tb = @is_file($hero_vdir."hero_tablet.mp4") ? "/img/visual/hero_tablet.mp4" : $hv_pc;
+				$hv_mo = @is_file($hero_vdir."hero_mobile.mp4") ? "/img/visual/hero_mobile.mp4" : $hv_pc;
+		?>
+		<div class="visual_video" data-pc="<?php echo $hv_pc; ?>" data-tablet="<?php echo $hv_tb; ?>" data-mobile="<?php echo $hv_mo; ?>">
+			<video muted loop playsinline preload="auto"></video>
+		</div>
+		<script>
+		(function(){
+			var box = document.querySelector('.visual_video'); if(!box) return;
+			var v = box.querySelector('video');
+			var w = window.innerWidth || document.documentElement.clientWidth || 1024;
+			v.src = w >= 1024 ? box.getAttribute('data-pc') : (w >= 640 ? box.getAttribute('data-tablet') : box.getAttribute('data-mobile'));
+			v.muted = true; v.setAttribute('muted','');
+			var pr = v.play(); if(pr && pr.catch) pr.catch(function(){});
+		})();
+		</script>
+		<?php } ?>
 		<div class="controler">
 			<div class="v_btn">
 				<button class="v_play">Play</button>
