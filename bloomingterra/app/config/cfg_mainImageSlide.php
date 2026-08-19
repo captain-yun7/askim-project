@@ -52,7 +52,7 @@ $config = array(
 						'pc' => array(
 							'0' => array(
 								'oname' => '20210603103808_9750.jpg',
-								'fname' => '20230118164404_3076.jpg',
+								'fname' => '20260730163822_7386.mp4',
 								'link' => '',
 							),
 							'1' => array(

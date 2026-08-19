@@ -48,6 +48,7 @@ curl -sL -A "Mozilla/5.0 ... Chrome/120" "https://www.askim.kr/portfolio/portfol
 
 ## 주의사항
 
+- **블루밍 언어 설정 함정** — `multilingual=0`이라 사이트는 **항상 kor 언어로 렌더** (스킨만 `respon_default_en`). `cfg_menu.php` 등 언어별 설정은 **kor 블록**이 실제 반영 대상 (eng 블록은 무시됨)
 - **비밀번호는 `_docs/runbook/env.md`만**. 코드/CLAUDE.md/worklog에 하드코딩 절대 금지
 - **에스킴 FTP IP 화이트리스트, 1주일 만료** — 만료 시 쓰리웨이(`cms.web2002.co.kr`)에 IP 재등록 + PW 새로 받음
 - **블루밍 PHP-FPM OPCache** — controller 변경 시 워커별로 즉시 갱신 안 됨. 즉시 반영 필요한 로직은 **view 단 `<?php ?>` block으로 우회** (view는 자동 재컴파일)
