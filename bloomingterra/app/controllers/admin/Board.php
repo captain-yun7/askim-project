@@ -291,7 +291,7 @@ class Board extends ADMIN_Controller {
 							}
 						}
 
-						if(count($data['tags']) > 0) { // insert
+						if(!empty($data['tags']) && is_array($data['tags'])) { // insert
 							$tags = [];
 							foreach($data['tags'] as $value) {
 								$tags[] = [
@@ -302,7 +302,7 @@ class Board extends ADMIN_Controller {
 							$this->dm->insert('da_board_gallery_tags', $tags, false, true);
 						}
 
-						if(count($data['rtags']) > 0) {
+						if(!empty($data['rtags']) && is_array($data['rtags'])) {
 							foreach($data['rtags'] as $key => $value) {
 								$rtags[] = [
 									'no' => $key,
@@ -382,7 +382,7 @@ class Board extends ADMIN_Controller {
 				}
 
 				if($this->_board['code'] === 'gallery') {
-					$get_data['tags'] = $this->dm->get('da_board_gallery_tags', [], ['bno' => $no], [], [], ['no' => 'ASC']);
+					$get_data['tags'] = isset($no) ? $this->dm->get('da_board_gallery_tags', [], ['bno' => $no], [], [], ['no' => 'ASC']) : array();
 				}
 
 				$get_data["board_info"] = $this->_board;
