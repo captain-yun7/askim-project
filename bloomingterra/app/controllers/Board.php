@@ -245,8 +245,9 @@ class Board extends FRONT_Controller {
 				'prev' => 'nothing',
 			];
 
-			$temp_next = $this->dm->get('da_board_gallery', [], ['no > ' => $get['no']], [], [], ['no' => 'ASC'])[0];
-			$temp_prev = $this->dm->get('da_board_gallery', [], ['no < ' => $get['no']], [], [], ['no' => 'DESC'])[0];
+			$published = ['regdt <= ' => date('Y-m-d H:i:s')]; // 예약발행 글 제외
+			$temp_next = $this->dm->get('da_board_gallery', [], ['no > ' => $get['no']] + $published, [], [], ['no' => 'ASC'])[0];
+			$temp_prev = $this->dm->get('da_board_gallery', [], ['no < ' => $get['no']] + $published, [], [], ['no' => 'DESC'])[0];
 			if($temp_next['no'] > 0) $button['next'] = $temp_next['no'];
 			if($temp_prev['no'] > 0) $button['prev'] = $temp_prev['no'];
 
@@ -258,8 +259,8 @@ class Board extends FRONT_Controller {
 			}
 
 			if($get['search']) {
-				$temp_next = $this->dm->get('da_board_gallery', [], ['no > ' => $get['no']], ['title' => $get['search'].'|both'], [], ['no' => 'ASC'])[0];
-				$temp_prev = $this->dm->get('da_board_gallery', [], ['no < ' => $get['no']], ['title' => $get['search'].'|both'], [], ['no' => 'DESC'])[0];
+				$temp_next = $this->dm->get('da_board_gallery', [], ['no > ' => $get['no']] + $published, ['title' => $get['search'].'|both'], [], ['no' => 'ASC'])[0];
+				$temp_prev = $this->dm->get('da_board_gallery', [], ['no < ' => $get['no']] + $published, ['title' => $get['search'].'|both'], [], ['no' => 'DESC'])[0];
 				if($temp_next['no'] > 0) $button['next'] = $temp_next['no'];
 				if($temp_prev['no'] > 0) $button['prev'] = $temp_prev['no'];
 			}
@@ -293,7 +294,7 @@ class Board extends FRONT_Controller {
 				if(count($related_posts) < 2) {
 					$have = array_map(function($p){ return (int)$p['no']; }, $related_posts);
 					$have[] = (int)$no;
-					$recent = $this->dm->get('da_board_gallery', [], [], [], [], ['no' => 'DESC'], [8, 0]);
+					$recent = $this->dm->get('da_board_gallery', [], ['regdt <= ' => date('Y-m-d H:i:s')], [], [], ['no' => 'DESC'], [8, 0]);
 					if(is_array($recent)) {
 						foreach($recent as $row) {
 							if(count($related_posts) >= 2) break;

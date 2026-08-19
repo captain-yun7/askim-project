@@ -159,10 +159,12 @@ class Board_model extends CI_Model {
 
 		if(isset($arr_where)) {
 			foreach($arr_where as $key => $value) {
+				// db_where와 동일하게 3번째 인자(비교연산자) 지원
+				$op = (isset($value[2]) && preg_match('/(<|>|!|=)/', trim($value[2]))) ? " ".trim($value[2])." " : " = ";
 				if($key == 0) {
-					$this->db->where("BOARD.".$value[0]." = ", $value[1]);
+					$this->db->where("BOARD.".$value[0].$op, $value[1]);
 				}else{
-					$this->db->where($value[0]." = ", $value[1]);
+					$this->db->where($value[0].$op, $value[1]);
 				}
 			}
 		}
@@ -642,7 +644,12 @@ class Board_model extends CI_Model {
 				}
 			}
 
-			$set_data["regdt"] = date('Y-m-d H:i:s');
+			// 예약발행: 어드민에서 발행일시 지정 시 해당 시각으로 저장 (프론트는 regdt <= NOW()만 노출)
+			if(_CONNECT_PAGE == "ADMIN" && ib_isset($data["regdt"]) && ($regdt_ts = strtotime($data["regdt"]))) {
+				$set_data["regdt"] = date('Y-m-d H:i:s', $regdt_ts);
+			} else {
+				$set_data["regdt"] = date('Y-m-d H:i:s');
+			}
 			$set_data["userip"] = $this->input->ip_address();
 			$set_data["fixed"] = array_key_exists("fixed", $data) ? $data["fixed"] : "0";
 			$set_data["hit"] = 0;
@@ -669,6 +676,10 @@ class Board_model extends CI_Model {
 		} else if($mode == "modify"){ // 수정
 			$set_data["fixed"] = array_key_exists("fixed", $data) ? $data["fixed"] : "0";
 			$set_data["updatedt"] = date('Y-m-d H:i:s');
+			// 예약발행: 수정 시에도 발행일시 변경 허용
+			if(_CONNECT_PAGE == "ADMIN" && ib_isset($data["regdt"]) && ($regdt_ts = strtotime($data["regdt"]))) {
+				$set_data["regdt"] = date('Y-m-d H:i:s', $regdt_ts);
+			}
 			$get_data = table_data_match($this->_table, $set_data);
 			$result = $this->db->update($this->_table, $get_data, array("no" => $no));
 		} else if($mode == "inquire_answer_write") { // 문의답변 등록

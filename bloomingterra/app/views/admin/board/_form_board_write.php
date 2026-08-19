@@ -101,6 +101,13 @@ ul#tag li { display: inline-block; margin-right: 10px; position: relative; }
                         <p class="prefaceAreaTip bbs_cuation"><em>고정글 기능은 답글에서 지원하지 않습니다.</em></p>
 					</td>
 				</tr>
+				<tr>
+					<th class="ta_left">발행일시 (예약)</th>
+					<td colspan="3">
+						<input type="datetime-local" name="regdt" value="<?= ($board_info["mode"] == "modify" && !empty($board_view["regdt"])) ? date("Y-m-d\TH:i", strtotime($board_view["regdt"])) : "" ?>" />
+						<p class="prefaceAreaTip bbs_cuation"><em>비워두면 즉시 발행됩니다. 미래 일시를 지정하면 그 시각부터 사이트에 노출됩니다.</em></p>
+					</td>
+				</tr>
 				<?php if($board_info["yn_email"] == "y" || $board_info["yn_mobile"] == "y") :?>
 				<tr>
 					<?php if($board_info["yn_email"] == "y") : ?>

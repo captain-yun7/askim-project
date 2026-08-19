@@ -57,6 +57,9 @@ class Front_Board_model extends Board_model {
 		$category = $this->input->get("category", true);
 		if($category) $arr_where[] = array("preface", $category);
 
+		// 예약발행: 발행시각(regdt)이 미래인 글은 프론트 목록 미노출
+		$arr_where[] = array("regdt", date('Y-m-d H:i:s'), "<=");
+
 		$get_data = parent::get_list_board($arr_where, $arr_like, $limit, $offset);
 
 		if(isset($get_data["notice_list"])) {
@@ -83,6 +86,9 @@ class Front_Board_model extends Board_model {
 	 * @return array
 	 */
 	public function get_view_board($arr_where = null) {
+		// 예약발행: 발행시각(regdt)이 미래인 글은 프론트 상세 접근 차단
+		$arr_where[] = array("regdt", date('Y-m-d H:i:s'), "<=");
+
 		$get_data = parent::get_view_board($arr_where);
 
 		if(!isset($get_data["board_view"])) {

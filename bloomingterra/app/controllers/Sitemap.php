@@ -76,6 +76,30 @@ class Sitemap extends FRONT_Controller {
 			}
 		}
 
+		// ── 2026-08-15 글로벌 서비스 국가 페이지 (/global, /global/<slug>) — {국가}x{매체} SEO 랜딩
+		if ($this->db->table_exists('da_global_country')) {
+			$urls[] = ['loc' => $base . '/global', 'priority' => '0.8', 'changefreq' => 'weekly'];
+			$gc_q = $this->db->select('slug, regdt, updatedt')
+			                 ->where('yn_use', 'y')
+			                 ->order_by('sort', 'ASC')
+			                 ->get('da_global_country');
+			if ($gc_q) {
+				foreach ($gc_q->result_array() as $row) {
+					if (empty($row['slug'])) continue;
+					$entry = [
+						'loc'        => $base . '/global/' . rawurlencode($row['slug']),
+						'priority'   => '0.7',
+						'changefreq' => 'monthly',
+					];
+					$lastmod = !empty($row['updatedt']) ? $row['updatedt'] : $row['regdt'];
+					if (!empty($lastmod)) {
+						$entry['lastmod'] = date('c', strtotime($lastmod));
+					}
+					$urls[] = $entry;
+				}
+			}
+		}
+
 		// ── board list + board view (게시판별)
 		$board_q = $this->db->select('code, name')
 		                    ->where('yn_display_list', 'y')
@@ -99,6 +123,7 @@ class Sitemap extends FRONT_Controller {
 				$post_q = $this->db->select('no, regdt, updatedt')
 				                   ->where('language', 'kor')
 				                   ->where("(is_secret IS NULL OR is_secret != 'y')", null, false)
+				                   ->where('regdt <=', date('Y-m-d H:i:s')) // 예약발행 글 제외
 				                   ->order_by('no', 'DESC')
 				                   ->get($table);
 				if (!$post_q) continue;
