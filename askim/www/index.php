@@ -22,13 +22,37 @@ $mbinfo = sql_fetch($sql_mb);
 			?>
 		</div>
 		<?php
-			// 히어로 풀스크린 영상: 파일 있으면 영상(음영), 없으면 위 사진 슬라이드.
-			// 교체: /img/visual/hero_{pc,tablet,mobile}.mp4 (없는 기기는 pc본으로 자동)
-			$hero_vdir = $_SERVER['DOCUMENT_ROOT']."/img/visual/";
-			if(@is_file($hero_vdir."hero_pc.mp4")){
-				$hv_pc = "/img/visual/hero_pc.mp4";
-				$hv_tb = @is_file($hero_vdir."hero_tablet.mp4") ? "/img/visual/hero_tablet.mp4" : $hv_pc;
-				$hv_mo = @is_file($hero_vdir."hero_mobile.mp4") ? "/img/visual/hero_mobile.mp4" : $hv_pc;
+			// 히어로 풀스크린 영상(음영). 우선순위:
+			//  1) 관리자: twcenter 배너 'visual' 그룹에 영상(mp4/webm/mov) 업로드
+			//     - 컨텐츠이미지=PC, 추가이미지2=태블릿, 추가이미지3=모바일 (없으면 PC본 자동)
+			//  2) 고정경로: /img/visual/hero_{pc,tablet,mobile}.mp4
+			// 둘 다 없으면 위 사진 슬라이드만 노출.
+			// ($de_img_dir=웹경로 / $de_img_path=파일경로 는 위 banner_skin.php에서 정의됨)
+			$hv_pc = $hv_tb = $hv_mo = "";
+			$hero_vexts = array('mp4','webm','mov','m4v');
+			$is_hero_vid = function($f) use ($de_img_path, $hero_vexts){
+				return $f && in_array(strtolower(pathinfo($f, PATHINFO_EXTENSION)), $hero_vexts) && @is_file($de_img_path.$f);
+			};
+			// 1) 관리자 배너에서 영상 항목 탐색
+			$vres = query("select de_img,de_img2,de_img3 from wiz_banner where code='visual' and isuse!='N' order by prior, idx asc");
+			while($vrow = sql_fetch_arr($vres)){
+				if($is_hero_vid($vrow['de_img'])){
+					$hv_pc = $de_img_dir.$vrow['de_img'];
+					$hv_tb = $is_hero_vid($vrow['de_img2']) ? $de_img_dir.$vrow['de_img2'] : $hv_pc;
+					$hv_mo = $is_hero_vid($vrow['de_img3']) ? $de_img_dir.$vrow['de_img3'] : $hv_pc;
+					break;
+				}
+			}
+			// 2) 고정경로 폴백
+			if($hv_pc === ""){
+				$hero_vdir = $_SERVER['DOCUMENT_ROOT']."/img/visual/";
+				if(@is_file($hero_vdir."hero_pc.mp4")){
+					$hv_pc = "/img/visual/hero_pc.mp4";
+					$hv_tb = @is_file($hero_vdir."hero_tablet.mp4") ? "/img/visual/hero_tablet.mp4" : $hv_pc;
+					$hv_mo = @is_file($hero_vdir."hero_mobile.mp4") ? "/img/visual/hero_mobile.mp4" : $hv_pc;
+				}
+			}
+			if($hv_pc !== ""){
 		?>
 		<div class="visual_video" data-pc="<?php echo $hv_pc; ?>" data-tablet="<?php echo $hv_tb; ?>" data-mobile="<?php echo $hv_mo; ?>">
 			<video muted loop playsinline preload="auto"></video>
