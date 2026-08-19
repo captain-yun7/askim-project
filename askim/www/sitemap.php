@@ -45,6 +45,7 @@ $view_sql = "SELECT idx, category, wdate
              FROM wiz_bbs
              WHERE code='portfolio'
                AND (privacy IS NULL OR privacy != 'Y')
+               AND wdate <= UNIX_TIMESTAMP()
              ORDER BY prino DESC";
 if ($view_q = mysqli_query($conn, $view_sql)) {
     while ($row = mysqli_fetch_assoc($view_q)) {

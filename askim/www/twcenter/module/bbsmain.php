@@ -31,7 +31,7 @@ if($category != "") $category_sql = " and wb.category = '$category' ";
 
 $sql = "select wb.idx,wb.subject,wb.content,wb.upfile1,wb.addinfo1,wb.addinfo2,wb.addinfo3,wb.addinfo4,wb.addinfo5,wb.addinfo6,wb.wdate as wtime,from_unixtime(wb.wdate, '".$bbs_info['datetype_list']."') as wdate,wb.privacy,wb.content,wb.depno,wb.category,wc.catname, wc.caticon, wb.memid, wb.memgrp
 				from wiz_bbs as wb left join wiz_bbscat as wc on wb.category = wc.idx
-				where wb.code = '$code' $category_sql order by wb.prino desc limit $cnt";
+				where wb.code = '$code' $category_sql and wb.wdate <= unix_timestamp(now()) order by wb.prino desc limit $cnt"; // 예약발행 글 제외
 $result = query($sql);
 while($row = sql_fetch_arr($result)){
 

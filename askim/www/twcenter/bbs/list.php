@@ -65,6 +65,15 @@ if($pos       != "")          $p_param = "pos=$pos&code_page=$code_page";
 $line = $bbs_info['line'];
 $bbsadmin_ids = explode(",", $bbs_info['bbsadmin']);
 
+// 예약발행: 발행시각(wdate)이 미래인 글은 관리자/게시판관리자 외 미노출
+if($mem_level == "0" || ($bbs_info['bbsadmin'] != "" && in_array($wiz_session['id'], $bbsadmin_ids))) {
+	$sched_sql = "";
+	$sched_sql2 = "";
+} else {
+	$sched_sql = " and wb.wdate <= unix_timestamp(now()) ";
+	$sched_sql2 = " and wdate <= unix_timestamp(now()) ";
+}
+
 // 목록보기 권한체크
 if($lpermi < $mem_level) {
 	//권한 체크관련 - 모바일에서 권한으로 인한 경고 후 이동시 모바일 이동페이지가 입력되어있으면 모바일 이동페이지로 이동 2021-11-10 
@@ -212,8 +221,9 @@ $sql = "
 	  from wiz_bbs as wb 
 	  left join wiz_bbscat as wc 
 	    on wb.category = wc.idx
-	 where wb.code = '$code' 
-	   and wb.notice = 'Y' 
+	 where wb.code = '$code'
+	   and wb.notice = 'Y'
+	   $sched_sql
 	 order by wb.prino desc
 ";
 $result = query($sql);
@@ -433,16 +443,17 @@ if($mem_level == 0){
 }
 
 $sql = "
-	select idx 
-	  from wiz_bbs 
-	 where code = '".$code."' 
-	   and notice != 'Y' 
-	   $my_sql 
-	   $category_sql 
-	   $search_sql 
-	   $address_sql 
-	   $sub_category_sql 
-	   $process_sql 
+	select idx
+	  from wiz_bbs
+	 where code = '".$code."'
+	   and notice != 'Y'
+	   $sched_sql2
+	   $my_sql
+	   $category_sql
+	   $search_sql
+	   $address_sql
+	   $sub_category_sql
+	   $process_sql
 	 order by prino desc
 ";
 $result = query($sql);
@@ -480,13 +491,14 @@ $sql = "
 	  from wiz_bbs as wb 
 	  left join wiz_bbscat as wc 
 	    on wb.category = wc.idx
-	 where wb.code = '$code' 
-	   and wb.notice != 'Y' 
-	   $category_sql 
-	   $search_sql 
-	   $my_sql 
+	 where wb.code = '$code'
+	   and wb.notice != 'Y'
+	   $sched_sql
+	   $category_sql
+	   $search_sql
+	   $my_sql
 	   $address_sql
-	 order by wb.prino desc 
+	 order by wb.prino desc
 	 limit $start, $rows
 ";
 $result = query($sql);

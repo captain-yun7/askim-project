@@ -82,7 +82,7 @@ $mbinfo = sql_fetch($sql_mb);
 <?php
 	// 드라이브쓰루 인사이트 — insight 게시판 최신 1건 자동 노출
 	// 운영자 입력: 본문 맨 위 'youtube: <URL>' / 'more: <URL>' 두 줄(선택) → 아래에서 추출·숨김
-	$dt_row = sql_fetch("select idx,subject,content,from_unixtime(wdate,'%Y.%m.%d') as wdate from wiz_bbs where code='insight' and notice!='Y' order by prino desc, idx desc limit 1");
+	$dt_row = sql_fetch("select idx,subject,content,from_unixtime(wdate,'%Y.%m.%d') as wdate from wiz_bbs where code='insight' and notice!='Y' and wdate <= unix_timestamp(now()) order by prino desc, idx desc limit 1"); // 예약발행 글 제외
 	$dt_youtube = $dt_more = $dt_body = ''; $dt_thumb = '/img/drivethru_thumb.png';
 	if(!empty($dt_row['idx'])){
 		$raw = $dt_row['content'];

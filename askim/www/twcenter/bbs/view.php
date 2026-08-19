@@ -36,15 +36,23 @@ if(empty($bbs_info['datetype_view'])) $bbs_info['datetype_view'] = "%Y-%m-%d";
 // 게시물 번호 ($no)
 $no = get_bbs_no($_GET);
 
+// 예약발행: 발행시각(wdate)이 미래인 글은 관리자/게시판관리자 외 접근 차단
+if($mem_level == "0" || ($bbs_info['bbsadmin'] != "" && in_array($wiz_session['id'], $bbsadmin_ids))) {
+	$sched_sql = "";
+} else {
+	$sched_sql = " and wb.wdate <= unix_timestamp(now()) ";
+}
+
 // 게시물 정보
 $sql = "
 	select wb.*
 		 , from_unixtime(wb.wdate, '".$bbs_info['datetype_view']."') as wdate
 		 , wc.catname, wc.caticon
-	  from wiz_bbs as wb 
-	  left join wiz_bbscat as wc 
+	  from wiz_bbs as wb
+	  left join wiz_bbscat as wc
 	    on wb.category = wc.idx
 	 where wb.idx = '$idx'
+	   $sched_sql
 ";
 $result = query($sql);
 $total = sql_fetch_row($result);
@@ -366,10 +374,10 @@ $sql = "
 		 , memid
 		 , memgrp
 		 , category
-	  from wiz_bbs 
-	 where code = '$code' 
-	   and prino > '".$bbs_row['prino']."' 
-	   $my_sql $cat_sql 
+	  from wiz_bbs wb
+	 where code = '$code'
+	   and prino > '".$bbs_row['prino']."'
+	   $my_sql $cat_sql $sched_sql
 	 order by prino asc limit 1
 ";
 $result = query($sql);
@@ -410,10 +418,10 @@ $sql = "
 		 , privacy
 		 , memid
 		 , memgrp
-	  from wiz_bbs 
-	 where code = '$code' 
-	   and prino < '".$bbs_row['prino']."' 
-	   $my_sql $cat_sql 
+	  from wiz_bbs wb
+	 where code = '$code'
+	   and prino < '".$bbs_row['prino']."'
+	   $my_sql $cat_sql $sched_sql
 	 order by prino desc limit 1
 ";
 $result = query($sql);
